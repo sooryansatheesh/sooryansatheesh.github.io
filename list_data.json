@@ -1,23 +1,23 @@
 {
 	"Wildlife": [
 		{
-			"Local_Name": "Northern Raccoon",
-			"Scientific_Name": "Procyon lotor",
+			"Local Name": "Northern Raccoon",
+			"Scientific Name": "Procyon lotor",
 			"Status": "Least concern"
 		},
 		{
-			"Local_Name": "Black-tailed Mule Deer",
-			"Scientific_Name": "Odocoileus hemionus",
+			"Local Name": "Black-tailed Mule Deer",
+			"Scientific Name": "Odocoileus hemionus",
 			"Status": "Least concern"
 		},
 		{
-			"Local_Name": "Costa's Hummingbird",
-			"Scientific_Name": "Calypte costae",
+			"Local Name": "Costa's Hummingbird",
+			"Scientific Name": "Calypte costae",
 			"Status": "Least concern"
 		},
 		{
-			"Local_Name": "Wild Turkey",
-			"Scientific_Name": "Meleagris gallopavo",
+			"Local Name": "Wild Turkey",
+			"Scientific Name": "Meleagris gallopavo",
 			"Status": "Least concern"
 		}
 
