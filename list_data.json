@@ -1,22 +1,48 @@
 {
-	"movies": [
+	"Wildlife": [
 		{
-			"Title": "Lost In Translation",
-			"Director": "Sofia Coppola",
-			"Rating": "R",
-			"Year": "2003"
+			"Local_Name": "Northern Raccoon",
+			"Scientific_Name": "Procyon lotor",
+			"Status": "Least concern"
 		},
 		{
-			"Title": "Casino Royale",
-			"Director": "Martin Campbell",
-			"Rating": "PG-13",
-			"Year": "2006"
+			"Local_Name": "Black-tailed Mule Deer",
+			"Scientific_Name": "Odocoileus hemionus",
+			"Status": "Least concern"
 		},
 		{
-			"Title": "The Dark Knight",
-			"Director": "Christopher Nolan",
-			"Rating": "PG-13",
-			"Year": "2008"
+			"Local_Name": "Costa's Hummingbird",
+			"Scientific_Name": "Calypte costae",
+			"Status": "Least concern"
+		},
+		{
+			"Local_Name": "Wild Turkey",
+			"Scientific_Name": "Meleagris gallopavo",
+			"Status": "Least concern"
 		}
+
+	],
+	"Animals and Birds": [
+		{
+			"Local_Name": "Northern Raccoon",
+			"Scientific_Name": "Procyon lotor",
+			"Status": "Least concern"
+		},
+		{
+			"Local_Name": "Black-tailed Mule Deer",
+			"Scientific_Name": "Odocoileus hemionus",
+			"Status": "Least concern"
+		},
+		{
+			"Local_Name": "Costa's Hummingbird",
+			"Scientific_Name": "Calypte costae",
+			"Status": "Least concern"
+		},
+		{
+			"Local_Name": "Wild Turkey",
+			"Scientific_Name": "Meleagris gallopavo",
+			"Status": "Least concern"
+		}
+
 	]
 }
