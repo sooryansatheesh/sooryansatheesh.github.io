@@ -21,28 +21,5 @@
 			"Status": "Least concern"
 		}
 
-	],
-	"Animals and Birds": [
-		{
-			"Local_Name": "Northern Raccoon",
-			"Scientific_Name": "Procyon lotor",
-			"Status": "Least concern"
-		},
-		{
-			"Local_Name": "Black-tailed Mule Deer",
-			"Scientific_Name": "Odocoileus hemionus",
-			"Status": "Least concern"
-		},
-		{
-			"Local_Name": "Costa's Hummingbird",
-			"Scientific_Name": "Calypte costae",
-			"Status": "Least concern"
-		},
-		{
-			"Local_Name": "Wild Turkey",
-			"Scientific_Name": "Meleagris gallopavo",
-			"Status": "Least concern"
-		}
-
 	]
 }
