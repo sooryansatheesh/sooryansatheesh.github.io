@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet Map with Marker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div>
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" />
+    <br />
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" />
+    <br />
+    <button onclick="updateMap()">Submit</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    var map;
+    var marker;
+
+    function updateMap() {
+      var latitude = parseFloat(document.getElementById("latitude").value);
+      var longitude = parseFloat(document.getElementById("longitude").value);
+
+      if (isNaN(latitude) || isNaN(longitude)) {
+        alert("Invalid latitude or longitude!");
+        return;
+      }
+
+      if (latitude < -180 || latitude > 180 || longitude < -180 || longitude > 180) {
+        alert("Latitude and longitude values must be between -180 and 180!");
+        return;
+      }
+
+      if (map && marker) {
+        map.removeLayer(marker);
+      }
+
+      map = L.map('map').setView([latitude, longitude], 12);
+
+      // OSM layer
+      var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18,
+      }).addTo(map);
+
+      // Marker with popup
+      marker = L.marker([latitude, longitude]).addTo(map);
+      marker.bindPopup("Latitude: " + latitude + "<br/>Longitude: " + longitude).openPopup();
+
+      // Layer control
+      var baseLayers = {
+        'OpenStreetMap': osmLayer
+      };
+
+      L.control.layers(baseLayers).addTo(map);
+    }
+  </script>
+</body>
+</html>
