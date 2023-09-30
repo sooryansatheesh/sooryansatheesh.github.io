@@ -1,0 +1,1954 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Tableau Project: EDA on the Distribution of Trees in Select Cities of the Bay Area</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+        text-indent: 0;
+      }
+      .s1 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 28pt;
+      }
+      .s2 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: italic;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 14pt;
+      }
+      .s3 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: italic;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10.5pt;
+      }
+      .s4 {
+        color: #365f91;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 18pt;
+      }
+      .s5 {
+        color: #365f91;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 13pt;
+      }
+      .s6 {
+        color: #233e5f;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 14pt;
+      }
+      .s7 {
+        color: #233e5f;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 12pt;
+      }
+      p {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10.5pt;
+        margin: 0pt;
+      }
+      .s8 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 9.5pt;
+      }
+      .s9 {
+        color: #365f91;
+        font-family: Cambria, serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 18pt;
+      }
+      .s10 {
+        color: #365f91;
+        font-family: Cambria, serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 13pt;
+      }
+      .s11 {
+        color: #233e5f;
+        font-family: Cambria, serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 14pt;
+      }
+      .s12 {
+        color: #233e5f;
+        font-family: Cambria, serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 12pt;
+      }
+      .a {
+        color: #00f;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: underline;
+        font-size: 10.5pt;
+      }
+      .s13 {
+        color: #44536a;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10.5pt;
+      }
+      .s14 {
+        color: #44536a;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 8.5pt;
+      }
+      .s15 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 10pt;
+      }
+      .s16 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10pt;
+      }
+      .s17 {
+        color: #233e5f;
+        font-family: Cambria, serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10.5pt;
+      }
+      .s18 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10.5pt;
+      }
+      .s19 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10pt;
+      }
+      .s20 {
+        color: #1f487c;
+        font-family: "Calibri Light", sans-serif;
+        font-style: italic;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 9pt;
+      }
+      .s21 {
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 11pt;
+      }
+      .s22 {
+        color: #00f;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: underline;
+        font-size: 10pt;
+      }
+      li {
+        display: block;
+      }
+      #l1 {
+        padding-left: 0pt;
+        counter-reset: c1 0;
+      }
+      #l1 > li:before {
+        counter-increment: c1;
+        content: counter(c1, decimal) ". ";
+        color: #365f91;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 18pt;
+      }
+      #l2 {
+        padding-left: 0pt;
+        counter-reset: c2 0;
+      }
+      #l2 > li:before {
+        counter-increment: c2;
+        content: counter(c1, decimal) "." counter(c2, decimal) " ";
+        color: #233e5f;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 14pt;
+      }
+      #l3 {
+        padding-left: 0pt;
+        counter-reset: d1 0;
+      }
+      #l3 > li:before {
+        counter-increment: d1;
+        content: counter(d1, decimal) ". ";
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 9.5pt;
+      }
+      li {
+        display: block;
+      }
+      #l4 {
+        padding-left: 0pt;
+        counter-reset: e1 0;
+      }
+      #l4 > li:before {
+        counter-increment: e1;
+        content: counter(e1, decimal) ". ";
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10.5pt;
+      }
+      li {
+        display: block;
+      }
+      #l5 {
+        padding-left: 0pt;
+        counter-reset: f1 1;
+      }
+      #l5 > li:before {
+        counter-increment: f1;
+        content: counter(f1, decimal) " ";
+        color: black;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+      }
+      #l6 {
+        padding-left: 0pt;
+        counter-reset: f2 0;
+      }
+      #l6 > li:before {
+        counter-increment: f2;
+        content: counter(f1, decimal) "." counter(f2, decimal) " ";
+        color: black;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+      }
+      #l7 {
+        padding-left: 0pt;
+      }
+      #l7 > li:before {
+        content: "- ";
+        color: black;
+        font-family: Calibri, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        font-size: 10.5pt;
+      }
+      #l8 {
+        padding-left: 0pt;
+        counter-reset: f2 0;
+      }
+      #l8 > li:before {
+        counter-increment: f2;
+        content: counter(f1, decimal) "." counter(f2, decimal) " ";
+        color: black;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <p
+      class="s1"
+      style="
+        padding-left: 5pt;
+        text-indent: 0pt;
+        line-height: 32pt;
+        text-align: left;
+      "
+    >
+      EDA on the distribution of Trees in select
+    </p>
+    <p
+      class="s1"
+      style="
+        padding-top: 5pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      "
+    >
+      cities of the Bay area
+    </p>
+    <p
+      class="s2"
+      style="
+        padding-top: 20pt;
+        padding-left: 11pt;
+        text-indent: 0pt;
+        text-align: left;
+      "
+    >
+      B<span class="s3">Y</span>: Soorya Narayan Satheesh
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <ol id="l1">
+      <li style="padding-left: 24pt; text-indent: -18pt; text-align: left">
+        <p class="s4" style="display: inline">
+          I<span class="s5">NITIAL</span>H<span class="s5">YPOTHESES OR </span
+          >Q<span class="s5">UESTIONS</span>
+        </p>
+        <ol id="l2">
+          <li
+            style="
+              padding-top: 5pt;
+              padding-left: 27pt;
+              text-indent: -21pt;
+              text-align: left;
+            "
+          >
+            <p class="s6" style="display: inline">
+              M<span class="s7">OTIVATION</span>
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              style="
+                padding-left: 31pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: justify;
+              "
+            >
+              In the rapidly warming climate people are affected daily the
+              negative impacts of the climate change. This is particularly true
+              for the people living in the urban areas. In such areas trees play
+              a crucial role in aesthetics, reducing pollution and other
+              ecological functions that are crucial for the survival of humans.
+              Therefore, understanding the distribution of trees, depending on
+              their species and type in the urban cities of the Bay area is
+              crucial for city governments to plan urban greening efforts so
+              that the climate change mitigation goals as well as biodiversity
+              requirements can be met.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+          </li>
+          <li style="padding-left: 27pt; text-indent: -21pt; text-align: left">
+            <p class="s6" style="display: inline">
+              H<span class="s7">YPOTHESES</span>
+            </p>
+            <p
+              style="
+                padding-top: 5pt;
+                padding-left: 55pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              The following hypotheses were developed before the analysis as
+              well as while doing the EDA
+            </p>
+            <ol id="l3">
+              <li
+                style="
+                  padding-top: 2pt;
+                  padding-left: 55pt;
+                  text-indent: -18pt;
+                  text-align: left;
+                "
+              >
+                <p class="s8" style="display: inline">
+                  Does the different cities of the bay area have a uniform
+                  distribution of tree species?
+                </p>
+              </li>
+              <li
+                style="
+                  padding-top: 1pt;
+                  padding-left: 55pt;
+                  text-indent: -18pt;
+                  text-align: left;
+                "
+              >
+                <p class="s8" style="display: inline">
+                  Is there diversity in the tree types grown in the Bay area?
+                </p>
+              </li>
+              <li
+                style="
+                  padding-top: 1pt;
+                  padding-left: 55pt;
+                  text-indent: -18pt;
+                  text-align: left;
+                "
+              >
+                <p class="s8" style="display: inline">
+                  Is there variation in the average age of the trees in the Bay
+                  area?
+                </p>
+              </li>
+              <li
+                style="
+                  padding-top: 2pt;
+                  padding-left: 55pt;
+                  text-indent: -18pt;
+                  text-align: left;
+                "
+              >
+                <p class="s8" style="display: inline">
+                  Is there any relation between the number of trees in a street
+                  and the diversity of species there?
+                </p>
+              </li>
+            </ol>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+          </li>
+          <li
+            style="
+              padding-top: 6pt;
+              padding-left: 26pt;
+              text-indent: -20pt;
+              text-align: left;
+            "
+          >
+            <p class="s6" style="display: inline">
+              A<span class="s7">NALYSIS </span>P<span class="s7">LAN</span>
+            </p>
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p style="padding-left: 34pt; text-indent: 0pt; text-align: justify">
+      I plan to use the following steps to carryout my analysis: -
+    </p>
+    <ol id="l4">
+      <li
+        style="
+          padding-top: 1pt;
+          padding-left: 52pt;
+          text-indent: -18pt;
+          text-align: justify;
+        "
+      >
+        <p style="display: inline">
+          Compile the datasets of the seven cities of the Bay area using “union”
+          feature in Tableau.
+        </p>
+      </li>
+      <li
+        style="
+          padding-top: 1pt;
+          padding-left: 52pt;
+          text-indent: -18pt;
+          text-align: justify;
+        "
+      >
+        <p style="display: inline">
+          Compute the species wise total number of trees in each city.
+        </p>
+      </li>
+      <li
+        style="
+          padding-top: 1pt;
+          padding-left: 52pt;
+          text-indent: -18pt;
+          line-height: 114%;
+          text-align: left;
+        "
+      >
+        <p style="display: inline">
+          Currently trees are categorized into around twelve types based on
+          various characteristics, they will be grouped into four major
+          categories.
+        </p>
+      </li>
+      <li style="padding-left: 52pt; text-indent: -18pt; text-align: justify">
+        <p style="display: inline">
+          Analyze the variation in DBH of the species across the cities
+        </p>
+      </li>
+      <li
+        style="
+          padding-top: 1pt;
+          padding-left: 52pt;
+          text-indent: -18pt;
+          text-align: justify;
+        "
+      >
+        <p style="display: inline">
+          Analyze the streetwise variation in number of trees.
+        </p>
+      </li>
+    </ol>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <ol id="l5">
+      <li
+        style="
+          padding-top: 5pt;
+          padding-left: 19pt;
+          text-indent: -13pt;
+          text-align: left;
+        "
+      >
+        <p class="s9" style="display: inline">
+          D<span class="s10">ATA </span>S<span class="s10">OURCE</span>
+        </p>
+        <ol id="l6">
+          <li
+            style="
+              padding-top: 1pt;
+              padding-left: 28pt;
+              text-indent: -22pt;
+              text-align: left;
+            "
+          >
+            <p class="s11" style="display: inline">
+              D<span class="s12">ESCRIPTION</span>
+            </p>
+            <p
+              style="
+                padding-top: 2pt;
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: justify;
+              "
+            >
+              <a
+                href="https://www.fs.usda.gov/rds/archive/catalog/RDS-2017-0010"
+                class="s18"
+                target="_blank"
+                >The data is from the “Raw urban street tree inventory data for
+                49 California cities” project by McPherson et al. which was
+                carried out through funding from the US Government from 2006 to
+                2013 (</a
+              ><span
+                style="
+                  color: #00f;
+                  font-family: Calibri, sans-serif;
+                  font-style: normal;
+                  font-weight: normal;
+                  text-decoration: underline;
+                  font-size: 10.5pt;
+                "
+                >https://www.fs.usda.gov/rds/archive/catalog/RDS-2017-0010</span
+              >). This project has enumerated over 929,823 street trees in 49
+              Californian cities. Each city has its own dataset in the form of a
+              CSV file. For the purpose of this EDA I focused on seven cities in
+              the Bay area – Berkeley, Burlingame, Hayward, Palo Alto, Redwood
+              City, San Mateo and Walnut Creek. In addition to this, an excel
+              file (citydata.xlsx) with the area, population (in 2020) and
+              population density of each city was prepared using data from
+              Wikipedia and used for gaining more insight.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              class="s13"
+              style="padding-left: 5pt; text-indent: 0pt; text-align: left"
+            >
+              T<span class="s14">ABLE </span>1: V<span class="s14"
+                >ARIABLES FROM </span
+              >O<span class="s14">RIGINAL </span>D<span class="s14"
+                >ATASET USED IN </span
+              >EDA
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <table
+              style="border-collapse: collapse; margin-left: 55.66pt"
+              cellspacing="0"
+            >
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s15"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Code
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s15"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Description
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Idx
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Code of an individual tree for the city
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    SpCode
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Short form of the tree species
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    DBH
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 12pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Breast height diameter
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Street Name
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Name of the street in the City
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    StreetNumber
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Number of the city street
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    City
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Name of the City
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Botanical Name
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Botanical Name of that tree species
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Common Name
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Common Name of the tree
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 29pt">
+                <td
+                  style="
+                    width: 80pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Tree Type
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 246pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 10pt;
+                      text-indent: 0pt;
+                      line-height: 114%;
+                      text-align: left;
+                    "
+                  >
+                    Special code that categorizes different tree species into
+                    one of twelve types
+                  </p>
+                </td>
+              </tr>
+            </table>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <table
+              style="border-collapse: collapse; margin-left: 55.66pt"
+              cellspacing="0"
+            >
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 90pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s15"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Code
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 236pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s15"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Description
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 90pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    City
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 236pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Name of the city from dataset
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 90pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Area_mi2
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 236pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Area of the city in square miles
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 90pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Population_2020
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 236pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 7pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Population of the city in 2020
+                  </p>
+                </td>
+              </tr>
+              <tr style="height: 15pt">
+                <td
+                  style="
+                    width: 90pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Population_Density
+                  </p>
+                </td>
+                <td
+                  style="
+                    width: 236pt;
+                    border-top-style: solid;
+                    border-top-width: 1pt;
+                    border-top-color: #7e7e7e;
+                    border-bottom-style: solid;
+                    border-bottom-width: 1pt;
+                    border-bottom-color: #7e7e7e;
+                  "
+                >
+                  <p
+                    class="s16"
+                    style="
+                      padding-left: 5pt;
+                      text-indent: 0pt;
+                      text-align: left;
+                    "
+                  >
+                    Population density of the city
+                  </p>
+                </td>
+              </tr>
+            </table>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+          </li>
+          <li
+            style="
+              padding-top: 5pt;
+              padding-left: 24pt;
+              text-indent: -18pt;
+              text-align: left;
+            "
+          >
+            <p class="s12" style="display: inline">
+              S<span class="s17">OURCE</span>(<span class="s17">S</span>)
+            </p>
+            <p
+              style="
+                padding-left: 41pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              <a
+                href="https://www.fs.usda.gov/rds/archive/catalog/RDS-2017-0010"
+                class="s18"
+                target="_blank"
+                >The main dataset is publicly available for download at the
+                website of the US Forest Service </a
+              ><a
+                href="https://www.fs.usda.gov/rds/archive/catalog/RDS-2017-0010"
+                class="a"
+                target="_blank"
+                >https://www.fs.usda.gov/rds/archive/catalog/RDS-2017-0010</a
+              >. The supplementary information on the cities was collected from
+              Wikipedia and compiled to form a xlsx file.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+          </li>
+          <li style="padding-left: 24pt; text-indent: -18pt; text-align: left">
+            <p class="s12" style="display: inline">FORMAT</p>
+            <p
+              style="
+                padding-top: 4pt;
+                padding-left: 47pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              The dataset was downloaded in the .csv format from the website and
+              the city information is stored in xlsx file.
+            </p>
+          </li>
+          <li
+            style="
+              padding-top: 3pt;
+              padding-left: 28pt;
+              text-indent: -22pt;
+              text-align: left;
+            "
+          >
+            <p class="s11" style="display: inline">
+              T<span class="s12">RANSFORMATIONS</span>
+            </p>
+            <p
+              style="
+                padding-top: 3pt;
+                padding-left: 34pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              The main transformations I performed were in the creation of
+              groups:
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <ul id="l7">
+              <li
+                style="
+                  padding-left: 34pt;
+                  text-indent: -18pt;
+                  line-height: 112%;
+                  text-align: left;
+                "
+              >
+                <p class="s19" style="display: inline">
+                  Combined the dataset of seven Bay area cities using union
+                  feature area – Berkeley, Burlingame, Hayward, Palo Alto,
+                  Redwood City, San Mateo and Walnut Creek.
+                </p>
+                <p style="text-indent: 0pt; text-align: left"><br /></p>
+              </li>
+              <li
+                style="padding-left: 34pt; text-indent: -18pt; text-align: left"
+              >
+                <p class="s19" style="display: inline">
+                  Linked the tree inventory datasets with the excel file on city
+                  information
+                </p>
+                <p style="text-indent: 0pt; text-align: left"><br /></p>
+              </li>
+              <li
+                style="
+                  padding-left: 34pt;
+                  text-indent: -18pt;
+                  line-height: 112%;
+                  text-align: left;
+                "
+              >
+                <p class="s19" style="display: inline">
+                  Grouped tree types from larger twelve to smaller four namely –
+                  Broadleaved Deciduous, Broadleaved Evergreen, Conifer
+                  Evergreen, Palm Evergreen and Others.
+                </p>
+                <p style="text-indent: 0pt; text-align: left"><br /></p>
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </li>
+      <li style="padding-left: 19pt; text-indent: -13pt; text-align: left">
+        <p class="s9" style="display: inline">
+          E<span class="s10">XPLORATION</span>
+        </p>
+        <ol id="l8">
+          <li
+            style="
+              padding-top: 2pt;
+              padding-left: 5pt;
+              text-indent: 0pt;
+              text-align: left;
+            "
+          >
+            <p class="s12" style="display: inline">
+              E<span class="s17">XPLORING </span>H<span class="s17"
+                >YPOTHESIS </span
+              >1: Does the different cities of the bay area have a uniform
+              distribution of tree species?
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              style="
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              Urban trees play a key role in health and aesthetics of a city.
+              The space available for trees to grow is also linked to the area
+              of the city, the population and the population density. Also
+              having a wide diversity of tree species is crucial. So I first
+              tried to understand how many trees are there in the different
+              cities along with the key species.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p style="padding-left: 35pt; text-indent: 0pt; text-align: left">
+              <span
+                ><img
+                  width="650"
+                  height="500"
+                  alt="image"
+                  src="935844828/Image_001.gif"
+              /></span>
+            </p>
+            <p
+              class="s20"
+              style="
+                padding-top: 1pt;
+                padding-left: 5pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              Figure 1-Tree numbers analysis
+            </p>
+            <p
+              style="
+                padding-top: 2pt;
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              From the study above I realized that there is big disparity in the
+              number of trees and the species of trees present in the different
+              cities. We can see that Palo Alto is having the largest number of
+              trees while Walnut Creek is having the smallest number. We could
+              also find out that while the most common tree is Magnolia
+              grandiflora with 10,265 numbers, at the bottom rung there are
+              several species with just one representative.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              style="
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              Subsequently I decided to study whether there is any impact of the
+              population or population density of a city on the number of tree
+              species (Figure below). First at the bottom right corner I
+              tabulated the city wise number of species. We can see that Palo
+              Alto is having the highest number of species while Walnut Creek
+              has the lowest number. I then decided to plot the number if tree
+              species against the population (in 2020) of the seven cities. This
+              graph is visible on the top right. Here we can observe that there
+              is not much difference in species diversity with increase in
+              population, except with Palo Alto and Walnut Creek being outliers.
+              I then repeated the exercise by using the population density
+              metrics to examine the data, but here also the result was similar.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p style="padding-left: 35pt; text-indent: 0pt; text-align: left">
+              <span
+                ><img
+                  width="650"
+                  height="500"
+                  alt="image"
+                  src="935844828/Image_002.gif"
+              /></span>
+            </p>
+            <p
+              class="s20"
+              style="
+                padding-top: 1pt;
+                padding-left: 5pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              Figure 2-Tree species distribution analysis
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+          </li>
+          <li style="padding-left: 24pt; text-indent: -18pt; text-align: left">
+            <p class="s12" style="display: inline">
+              E<span class="s17">XPLORING </span>H<span class="s17"
+                >YPOTHESIS </span
+              >2: Is there diversity in the tree types grown in the Bay area?
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              class="s19"
+              style="
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              Another key parameter about trees is that they can be categorized
+              based on types. Here we are using the following four types -
+              Broadleaved Deciduous, Broadleaved Evergreen, Conifer Evergreen,
+              Palm Evergreen and Others. Different types of trees naturally grow
+              in areas more suited to their particular climatic conditions. Here
+              since we are evaluating urban trees, we have to include the aspect
+              of human intervention in their introduction and propagation also.
+              Therefore the distribution of different types of trees we see is
+              also the product of the decisions taken by city planners and home
+              owners decades ago.
+            </p>
+            <p style="padding-left: 35pt; text-indent: 0pt; text-align: left">
+              <span
+                ><img
+                  width="600"
+                  height="400"
+                  alt="image"
+                  src="935844828/Image_003.gif"
+              /></span>
+            </p>
+            <p
+              class="s20"
+              style="
+                padding-top: 1pt;
+                padding-left: 5pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              Figure 3-Tree type distribution
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              class="s21"
+              style="
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: justify;
+              "
+            >
+              In this (Figure above) analysis ,I wanted to quantify the city
+              wise distribution of the different types of trees. This analysis
+              has given some interesting insights. We can see that by sheer
+              numbers Broadleaved Deciduous type of tree species dwarfs every
+              other category with 24,887 nos, while Palm Evergreen trees form
+              the smallest group with just 724 nos. Among cities, Berkeley is
+              having the largest number of Broadleaved Deciduous trees, while
+              Palo Alto, Hayward and San Mateo top for Broadleaf Evergreen,
+              Conifer Evergreen and Palm Evergreen respectively.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+          </li>
+          <li style="padding-left: 24pt; text-indent: -18pt; text-align: left">
+            <p class="s12" style="display: inline">
+              E<span class="s17">XPLORING </span>H<span class="s17"
+                >YPOTHESIS </span
+              >3: Is there variation in the average age of the trees in the Bay
+              area?
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              class="s21"
+              style="
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: justify;
+              "
+            >
+              In forestry a key parameter of tree is its diameter which measured
+              at chest height (DBH). For every species one can determine the
+              height of a tree using its DBH by referring to the local tree
+              tables prepared by years of observation and research by the US
+              Forest Service. So, in the absence of height parameter of each
+              tree in this dataset we will use the DBH for assessing the current
+              state of growth of the different trees.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              class="s21"
+              style="
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: justify;
+              "
+            >
+              In the dashboard (Figure-Below) I used two bar graphs faceted for
+              tree type to understand the distribution of DBH. In the first one,
+              we can observe that the average DBH is different across different
+              cities and types of trees. For Broadleaved Deciduous trees the
+              average DBH increases from 1.895 for Berkeley to 2.574 ft for Palo
+              Alto. This shows that the current trees in Berkeley of this type
+              is much younger than similar trees in Palo Alto specially since
+              both cities fall in the same bio-climatic region and so must have
+              the same growth characteristics. This deduction can be extended to
+              different types of trees across different cities.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              class="s21"
+              style="padding-left: 34pt; text-indent: 0pt; text-align: justify"
+            >
+              Similarly we analyzed to find the median DBH across the cities
+              across types and found that it is
+            </p>
+            <p
+              class="s21"
+              style="
+                padding-top: 2pt;
+                padding-bottom: 2pt;
+                padding-left: 34pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              mostly the same across a type of tree.
+            </p>
+            <p style="padding-left: 35pt; text-indent: 0pt; text-align: left">
+              <span
+                ><img
+                  width="700"
+                  height="500"
+                  alt="image"
+                  src="935844828/Image_004.gif"
+              /></span>
+            </p>
+            <p
+              class="s20"
+              style="
+                padding-top: 1pt;
+                padding-left: 5pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              Figure 4-Tree DBH distribution
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+          </li>
+          <li style="padding-left: 5pt; text-indent: 0pt; text-align: left">
+            <p class="s12" style="display: inline">
+              E<span class="s17">XPLORING </span>H<span class="s17"
+                >YPOTHESIS 4</span
+              >: Is there any relation between the number of trees in a street
+              and the diversity of species there?
+            </p>
+            <p
+              class="s21"
+              style="
+                padding-top: 9pt;
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              When I first considered this hypothesis, I thought that it is only
+              intuitive to imagine that with an increase in the number of trees
+              there will also be an increase in the species diversity. I further
+              wanted to study this at a street level across cities.
+            </p>
+            <p
+              class="s21"
+              style="
+                padding-top: 9pt;
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: justify;
+              "
+            >
+              So first I wanted to check the street wise number of trees across
+              the seven cities. This can be seen from the chart on the top right
+              corner. Here we can see that average number of trees per street is
+              55, while the maximum number is 3431 for Farm Hill Boulevard in
+              Redwood City.
+            </p>
+            <p
+              class="s21"
+              style="
+                padding-top: 9pt;
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              Next, I analyzed the number of tree species found in each street
+              across the seven cities. This can be seen in the chart on the top
+              left corner of the dashboard below. Here we can see that
+              Burlingame Avenue is having the highest number of 134 species.
+            </p>
+            <p style="padding-left: 35pt; text-indent: 0pt; text-align: left">
+              <span
+                ><img
+                  width="600"
+                  height="400"
+                  alt="image"
+                  src="935844828/Image_005.gif"
+              /></span>
+            </p>
+            <p
+              class="s20"
+              style="
+                padding-top: 1pt;
+                padding-left: 5pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              Figure 5-Street wise tree distribution
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p
+              class="s21"
+              style="
+                padding-left: 34pt;
+                text-indent: 0pt;
+                line-height: 114%;
+                text-align: left;
+              "
+            >
+              Now after this analysis I wanted to find out which city has the
+              highest street wise per capita diversity of trees. I decided to
+              plot the number of tree species in a city against the number of
+              trees in the street and faceted using the city variable. The trend
+              line for each different city is an indicator of how diverse the
+              streets of the city are in terms of tree species. Higher the
+              slope, higher the diversity and vice versa.
+            </p>
+            <p style="text-indent: 0pt; text-align: left"><br /></p>
+            <p style="padding-left: 42pt; text-indent: 0pt; text-align: left">
+              <span
+                ><img width="500" height="500 alt="image"
+                src="935844828/Image_006.gif"/></span
+              >
+            </p>
+            <p
+              class="s20"
+              style="
+                padding-top: 1pt;
+                padding-left: 5pt;
+                text-indent: 0pt;
+                text-align: left;
+              "
+            >
+              Figure 6-Finding cities with most tree diverse streets
+            </p>
+          </li>
+        </ol>
+      </li>
+      <li style="padding-left: 19pt; text-indent: -13pt; text-align: left">
+        <p class="s4" style="display: inline">
+          C<span class="s5">ONCLUSION</span>
+        </p>
+        <p style="text-indent: 0pt; text-align: left"><br /></p>
+        <p
+          class="s19"
+          style="
+            padding-left: 5pt;
+            text-indent: 0pt;
+            line-height: 114%;
+            text-align: left;
+          "
+        >
+          This EDA project helped me understand the nitty-gritties of selection
+          of dataset and working with a wide variety of visualization. This
+          project helped changed several presumptions I had about the nature of
+          trees and environment in the Bay area. When we talk of trees, we think
+          of forests in the Yosemite but we forget that the urban trees also
+          play a crucial role in helping the environment as well as the humans
+          living near them. Thus using the insights gleaned from this analysis
+          the city planners could plan ahead to increase the diversity of tree
+          species in the cities to help increase urban biodiversity.
+        </p>
+        <p style="text-indent: 0pt; text-align: left"><br /></p>
+      </li>
+      <li style="padding-left: 16pt; text-indent: -10pt; text-align: left">
+        <p class="s10" style="display: inline">REFERENCES</p>
+      </li>
+    </ol>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      style="
+        padding-top: 10pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      "
+    >
+      <a
+        href="https://doi.org/10.2737/RDS-2017-0010"
+        style="
+          color: black;
+          font-family: Calibri, sans-serif;
+          font-style: normal;
+          font-weight: normal;
+          text-decoration: none;
+          font-size: 10pt;
+        "
+        target="_blank"
+        >McPherson, E. Gregory; van Doorn, Natalie S.; de Goede, John. 2017. Raw
+        urban street tree inventory data for 49 California cities. Fort Collins,
+        CO: Forest Service Research Data Archive. </a
+      ><a
+        href="https://doi.org/10.2737/RDS-2017-0010"
+        class="s22"
+        target="_blank"
+        >https://doi.org/10.2737/RDS-2017-0010</a
+      >
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      class="s19"
+      style="
+        padding-top: 2pt;
+        padding-left: 5pt;
+        text-indent: 0pt;
+        text-align: left;
+      "
+    >
+      Wikimedia Foundation. (2023, February 23). <i>Berkeley, California</i>.
+      Wikipedia. Retrieved March 8, 2023, from
+      https://en.wikipedia.org/wiki/Berkeley,_California
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      class="s19"
+      style="padding-left: 5pt; text-indent: 0pt; text-align: left"
+    >
+      Wikimedia Foundation. (2023, February 23).
+      <i>Redwood City, California</i>. Wikipedia. Retrieved March 8, 2023, from
+      https://en.wikipedia.org/wiki/ Redwood_City,_California
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      class="s19"
+      style="padding-left: 5pt; text-indent: 0pt; text-align: left"
+    >
+      Wikimedia Foundation. (2023, February 23). <i>Burlingame, California</i>.
+      Wikipedia. Retrieved March 8, 2023, from https://en.wikipedia.org/wiki/
+      Burlingame,_California
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      class="s19"
+      style="padding-left: 5pt; text-indent: 0pt; text-align: left"
+    >
+      Wikimedia Foundation. (2023, February 23).
+      <i>Walnut Creek, California</i>. Wikipedia. Retrieved March 8, 2023, from
+      https://en.wikipedia.org/wiki/ Walnut_Creek,_California
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      class="s19"
+      style="padding-left: 5pt; text-indent: 0pt; text-align: left"
+    >
+      Wikimedia Foundation. (2023, February 23). <i>Palo Alto, California</i>.
+      Wikipedia. Retrieved March 8, 2023, from https://en.wikipedia.org/wiki/
+      Palo_Alto,_California
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      class="s19"
+      style="padding-left: 5pt; text-indent: 0pt; text-align: left"
+    >
+      Wikimedia Foundation. (2023, February 23). <i>Hayward, California</i>.
+      Wikipedia. Retrieved March 8, 2023, from https://en.wikipedia.org/wiki/
+      Hayward,_California
+    </p>
+    <p style="text-indent: 0pt; text-align: left"><br /></p>
+    <p
+      class="s19"
+      style="padding-left: 5pt; text-indent: 0pt; text-align: left"
+    >
+      Wikimedia Foundation. (2023, February 23). <i>San Mateo, California</i>.
+      Wikipedia. Retrieved March 8, 2023, from https://en.wikipedia.org/wiki/
+      San_Mateo,_California
+    </p>
+  </body>
+</html>
