@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../MLProject"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "sooryansatheesh"
+	}
+}
