@@ -1460,3 +1460,17 @@ footer .credits {
 footer .credits a {
   color: #fff;
 }
+
+.courserow{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.courserow .courselist {
+  width: 50%;
+}
+
+.courserow .courselist ul{
+  text-align: left;
+}
