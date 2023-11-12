@@ -1478,3 +1478,15 @@ footer .credits a {
 .courserow .courselist h3{
   text-align: left;
 }
+
+.course-description p{
+  text-justify: auto;
+  text-align: left;
+}
+
+.institution-title{
+  font-size: 2rem;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.4rem 0;
+}
