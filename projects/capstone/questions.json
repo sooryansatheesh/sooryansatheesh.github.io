@@ -1,0 +1,32 @@
+[
+    {
+      "question": "What is your current academic status at UC Berkeley?",
+      "options": ["Undergraduate student",
+       "Masters student",
+        "PhD student"]
+    },
+    {
+      "question": "Which college/school do you attend at UC Berkeley? (You may refer to this website for clarification - https://www.berkeley.edu/academics/schools-colleges/ )",
+      "options": ["Business",
+       "Chemistry",
+        "Computing, Data Science & Society",
+         "Education",
+          "Engineering",
+        "Environmental Design",
+    "Information",
+        "Journalism",
+    "Law",
+        "Letters & Science",
+        "Natural Resources",
+        "Optometry",
+        "Public Health",
+    "Public Policy",
+        "Social Welfare"
+        ]
+    },
+    {
+      "question": "Which smartphone OS do you prefer?",
+      "options": ["iOS", "Android", "Windows", "Other", "None"]
+    }
+  ]
+  
