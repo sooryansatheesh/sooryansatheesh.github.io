@@ -1,32 +1,90 @@
 [
-    {
-      "question": "What is your current academic status at UC Berkeley?",
-      "options": ["Undergraduate student",
-       "Masters student",
-        "PhD student"]
-    },
-    {
-      "question": "Which college/school do you attend at UC Berkeley? (You may refer to this website for clarification - https://www.berkeley.edu/academics/schools-colleges/ )",
-      "options": ["Business",
-       "Chemistry",
-        "Computing, Data Science & Society",
-         "Education",
-          "Engineering",
-        "Environmental Design",
-    "Information",
-        "Journalism",
-    "Law",
-        "Letters & Science",
-        "Natural Resources",
-        "Optometry",
-        "Public Health",
-    "Public Policy",
-        "Social Welfare"
-        ]
-    },
-    {
-      "question": "Which smartphone OS do you prefer?",
-      "options": ["iOS", "Android", "Windows", "Other", "None"]
+  {
+    "question_id": 0,
+    "section_no": 0,
+    "question": "Section1-What is your current academic status at UC Berkeley?",
+    "options": {
+      "0": "Undergraduate student",
+      "1": "Masters student",
+      "2": "PhD student"
     }
-  ]
-  
+  },
+  {
+    "question_id": 1,
+    "section_no": 0,
+    "question": "Section1-Which college/school do you attend at UC Berkeley? (You may refer to this website for clarification - https://www.berkeley.edu/academics/schools-colleges/ )",
+    "options": {
+      "0": "Business",
+      "1": "Chemistry",
+      "2": "Computing, Data Science & Society",
+      "3": "Education",
+      "4": "Engineering",
+      "5": "Environmental Design",
+      "6": "Information",
+      "7": "Journalism",
+      "8": "Law",
+      "9": "Letters & Science",
+      "10": "Natural Resources",
+      "11": "Optometry",
+      "12": "Public Health",
+      "13": "Public Policy",
+      "14": "Social Welfare"
+    }
+  },
+  {
+    "question_id": 2,
+    "section_no": 0,
+    "question": "Section1-Which smartphone OS do you prefer?",
+    "options": {
+      "0": "iOS",
+      "1": "Android",
+      "2": "Windows",
+      "3": "Other",
+      "4": "None"
+    }
+  },
+  {
+    "question_id": 3,
+    "section_no": 1,
+    "question": "Section2-What is your current academic status at UC Berkeley?",
+    "options": {
+      "0": "Undergraduate student",
+      "1": "Masters student",
+      "2": "PhD student"
+    }
+  },
+  {
+    "question_id": 4,
+    "section_no": 1,
+    "question": "Section2-Which college/school do you attend at UC Berkeley? (You may refer to this website for clarification - https://www.berkeley.edu/academics/schools-colleges/ )",
+    "options": {
+      "0": "Business",
+      "1": "Chemistry",
+      "2": "Computing, Data Science & Society",
+      "3": "Education",
+      "4": "Engineering",
+      "5": "Environmental Design",
+      "6": "Information",
+      "7": "Journalism",
+      "8": "Law",
+      "9": "Letters & Science",
+      "10": "Natural Resources",
+      "11": "Optometry",
+      "12": "Public Health",
+      "13": "Public Policy",
+      "14": "Social Welfare"
+    }
+  },
+  {
+    "question_id": 5,
+    "section_no": 1,
+    "question": "Section2-Which smartphone OS do you prefer?",
+    "options": {
+      "0": "iOS",
+      "1": "Android",
+      "2": "Windows",
+      "3": "Other",
+      "4": "None"
+    }
+  }
+]
