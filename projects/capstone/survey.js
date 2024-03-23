@@ -43,7 +43,8 @@ function displayQuestion(questionId) {
 function storeResponse(questionId, responseIndex) {
     responses[questionId] = responseIndex;
 }
-
+// Hide the Submit button if it was displayed
+submitBtn.style.display = 'none';
 function getNextQuestion() {
     const currentQuestion = questions.find(q => q.question_id === currentQuestionId);
     if (!currentQuestion) {
@@ -57,6 +58,8 @@ function getNextQuestion() {
         const nextSectionNo = currentQuestion.section_no + 1;
         const firstQuestionOfNextSection = questions.find(q => q.section_no === nextSectionNo);
         if (!firstQuestionOfNextSection) {
+            nextBtn.style.display = 'none'; // Hide the next button
+            submitBtn.style.display = 'block';//display the submit button
             console.error(`First question of the next section with section number ${nextSectionNo} not found.`);
             return;
         }
@@ -66,6 +69,8 @@ function getNextQuestion() {
     }
     displayQuestion(currentQuestionId);
     updateCounter();
+
+    
 }
 
 function submitSurvey() {
@@ -80,11 +85,13 @@ function submitSurvey() {
         if (response.ok) {
             alert('Survey submitted successfully!');
         } else {
-            alert('Error submitting survey.');
+            const responseText = JSON.stringify(responses, null, 2); // Pretty-print responses
+            alert('Error submitting survey.\n\nResponses:\n${responseText}');
         }
     }).catch(error => {
         console.error('Error:', error);
-        alert('Error submitting survey.');
+        const responseText = JSON.stringify(responses, null, 2); // Pretty-print responses
+        alert('Error submitting survey.\n\nResponses:\n'+responseText);
     });
 }
 
