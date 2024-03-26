@@ -1,4 +1,5 @@
 let questions = [];
+let sections=[];
 let currentQuestionId = 0;
 const responses = {};
 
@@ -7,6 +8,14 @@ const counterContainer = document.getElementById('counter');
 const nextBtn = document.getElementById('next-btn');
 const submitBtn = document.getElementById('submit-btn');
 const counter = document.getElementById('counter');
+
+function fetchSections(){
+    fetch('section_info.json')
+.then(response => response.json())
+.then(data =>{
+    sections=data;
+}).catch(error => console.error('Error fetching section information:', error));
+}
 
 function fetchQuestions() {
     fetch('questions.json')
@@ -47,10 +56,10 @@ function displayQuestion(questionId) {
 
 function updateSectionInformation(question){
 // Fetch section information
-fetch('section_info.json')
-.then(response => response.json())
-.then(data => {
-    const section = data.sections.find(sec => sec.id === question.section_no);
+// fetch('section_info.json')
+// .then(response => response.json())
+// .then(data => {
+    const section = sections.sections.find(sec => sec.id === question.section_no);
     if (!section) {
         console.error(`Section with ID ${question.section_no} not found.`);
         return;
@@ -61,8 +70,8 @@ fetch('section_info.json')
     document.getElementById('section-title').textContent = section.title;
     document.getElementById('section-description').textContent = section.description;
 
-      })
-.catch(error => console.error('Error fetching section information:', error));
+//       })
+// .catch(error => console.error('Error fetching section information:', error));
 }
 
 function storeResponse(questionId, responseIndex) {
@@ -140,6 +149,7 @@ function updateCounter() {
     counter.textContent = `Section ${sectionNo+1} | ${currentQuestionIndexInSection}/${totalQuestionsInSection}`;
 }
 
+fetchSections();
 fetchQuestions();
 
 nextBtn.addEventListener('click', () => {
