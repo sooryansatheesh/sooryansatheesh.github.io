@@ -3,6 +3,7 @@ let currentQuestionId = 0;
 const responses = {};
 
 const questionContainer = document.getElementById('question-container');
+const counterContainer = document.getElementById('counter');
 const nextBtn = document.getElementById('next-btn');
 const submitBtn = document.getElementById('submit-btn');
 const counter = document.getElementById('counter');
@@ -81,6 +82,10 @@ function getNextQuestion() {
         const firstQuestionOfNextSection = questions.find(q => q.section_no === nextSectionNo);
         if (!firstQuestionOfNextSection) {
             nextBtn.style.display = 'none'; // Hide the next button
+            counterContainer.style.display = 'none'; // Hide the counter part
+            questionContainer.innerHTML = '';// Empty the contents of the container
+            questionContainer.textContent='Thank you for taking the survey!!'//Display thank you message after completing the survey
+            questionContainer.style.fontWeight = 'bold';//Display the text in bold
             submitBtn.style.display = 'block';//display the submit button
             console.error(`First question of the next section with section number ${nextSectionNo} not found.`);
             return;
