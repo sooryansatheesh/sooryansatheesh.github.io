@@ -25,28 +25,10 @@ function displayQuestion(questionId) {
         console.error(`Question with ID ${questionId} not found.`);
         return;
     }
+    //Updating the Section Information
+    updateSectionInformation(question);
 
-    // Fetch section information
-    fetch('section_info.json')
-        .then(response => response.json())
-        .then(data => {
-            const section = data.sections.find(sec => sec.id === question.section_no);
-            if (!section) {
-                console.error(`Section with ID ${question.section_no} not found.`);
-                return;
-            }
-
-            // Update section information in the HTML
-            document.getElementById('section-id').textContent = `Section No.: ${section.id+1}`;
-            document.getElementById('section-title').textContent = section.title;
-            document.getElementById('section-description').textContent = section.description;
-
-              })
-        .catch(error => console.error('Error fetching section information:', error));
-
-
-
-
+    
     let optionsHtml = '';
     if (Array.isArray(question.options)) {
         question.options.forEach((option, i) => {
@@ -61,6 +43,26 @@ function displayQuestion(questionId) {
         <p>${question.question}</p>
         ${optionsHtml}
     `;
+}
+
+function updateSectionInformation(question){
+// Fetch section information
+fetch('section_info.json')
+.then(response => response.json())
+.then(data => {
+    const section = data.sections.find(sec => sec.id === question.section_no);
+    if (!section) {
+        console.error(`Section with ID ${question.section_no} not found.`);
+        return;
+    }
+
+    // Update section information in the HTML
+    document.getElementById('section-id').textContent = `Section No.: ${section.id+1}`;
+    document.getElementById('section-title').textContent = section.title;
+    document.getElementById('section-description').textContent = section.description;
+
+      })
+.catch(error => console.error('Error fetching section information:', error));
 }
 
 function storeResponse(questionId, responseIndex) {
@@ -81,12 +83,7 @@ function getNextQuestion() {
         const nextSectionNo = currentQuestion.section_no + 1;
         const firstQuestionOfNextSection = questions.find(q => q.section_no === nextSectionNo);
         if (!firstQuestionOfNextSection) {
-            nextBtn.style.display = 'none'; // Hide the next button
-            counterContainer.style.display = 'none'; // Hide the counter part
-            questionContainer.innerHTML = '';// Empty the contents of the container
-            questionContainer.textContent='Thank you for taking the survey!!'//Display thank you message after completing the survey
-            questionContainer.style.fontWeight = 'bold';//Display the text in bold
-            submitBtn.style.display = 'block';//display the submit button
+            lastQuestionAction();//Actions after the last question of the survey is answered
             console.error(`First question of the next section with section number ${nextSectionNo} not found.`);
             return;
         }
@@ -98,6 +95,15 @@ function getNextQuestion() {
     updateCounter();
 
     
+}
+//Actions after the last question of the survey is answered
+function lastQuestionAction(){
+    nextBtn.style.display = 'none'; // Hide the next button
+    counterContainer.style.display = 'none'; // Hide the counter part
+    questionContainer.innerHTML = '';// Empty the contents of the container
+    questionContainer.textContent='Thank you for taking the survey!!'//Display thank you message after completing the survey
+    questionContainer.style.fontWeight = 'bold';//Display the text in bold
+    submitBtn.style.display = 'block';//display the submit button
 }
 
 function submitSurvey() {
