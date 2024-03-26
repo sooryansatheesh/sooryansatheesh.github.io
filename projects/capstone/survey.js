@@ -24,6 +24,28 @@ function displayQuestion(questionId) {
         console.error(`Question with ID ${questionId} not found.`);
         return;
     }
+
+    // Fetch section information
+    fetch('section_info.json')
+        .then(response => response.json())
+        .then(data => {
+            const section = data.sections.find(sec => sec.id === question.section_no);
+            if (!section) {
+                console.error(`Section with ID ${question.section_no} not found.`);
+                return;
+            }
+
+            // Update section information in the HTML
+            document.getElementById('section-id').textContent = `Section No.: ${section.id+1}`;
+            document.getElementById('section-title').textContent = section.title;
+            document.getElementById('section-description').textContent = section.description;
+
+              })
+        .catch(error => console.error('Error fetching section information:', error));
+
+
+
+
     let optionsHtml = '';
     if (Array.isArray(question.options)) {
         question.options.forEach((option, i) => {
@@ -86,7 +108,7 @@ function submitSurvey() {
             alert('Survey submitted successfully!');
         } else {
             const responseText = JSON.stringify(responses, null, 2); // Pretty-print responses
-            alert('Error submitting survey.\n\nResponses:\n${responseText}');
+            alert('Error submitting survey.\n\nResponses:\n'+responseText);
         }
     }).catch(error => {
         console.error('Error:', error);

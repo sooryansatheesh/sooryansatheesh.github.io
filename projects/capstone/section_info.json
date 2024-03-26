@@ -1,0 +1,25 @@
+{
+    "sections": [
+      {
+        "id": 0,
+        "title": "Service Quality",
+        "description": "Please rate the quality of service provided by our staff."
+      },
+      {
+        "id": 1,
+        "title": "Facilities Cleanliness",
+        "description": "How satisfied are you with the cleanliness of our facilities?"
+      },
+      {
+        "id": 2,
+        "title": "Website Usability",
+        "description": "Rate the ease of use and navigation of our website."
+      },
+      {
+        "id": 3,
+        "title": "Product Variety",
+        "description": "Provide feedback on the variety of products available."
+      }
+    ]
+  }
+  
