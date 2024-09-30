@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+#displayDataEntryContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#map { 
+    width: 80%;
+    height: 70vh;
+}
+
+#rightcontainer {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+#entryForm {
+    margin-bottom: 20px;
+}
+
+#entryForm input, #entryForm textarea {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 5px;
+}
+
+#journalEntries {
+    margin-top: 20px;
+    overflow-y: auto;
+    max-height: calc(70vh - 250px); /* Adjust based on your needs */
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
