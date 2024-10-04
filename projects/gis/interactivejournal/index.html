@@ -3,39 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Travel Journal</title>
+    <title>Travel Journal Landing Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-    <script src="index.js" defer></script>
+    <link rel="stylesheet" href="index/styles.css">
 </head>
 <body>
     <header>
-        <h1>My Interactive Travel Journal</h1>
+        <h1>Welcome to My Interactive Travel Journal</h1>
     </header>
 
     <main>
-        <div id="displayDataEntryContainer">
-            <div id="map"></div>
-            <div id="rightcontainer">
-                <div id="entryForm">
-                    <h3>Add New Entry:</h3>
-                    <input type="text" id="locationName" placeholder="Location Name">
-                    <input type="date" id="visitDate">
-                    <textarea id="notes" placeholder="Notes about your visit"></textarea>
-                    <button onclick="addMarker()">Add Marker</button>
-                </div>
-                <div id="journalEntries"></div>
-            </div>
-            
+        <div id="summary">
+            <h2>Travel Summary</h2>
+            <p>Total Places Visited: <span id="totalPlaces">0</span></p>
+            <p>Total Trips: <span id="totalTrips">0</span></p>
         </div>
-        
+        <div id="map"></div>
+        <a href="tripdetails.html" class="button">Add New Entry</a>
     </main>
 
     <footer>
         <p>&copy; 2024 Interactive Travel Journal. All rights reserved.</p>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="index/script.js"></script>
 </body>
 </html>
