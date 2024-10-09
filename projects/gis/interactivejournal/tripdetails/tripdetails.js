@@ -220,7 +220,7 @@ function updateJournalEntries() {
         entriesDiv.innerHTML += `
             <div class="journal-entry">
                 <p><strong>Entry ${index + 1}:</strong> ${content}</p>
-                <button onclick="deleteMarker(${marker._leaflet_id})">Delete Entry</button>
+                
             </div>
         `;
     });

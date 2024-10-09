@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Travel Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <link rel="stylesheet" href="tripdetails/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="tripdetails/tripdetails.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>My Interactive Travel Journal</h1>
+    </header>
+
+    <main>
+        <div id="displayDataEntryContainer">
+            <div id="map"></div>
+            <div id="rightcontainer">
+                <div id="entryForm">
+                    <h3>Add New Entry:</h3>
+                    <input type="text" id="locationName" placeholder="Location Name">
+                    <input type="date" id="visitDate">
+                    <textarea id="notes" placeholder="Notes about your visit"></textarea>
+                    <button onclick="addMarker()">Add Marker</button>
+                </div>
+                <div id="journalEntries"></div>
+            </div>
+            
+        </div>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Interactive Travel Journal. All rights reserved.</p>
+    </footer>
+</body>
+</html>
