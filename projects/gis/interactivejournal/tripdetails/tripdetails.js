@@ -113,6 +113,7 @@ function addMarker() {
         let normalizedLatLng = normalizeLatLng(tempMarker.getLatLng());
 
         let entry = {
+            id: Date.now(), // Generate a unique ID
             locationName: locationName,
             visitDate: visitDate,
             notes: notes,
@@ -135,9 +136,8 @@ function addMarker() {
 }
 
 function saveAndDisplayMarker(marker, entry) {
-    let normalizedLatLng = L.latLng(entry.lat, entry.lng); // Already normalized in addMarker
+    let normalizedLatLng = L.latLng(entry.lat, entry.lng);
     marker.setLatLng(normalizedLatLng);
-
     
     let popupContent = `
     <b>${entry.locationName}</b><br>
@@ -145,35 +145,62 @@ function saveAndDisplayMarker(marker, entry) {
     Notes: ${entry.notes}<br>
     Latitude: ${entry.lat.toFixed(6)}<br>
     Longitude: ${entry.lng.toFixed(6)}<br>
-    <button onclick="deleteMarker(${marker._leaflet_id})">Delete</button>
+    
     `;
 
-    marker.bindPopup(popupContent).openPopup();
-    markers.push(marker);
+    marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`).openPopup();
+    markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
     console.log('Marker saved and displayed:', entry);
     saveJournalEntries();
     updateJournalEntries();
 }
 
-function deleteMarker(markerId) {
-    let markerIndex = markers.findIndex(m => m._leaflet_id === markerId);
+function deleteMarker(entryId) {
+    console.log('Marker delete button clicked for entryId:', entryId);
+    console.log('Current markers array:', markers);
+    
+    let markerIndex = markers.findIndex(m => m.entryId == entryId);
+    console.log('Found marker index:', markerIndex);
+    
     if (markerIndex !== -1) {
-        let marker = markers[markerIndex];
-        drawnItems.removeLayer(marker);
-        map.removeLayer(marker);
+        let markerObj = markers[markerIndex];
+        console.log('Marker to be deleted:', markerObj);
+        
+        try {
+            drawnItems.removeLayer(markerObj.marker);
+            console.log('Marker removed from drawnItems');
+        } catch (e) {
+            console.error('Error removing marker from drawnItems:', e);
+        }
+        
+        try {
+            map.removeLayer(markerObj.marker);
+            console.log('Marker removed from map');
+        } catch (e) {
+            console.error('Error removing marker from map:', e);
+        }
+        
         markers.splice(markerIndex, 1);
+        console.log('Marker removed from markers array');
+        
         saveJournalEntries();
         updateJournalEntries();
-        console.log('Marker deleted:', markerId);
+        console.log('Marker deleted:', entryId);
+    } else {
+        console.log('Marker not found in the markers array. Deletion did not occur.');
+        console.log('Available marker IDs:', markers.map(m => m.entryId));
     }
 }
 
+// Updated saveJournalEntries function
 function saveJournalEntries() {
-    let entries = markers.map(marker => {
-        let popup = marker.getPopup();
-        let latLng = marker.getLatLng();
+    let entries = markers.map(markerObj => {
+        let latLng = markerObj.marker.getLatLng();
         return {
-            content: popup.getContent(),
+            id: markerObj.entryId,
+            locationName: markerObj.marker.getPopup().getContent().split('<br>')[0].replace('<b>', '').replace('</b>', ''),
+            visitDate: markerObj.marker.getPopup().getContent().split('<br>')[1].split(': ')[1],
+            notes: markerObj.marker.getPopup().getContent().split('<br>')[2].split(': ')[1],
             lat: latLng.lat,
             lng: latLng.lng
         };
@@ -182,13 +209,22 @@ function saveJournalEntries() {
     console.log('Journal entries saved to localStorage:', entries);
 }
 
+// Updated loadJournalEntries function
 function loadJournalEntries() {
     let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
     console.log('Loading journal entries:', entries);
     entries.forEach(entry => {
         let marker = L.marker([entry.lat, entry.lng]).addTo(map);
-        marker.bindPopup(entry.content);
-        markers.push(marker);
+        let popupContent = `
+        <b>${entry.locationName}</b><br>
+        Date: ${entry.visitDate}<br>
+        Notes: ${entry.notes}<br>
+        Latitude: ${entry.lat.toFixed(6)}<br>
+        Longitude: ${entry.lng.toFixed(6)}<br>
+        
+        `;
+        marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`);
+        markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
         drawnItems.addLayer(marker);
         console.log('Loaded marker:', entry);
     });
@@ -216,7 +252,7 @@ function updateJournalEntries() {
     let entriesDiv = document.getElementById('journalEntries');
     entriesDiv.innerHTML = '<h3>Your Travel Journal:</h3>';
     markers.forEach((marker, index) => {
-        let content = marker.getPopup().getContent();
+        let content = marker.marker.getPopup().getContent();
         entriesDiv.innerHTML += `
             <div class="journal-entry">
                 <p><strong>Entry ${index + 1}:</strong> ${content}</p>
@@ -227,6 +263,18 @@ function updateJournalEntries() {
     console.log('Journal entries updated in DOM. Total entries:', markers.length);
 }
 
+// Add this function to clean up any legacy entries
+function cleanLegacyEntries() {
+    let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    let updatedEntries = entries.map(entry => {
+        if (!entry.id) {
+            entry.id = Date.now() + Math.random(); // Generate a unique ID for legacy entries
+        }
+        return entry;
+    });
+    localStorage.setItem('journalEntries', JSON.stringify(updatedEntries));
+    console.log('Cleaned up legacy entries:', updatedEntries);
+}
 // Test function
 function testNormalization() {
     let testCases = [
@@ -247,4 +295,7 @@ function testNormalization() {
 }
 
 
-document.addEventListener('DOMContentLoaded', initMap);
+document.addEventListener('DOMContentLoaded', function() {
+    cleanLegacyEntries();
+    initMap();
+});
