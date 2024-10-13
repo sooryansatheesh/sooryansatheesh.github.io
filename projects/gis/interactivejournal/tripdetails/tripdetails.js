@@ -2,8 +2,13 @@ let map, drawnItems;
 let markers = [];
 let routes = [];
 let tempMarker = null;
+let currentTripId = null;
 
 function initMap() {
+    // Get the trip ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    currentTripId = urlParams.get('tripId');
+    console.log("Current Trip ID:", currentTripId);
     map = L.map('map', {
         center: [0, 0],
         zoom: 2,
@@ -114,6 +119,7 @@ function addMarker() {
 
         let entry = {
             id: Date.now(), // Generate a unique ID
+            tripId: currentTripId,
             locationName: locationName,
             visitDate: visitDate,
             notes: notes,
@@ -194,10 +200,17 @@ function deleteMarker(entryId) {
 
 // Updated saveJournalEntries function
 function saveJournalEntries() {
-    let entries = markers.map(markerObj => {
+    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    
+    // Remove entries for the current trip
+    allEntries = allEntries.filter(entry => entry.tripId !== currentTripId);
+    
+    // Add current markers to allEntries
+    let currentEntries = markers.map(markerObj => {
         let latLng = markerObj.marker.getLatLng();
         return {
             id: markerObj.entryId,
+            tripId: currentTripId,
             locationName: markerObj.marker.getPopup().getContent().split('<br>')[0].replace('<b>', '').replace('</b>', ''),
             visitDate: markerObj.marker.getPopup().getContent().split('<br>')[1].split(': ')[1],
             notes: markerObj.marker.getPopup().getContent().split('<br>')[2].split(': ')[1],
@@ -205,14 +218,29 @@ function saveJournalEntries() {
             lng: latLng.lng
         };
     });
-    localStorage.setItem('journalEntries', JSON.stringify(entries));
-    console.log('Journal entries saved to localStorage:', entries);
+    
+    allEntries = allEntries.concat(currentEntries);
+    
+    localStorage.setItem('journalEntries', JSON.stringify(allEntries));
+    console.log('Journal entries saved to localStorage:', allEntries);
 }
 
 // Updated loadJournalEntries function
+// Update the loadJournalEntries function
 function loadJournalEntries() {
-    let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-    console.log('Loading journal entries:', entries);
+    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    console.log('All journal entries:', allEntries);
+    
+    let entries = allEntries.filter(entry => entry.tripId === currentTripId);
+    console.log('Loading journal entries for current trip:', entries);
+    
+    // Clear existing markers
+    markers.forEach(markerObj => {
+        map.removeLayer(markerObj.marker);
+        drawnItems.removeLayer(markerObj.marker);
+    });
+    markers = [];
+
     entries.forEach(entry => {
         let marker = L.marker([entry.lat, entry.lng]).addTo(map);
         let popupContent = `
@@ -221,7 +249,6 @@ function loadJournalEntries() {
         Notes: ${entry.notes}<br>
         Latitude: ${entry.lat.toFixed(6)}<br>
         Longitude: ${entry.lng.toFixed(6)}<br>
-        
         `;
         marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`);
         markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
@@ -296,6 +323,6 @@ function testNormalization() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    cleanLegacyEntries();
+    // cleanLegacyEntries();
     initMap();
 });

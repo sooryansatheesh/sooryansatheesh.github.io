@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Management</title>
+    <link rel="stylesheet" href="trip-management/styles.css">
+    <script src="trip-management/trip-management.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Trip Management</h1>
+    </header>
+
+    <main>
+        <section id="newTripForm">
+            <h2>Create New Trip</h2>
+            <form id="tripForm">
+                <input type="text" id="tripName" placeholder="Trip Name" required>
+                <input type="date" id="startDate" required>
+                <input type="date" id="endDate" required>
+                <button type="submit" id="submitButton">Create/Update Trip</button>
+            </form>
+        </section>
+
+        <section id="tripList">
+            <h2>Your Trips</h2>
+            <ul id="savedTrips"></ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Interactive Travel Journal. All rights reserved.</p>
+    </footer>
+</body>
+</html>
