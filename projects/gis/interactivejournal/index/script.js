@@ -25,17 +25,22 @@ function loadJournalEntries() {
     let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
     entries.forEach(entry => {
         let marker = L.marker([entry.lat, entry.lng]).addTo(map);
-        marker.bindPopup(entry.content);
+        let popupContent = `
+            <b>${entry.locationName}</b><br>
+            Date: ${entry.visitDate}<br>
+            Notes: ${entry.notes}
+        `;
+        marker.bindPopup(popupContent);
         markers.push(marker);
     });
 }
 
 function updateSummary() {
     let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-    let routes = JSON.parse(localStorage.getItem('routes') || '[]');
+    let trips = JSON.parse(localStorage.getItem('trips') || '[]');
 
     document.getElementById('totalPlaces').textContent = entries.length;
-    document.getElementById('totalTrips').textContent = routes.length;
+    document.getElementById('totalTrips').textContent = trips.length;
 }
 
 document.addEventListener('DOMContentLoaded', initMap);
