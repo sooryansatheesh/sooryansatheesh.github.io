@@ -109,9 +109,18 @@ function addNewPlace(tripId) {
 // Function to delete a trip
 function deleteTrip(tripId) {
     console.log("Deleting trip:", tripId);
+    
+    // Delete the trip
     let trips = JSON.parse(localStorage.getItem('trips') || '[]');
     trips = trips.filter(trip => trip.id !== tripId);
     localStorage.setItem('trips', JSON.stringify(trips));
+    
+    // Delete associated journal entries
+    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    allEntries = allEntries.filter(entry => entry.tripId !== tripId);
+    localStorage.setItem('journalEntries', JSON.stringify(allEntries));
+    
+    console.log("Trip and associated entries deleted");
     displayTrips();
 }
 
