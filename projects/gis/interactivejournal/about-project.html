@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Journal Landing Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/about.css">
     <link rel="stylesheet" href="css/shared.css">
-
 </head>
 <body>
     <header>
@@ -23,16 +22,14 @@
         </nav>
     </header>
 
-    <main class="main-container">
-        <div id="map"></div>
-        <div class="sidebar">
-            <div id="summary">
-                <h2>Travel Summary</h2>
-                <p>Total Places Visited: <span id="totalPlaces">0</span></p>
-                <p>Total Trips: <span id="totalTrips">0</span></p>
-            </div>
-            <a href="trip-management.html" class="button">Add new entry</a>
+    <main>
+        <div id="summary">
+            <h2>Travel Summary</h2>
+            <p>Total Places Visited: <span id="totalPlaces">0</span></p>
+            <p>Total Trips: <span id="totalTrips">0</span></p>
         </div>
+        <div id="map"></div>
+        <a href="trip-management.html" class="button">Add new entry</a>
     </main>
 
     <footer>
@@ -40,6 +37,6 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="js/index.js"></script>
+    <script src="index/script.js"></script>
 </body>
 </html>
