@@ -3,6 +3,8 @@ let markers = [];
 let routes = [];
 let tempMarker = null;
 let currentTripId = null;
+let tripPath; // Global variable to store the path
+
 
 function initMap() {
     // Get the trip ID from the URL
@@ -77,11 +79,25 @@ function initMap() {
         
     });
 
-    
+        // Add this inside the initMap() function, after creating the map
+    let geocoder = L.Control.geocoder({
+        defaultMarkGeocode: false
+    }).addTo(map);
+
+    geocoder.on('markgeocode', function(e) {
+        let bbox = e.geocode.bbox;
+        let poly = L.polygon([
+            bbox.getSouthEast(),
+            bbox.getNorthEast(),
+            bbox.getNorthWest(),
+            bbox.getSouthWest()
+        ]).addTo(map);
+        map.fitBounds(poly.getBounds());
+    });
 
     loadJournalEntries();
     loadRoutes();
-
+    loadAndDisplayTripName();
     // Add event listener for form submission
     document.getElementById('entryForm').addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent form from submitting normally
@@ -108,20 +124,25 @@ function showEntryForm() {
 }
 
 function addMarker() {
-     
-           
     let locationName = document.getElementById('locationName').value;
-    let visitDate = document.getElementById('visitDate').value;
+    let arrivalDate = document.getElementById('arrivalDate').value;
+    let departureDate = document.getElementById('departureDate').value;
     let notes = document.getElementById('notes').value;
 
-    if (locationName && visitDate && tempMarker) {
+    if (locationName && arrivalDate && departureDate && tempMarker) {
         let normalizedLatLng = normalizeLatLng(tempMarker.getLatLng());
 
+        if (isDateConflict(arrivalDate, departureDate)) {
+            alert("Date conflict detected. Please choose different dates.");
+            return;
+        }
+
         let entry = {
-            id: Date.now(), // Generate a unique ID
+            id: Date.now(),
             tripId: currentTripId,
             locationName: locationName,
-            visitDate: visitDate,
+            arrivalDate: arrivalDate,
+            departureDate: departureDate,
             notes: notes,
             lat: normalizedLatLng.lat,
             lng: normalizedLatLng.lng
@@ -130,15 +151,39 @@ function addMarker() {
         console.log('New entry created:', entry);
 
         saveAndDisplayMarker(tempMarker, entry);
-        drawnItems.addLayer(tempMarker); // Add the marker to drawnItems
-        tempMarker=null;
+        drawnItems.addLayer(tempMarker);
+        tempMarker = null;
         document.getElementById('entryForm').style.display = 'none';
         document.getElementById('locationName').value = '';
-        document.getElementById('visitDate').value = '';
+        document.getElementById('arrivalDate').value = '';
+        document.getElementById('departureDate').value = '';
         document.getElementById('notes').value = '';
     } else {
-        alert("Please enter a location name, visit date, and click on the map to place a marker.");
+        alert("Please enter a location name, arrival date, departure date, and click on the map to place a marker.");
     }
+}
+
+function isDateConflict(newArrival, newDeparture) {
+    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    let tripEntries = allEntries.filter(entry => entry.tripId === currentTripId);
+
+    newArrival = new Date(newArrival);
+    newDeparture = new Date(newDeparture);
+
+    for (let entry of tripEntries) {
+        let entryArrival = new Date(entry.arrivalDate);
+        let entryDeparture = new Date(entry.departureDate);
+
+        if (
+            (newArrival >= entryArrival && newArrival < entryDeparture) ||
+            (newDeparture > entryArrival && newDeparture <= entryDeparture) ||
+            (newArrival <= entryArrival && newDeparture >= entryDeparture)
+        ) {
+            return true; // Conflict found
+        }
+    }
+
+    return false; // No conflict
 }
 
 function saveAndDisplayMarker(marker, entry) {
@@ -147,11 +192,11 @@ function saveAndDisplayMarker(marker, entry) {
     
     let popupContent = `
     <b>${entry.locationName}</b><br>
-    Date: ${entry.visitDate}<br>
+    Arrival: ${entry.arrivalDate}<br>
+    Departure: ${entry.departureDate}<br>
     Notes: ${entry.notes}<br>
     Latitude: ${entry.lat.toFixed(6)}<br>
     Longitude: ${entry.lng.toFixed(6)}<br>
-    
     `;
 
     marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`).openPopup();
@@ -208,12 +253,14 @@ function saveJournalEntries() {
     // Add current markers to allEntries
     let currentEntries = markers.map(markerObj => {
         let latLng = markerObj.marker.getLatLng();
+        let popupContent = markerObj.marker.getPopup().getContent().split('<br>');
         return {
             id: markerObj.entryId,
             tripId: currentTripId,
-            locationName: markerObj.marker.getPopup().getContent().split('<br>')[0].replace('<b>', '').replace('</b>', ''),
-            visitDate: markerObj.marker.getPopup().getContent().split('<br>')[1].split(': ')[1],
-            notes: markerObj.marker.getPopup().getContent().split('<br>')[2].split(': ')[1],
+            locationName: popupContent[0].replace('<b>', '').replace('</b>', ''),
+            arrivalDate: popupContent[1].split(': ')[1],
+            departureDate: popupContent[2].split(': ')[1],
+            notes: popupContent[3].split(': ')[1],
             lat: latLng.lat,
             lng: latLng.lng
         };
@@ -225,8 +272,8 @@ function saveJournalEntries() {
     console.log('Journal entries saved to localStorage:', allEntries);
 }
 
+
 // Updated loadJournalEntries function
-// Update the loadJournalEntries function
 function loadJournalEntries() {
     let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
     console.log('All journal entries:', allEntries);
@@ -245,7 +292,8 @@ function loadJournalEntries() {
         let marker = L.marker([entry.lat, entry.lng]).addTo(map);
         let popupContent = `
         <b>${entry.locationName}</b><br>
-        Date: ${entry.visitDate}<br>
+        Arrival: ${entry.arrivalDate}<br>
+        Departure: ${entry.departureDate}<br>
         Notes: ${entry.notes}<br>
         Latitude: ${entry.lat.toFixed(6)}<br>
         Longitude: ${entry.lng.toFixed(6)}<br>
@@ -256,8 +304,50 @@ function loadJournalEntries() {
         console.log('Loaded marker:', entry);
     });
     updateJournalEntries();
+    drawTripPath();
 }
 
+function drawTripPath() {
+    // Check if currentTripId is null or undefined
+    if (!currentTripId) {
+        console.log('No trip ID available. Cannot draw path.');
+        return; // Exit the function if there's no current trip ID
+    }
+
+    // Remove existing path if any
+    if (tripPath) {
+        map.removeLayer(tripPath);
+    }
+
+    // Get all entries for the current trip
+    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    let tripEntries = allEntries.filter(entry => entry.tripId === currentTripId);
+
+    // Check if there are any entries for this trip
+    if (tripEntries.length === 0) {
+        console.log('No entries found for the current trip. Cannot draw path.');
+        return; // Exit the function if there are no entries
+    }
+
+    // Sort entries by arrival date
+    tripEntries.sort((a, b) => new Date(a.arrivalDate) - new Date(b.arrivalDate));
+
+    // Create an array of LatLng objects
+    let pathPoints = tripEntries.map(entry => L.latLng(entry.lat, entry.lng));
+
+    // Create a polyline with the points
+    tripPath = L.polyline(pathPoints, {
+        color: 'red',
+        weight: 3,
+        opacity: 0.7,
+        smoothFactor: 1
+    }).addTo(map);
+
+    // Fit the map bounds to show the entire path
+    if (pathPoints.length > 0) {
+        map.fitBounds(tripPath.getBounds());
+    }
+}
 function saveRoutes() {
     let routeData = routes.map(route => route.getLatLngs());
     localStorage.setItem('routes', JSON.stringify(routeData));
@@ -287,6 +377,8 @@ function updateJournalEntries() {
             </div>
         `;
     });
+    loadAndDisplayTripName();
+    drawTripPath();
     console.log('Journal entries updated in DOM. Total entries:', markers.length);
 }
 
@@ -320,8 +412,96 @@ function testNormalization() {
         console.log("------------------------");
     });
 }
+// Function to calculate distance between two points 
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 3959; // Radius of the Earth in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = R * c; // Distance in miles
+    return distance;
+}
 
+// Function to Calculate total distance
+function calculateTotalDistance(entries) {
+    let totalDistance = 0;
+    for (let i = 1; i < entries.length; i++) {
+        let prevEntry = entries[i - 1];
+        let currentEntry = entries[i];
+        totalDistance += calculateDistance(
+            prevEntry.lat, prevEntry.lng,
+            currentEntry.lat, currentEntry.lng
+        );
+    }
+    return Math.round(totalDistance); // Round to nearest mile
+}
 
+// Calculate Trip Duration
+function calculateTripDuration(entries) {
+    if (entries.length === 0) return 0;
+    
+    let sortedEntries = entries.sort((a, b) => new Date(a.arrivalDate) - new Date(b.arrivalDate));
+    
+    let firstDate = new Date(sortedEntries[0].arrivalDate);
+    let lastDate = new Date(sortedEntries[sortedEntries.length - 1].departureDate);
+    
+    let diffTime = Math.abs(lastDate - firstDate);
+    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    
+    return diffDays + 1;
+}
+// Trip Details display code
+function loadAndDisplayTripName() {
+    if (currentTripId) {
+        // Retrieve all trips from localStorage
+        let trips = JSON.parse(localStorage.getItem('trips') || '[]');
+        
+        // Find the trip with the matching ID
+        let currentTrip = trips.find(trip => trip.id == currentTripId);
+        
+        if (currentTrip) {
+            // Get all journal entries
+            let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+            
+            // Filter entries for the current trip
+            let tripEntries = allEntries.filter(entry => entry.tripId === currentTripId);
+            
+            // Sort entries by arrival date
+            tripEntries.sort((a, b) => new Date(a.arrivalDate) - new Date(b.arrivalDate));
+            
+            // Calculate number of places visited
+            let placesVisited = tripEntries.length;
+            
+            // Calculate trip duration
+            let tripDuration = calculateTripDuration(tripEntries);
+            
+            // Calculate total distance traveled
+            let distanceTraveled = calculateTotalDistance(tripEntries);
+            
+            // Display the trip information
+            let tripNameElement = document.getElementById('tripDetailsDisplay');
+            tripNameElement.innerHTML = `
+                <h2>Trip: ${currentTrip.name}</h2>
+                <p>Places visited: ${placesVisited}</p>
+                <p>Trip duration: ${tripDuration} days</p>
+                <p>Total distance traveled: ${distanceTraveled} miles</p>
+            `;
+            
+            // Show the entry form
+            document.getElementById('entryForm').style.display = 'block';
+        } else {
+            console.error('Trip not found');
+            // Optionally, display an error message to the user
+        }
+    } else {
+        console.error('No trip ID provided');
+        // Optionally, redirect to the trip selection page or display an error message
+    }
+}
 document.addEventListener('DOMContentLoaded', function() {
     // cleanLegacyEntries();
     initMap();

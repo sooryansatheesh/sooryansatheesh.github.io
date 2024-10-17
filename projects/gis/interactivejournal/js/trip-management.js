@@ -12,10 +12,10 @@ function saveOrUpdateTrip(event) {
     console.log("saveOrUpdateTrip function called");
 
     const tripName = document.getElementById('tripName').value;
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
+    const tripNotes = document.getElementById('tripNotes').value;
+    
 
-    console.log("Trip details:", { tripName, startDate, endDate });
+    console.log("Trip details:", { tripName, tripNotes });
 
     let trips = [];
     try {
@@ -32,8 +32,7 @@ function saveOrUpdateTrip(event) {
             trips[tripIndex] = {
                 ...trips[tripIndex],
                 name: tripName,
-                startDate: startDate,
-                endDate: endDate
+                tripNotes: tripNotes
             };
             console.log("Updated trip:", trips[tripIndex]);
         }
@@ -42,8 +41,7 @@ function saveOrUpdateTrip(event) {
         const newTrip = {
             id: generateUniqueId(),
             name: tripName,
-            startDate: startDate,
-            endDate: endDate
+            tripNotes: tripNotes
         };
         trips.push(newTrip);
         console.log("New trip created:", newTrip);
@@ -90,7 +88,7 @@ function displayTrips() {
     trips.forEach(trip => {
         const li = document.createElement('li');
         li.innerHTML = `
-            ${trip.name} (${trip.startDate} to ${trip.endDate})
+            ${trip.name}
             <button onclick="addNewPlace('${trip.id}')">Add New Place</button>
             <button onclick="deleteTrip('${trip.id}')">Delete Trip</button>
             <button onclick="editTrip('${trip.id}')">Edit Trip</button>
@@ -132,8 +130,7 @@ function editTrip(tripId) {
     
     if (trip) {
         document.getElementById('tripName').value = trip.name;
-        document.getElementById('startDate').value = trip.startDate;
-        document.getElementById('endDate').value = trip.endDate;
+        document.getElementById('tripNotes').value = trip.tripNotes;
         editingTripId = tripId; // Set the editing state
         document.getElementById('submitButton').textContent = 'Update Trip';
     }
