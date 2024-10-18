@@ -121,14 +121,46 @@ function normalizeLatLng(latlng) {
 
 function showEntryForm() {
     document.getElementById('entryForm').style.display = 'block';
+    //we first check if there are any existing startpoints or end points in the list of points
+    const arrivalDateField = document.getElementById('arrivalDate');
+    const departureDateField = document.getElementById('departureDate');
+    const startPointCheckbox = document.getElementById('isStartPoint');
+    const endPointCheckbox = document.getElementById('isEndPoint');
+    const existingStartPoint = getExistingStartPoint();
+    const existingEndPoint = getExistingEndPoint();
+
+    // Disable start point checkbox if one already exists
+    if (existingStartPoint) {
+        startPointCheckbox.disabled = true;
+        startPointCheckbox.checked = false;
+    } else {
+        startPointCheckbox.disabled = false;
+    }
+
+    // Disable end point checkbox if one already exists
+    if (existingEndPoint) {
+        endPointCheckbox.disabled = true;
+        endPointCheckbox.checked = false;
+    } else {
+        endPointCheckbox.disabled = false;
+    }
+
+    // If this is the first entry, set it as the start point by default
+    if (markers.length === 0) {
+        startPointCheckbox.checked = true;
+        endPointCheckbox.disabled = true;
+    }
+
+    // Update the date fields based on the current state
+    updateDateFields();
 }
 
-function hasStartPoint() {
+function getExistingStartPoint() {
     let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
     return allEntries.some(entry => entry.tripId === currentTripId && entry.isStartPoint);
 }
 
-function hasEndPoint() {
+function getExistingEndPoint() {
     let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
     return allEntries.some(entry => entry.tripId === currentTripId && entry.isEndPoint);
 }
@@ -146,7 +178,7 @@ function addMarker() {
             let normalizedLatLng = normalizeLatLng(tempMarker.getLatLng());
 
             // Check if trying to add a start or end point when one already exists
-            if ((isStartPoint && hasStartPoint()) || (isEndPoint && hasEndPoint())) {
+            if ((isStartPoint && getExistingStartPoint()) || (isEndPoint && getExistingEndPoint())) {
                 alert("A " + (isStartPoint ? "starting" : "ending") + " point already exists for this trip.");
                 return;
             }
@@ -229,7 +261,7 @@ function saveAndDisplayMarker(marker, entry) {
     `;
 
     marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`).openPopup();
-    markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
+    markers.push({ leafletId: marker._leaflet_id,isStartPoint:entry.isStartPoint,isEndPoint:entry.isEndPoint, entryId: entry.id, marker: marker });
     console.log('Marker saved and displayed:', entry);
     saveJournalEntries();
     updateJournalEntries();
@@ -244,7 +276,7 @@ function updateDateFields() {
     const endPointCheckbox = document.getElementById('isEndPoint');
 
     // Disable start point checkbox if one already exists
-    if (hasStartPoint() && !isStartPoint) {
+    if (getExistingStartPoint() && !isStartPoint) {
         startPointCheckbox.disabled = true;
         startPointCheckbox.checked = false;
     } else {
@@ -252,7 +284,7 @@ function updateDateFields() {
     }
 
     // Disable end point checkbox if one already exists
-    if (hasEndPoint() && !isEndPoint) {
+    if (getExistingEndPoint() && !isEndPoint) {
         endPointCheckbox.disabled = true;
         endPointCheckbox.checked = false;
     } else {
@@ -335,7 +367,9 @@ function saveJournalEntries() {
             departureDate: popupContent[2].split(': ')[1],
             notes: popupContent[3].split(': ')[1],
             lat: latLng.lat,
-            lng: latLng.lng
+            lng: latLng.lng,
+            isStartPoint: markerObj.isStartPoint,
+            isEndPoint: markerObj.isEndPoint
         };
     });
     
@@ -372,7 +406,8 @@ function loadJournalEntries() {
         Longitude: ${entry.lng.toFixed(6)}<br>
         `;
         marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`);
-        markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
+        markers.push({ leafletId: marker._leaflet_id,isStartPoint:entry.isStartPoint,isEndPoint:entry.isEndPoint, entryId: entry.id, marker: marker });
+
         drawnItems.addLayer(marker);
         console.log('Loaded marker:', entry);
     });
