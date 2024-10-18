@@ -123,44 +123,73 @@ function showEntryForm() {
     document.getElementById('entryForm').style.display = 'block';
 }
 
+function hasStartPoint() {
+    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    return allEntries.some(entry => entry.tripId === currentTripId && entry.isStartPoint);
+}
+
+function hasEndPoint() {
+    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    return allEntries.some(entry => entry.tripId === currentTripId && entry.isEndPoint);
+}
+
 function addMarker() {
     let locationName = document.getElementById('locationName').value;
     let arrivalDate = document.getElementById('arrivalDate').value;
     let departureDate = document.getElementById('departureDate').value;
     let notes = document.getElementById('notes').value;
+    let isStartPoint = document.getElementById('isStartPoint').checked;
+    let isEndPoint = document.getElementById('isEndPoint').checked;
 
-    if (locationName && arrivalDate && departureDate && tempMarker) {
-        let normalizedLatLng = normalizeLatLng(tempMarker.getLatLng());
+    if (locationName && tempMarker) {
+        if ((isStartPoint || arrivalDate) && (isEndPoint || departureDate)) {
+            let normalizedLatLng = normalizeLatLng(tempMarker.getLatLng());
 
-        if (isDateConflict(arrivalDate, departureDate)) {
-            alert("Date conflict detected. Please choose different dates.");
-            return;
+            // Check if trying to add a start or end point when one already exists
+            if ((isStartPoint && hasStartPoint()) || (isEndPoint && hasEndPoint())) {
+                alert("A " + (isStartPoint ? "starting" : "ending") + " point already exists for this trip.");
+                return;
+            }
+
+            if (!isDateConflict(isStartPoint ? null : arrivalDate, isEndPoint ? null : departureDate)) {
+                let entry = {
+                    id: Date.now(),
+                    tripId: currentTripId,
+                    locationName: locationName,
+                    arrivalDate: isStartPoint ? null : arrivalDate,
+                    departureDate: isEndPoint ? null : departureDate,
+                    notes: notes,
+                    lat: normalizedLatLng.lat,
+                    lng: normalizedLatLng.lng,
+                    isStartPoint: isStartPoint,
+                    isEndPoint: isEndPoint
+                };
+                
+                console.log('New entry created:', entry);
+
+                saveAndDisplayMarker(tempMarker, entry);
+                drawnItems.addLayer(tempMarker);
+                tempMarker = null;
+                document.getElementById('entryForm').style.display = 'none';
+                resetForm();
+            } else {
+                alert("Date conflict detected. Please choose different dates.");
+            }
+        } else {
+            alert("Please enter both arrival and departure dates, or mark as start/end point.");
         }
-
-        let entry = {
-            id: Date.now(),
-            tripId: currentTripId,
-            locationName: locationName,
-            arrivalDate: arrivalDate,
-            departureDate: departureDate,
-            notes: notes,
-            lat: normalizedLatLng.lat,
-            lng: normalizedLatLng.lng
-        };
-        
-        console.log('New entry created:', entry);
-
-        saveAndDisplayMarker(tempMarker, entry);
-        drawnItems.addLayer(tempMarker);
-        tempMarker = null;
-        document.getElementById('entryForm').style.display = 'none';
-        document.getElementById('locationName').value = '';
-        document.getElementById('arrivalDate').value = '';
-        document.getElementById('departureDate').value = '';
-        document.getElementById('notes').value = '';
     } else {
-        alert("Please enter a location name, arrival date, departure date, and click on the map to place a marker.");
+        alert("Please enter a location name and click on the map to place a marker.");
     }
+}
+function resetForm() {
+    document.getElementById('locationName').value = '';
+    document.getElementById('arrivalDate').value = '';
+    document.getElementById('departureDate').value = '';
+    document.getElementById('notes').value = '';
+    document.getElementById('isStartPoint').checked = false;
+    document.getElementById('isEndPoint').checked = false;
+    updateDateFields();
 }
 
 function isDateConflict(newArrival, newDeparture) {
@@ -206,6 +235,47 @@ function saveAndDisplayMarker(marker, entry) {
     updateJournalEntries();
 }
 
+function updateDateFields() {
+    const isStartPoint = document.getElementById('isStartPoint').checked;
+    const isEndPoint = document.getElementById('isEndPoint').checked;
+    const arrivalDateField = document.getElementById('arrivalDate');
+    const departureDateField = document.getElementById('departureDate');
+    const startPointCheckbox = document.getElementById('isStartPoint');
+    const endPointCheckbox = document.getElementById('isEndPoint');
+
+    // Disable start point checkbox if one already exists
+    if (hasStartPoint() && !isStartPoint) {
+        startPointCheckbox.disabled = true;
+        startPointCheckbox.checked = false;
+    } else {
+        startPointCheckbox.disabled = false;
+    }
+
+    // Disable end point checkbox if one already exists
+    if (hasEndPoint() && !isEndPoint) {
+        endPointCheckbox.disabled = true;
+        endPointCheckbox.checked = false;
+    } else {
+        endPointCheckbox.disabled = false;
+    }
+
+    // Disable the other checkbox when one is checked
+    if (isStartPoint) {
+        endPointCheckbox.disabled = true;
+        endPointCheckbox.checked = false;
+        arrivalDateField.disabled = true;
+        arrivalDateField.value = '';
+    } else if (isEndPoint) {
+        startPointCheckbox.disabled = true;
+        startPointCheckbox.checked = false;
+        departureDateField.disabled = true;
+        departureDateField.value = '';
+    } else {
+        arrivalDateField.disabled = false;
+        departureDateField.disabled = false;
+    }
+}
+
 function deleteMarker(entryId) {
     console.log('Marker delete button clicked for entryId:', entryId);
     console.log('Current markers array:', markers);
@@ -233,7 +303,10 @@ function deleteMarker(entryId) {
         
         markers.splice(markerIndex, 1);
         console.log('Marker removed from markers array');
-        
+        // If the deleted marker was a start or end point, update the UI
+        if (markerObj.marker.options.isStartPoint || markerObj.marker.options.isEndPoint) {
+            updateDateFields();
+        }
         saveJournalEntries();
         updateJournalEntries();
         console.log('Marker deleted:', entryId);
@@ -305,6 +378,7 @@ function loadJournalEntries() {
     });
     updateJournalEntries();
     drawTripPath();
+    updateDateFields(); // Add this line to update UI based on loaded entries
 }
 
 function drawTripPath() {
@@ -505,4 +579,12 @@ function loadAndDisplayTripName() {
 document.addEventListener('DOMContentLoaded', function() {
     // cleanLegacyEntries();
     initMap();
+    document.getElementById('isStartPoint').addEventListener('change', updateDateFields);
+    document.getElementById('isEndPoint').addEventListener('change', updateDateFields);
+    
+    // Set the first entry as the starting point by default if no entries exist
+    if (markers.length === 0) {
+        document.getElementById('isStartPoint').checked = true;
+        updateDateFields();
+    }
 });
