@@ -65,12 +65,14 @@ main {
 }
 
 #entryForm {
+    display:flex;
+    flex-direction: row;
     margin-bottom: 20px;
 }
 
 #entryForm input, #entryForm textarea {
     margin-bottom: 10px;
-    width: 100%;
+    width: auto;
     padding: 5px;
 }
 
@@ -87,3 +89,41 @@ main {
     padding: 1rem;
     margin-top: auto;
 } */
+
+
+/* Search Box CSS Code Starts */
+.leaflet-control-geocoder {
+    border: 2px solid rgba(0,0,0,0.2);
+    background-clip: padding-box;
+}
+
+.leaflet-control-geocoder-form input {
+    font-size: 16px;
+    padding: 5px;
+    width: 200px;
+}
+
+/* Search Box CSS Code Ends */
+
+/* Trip Details Display */
+#tripDetailsDisplay {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+#tripDetailsDisplay h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2em;
+}
+
+#tripDetailsDisplay p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Trip Details Display end */

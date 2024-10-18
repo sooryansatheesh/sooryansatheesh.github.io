@@ -11,6 +11,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="js/tripdetails.js" defer></script>
 </head>
 <body>
@@ -31,11 +33,20 @@
         <div id="displayDataEntryContainer">
             <div id="map"></div>
             <div id="rightcontainer">
+                <div id="tripDetailsDisplay"></div>
                 <div id="entryForm">
                     <h3>Add New Entry:</h3>
-                    <input type="text" id="locationName" placeholder="Location Name">
-                    <input type="date" id="visitDate">
-                    <textarea id="notes" placeholder="Notes about your visit"></textarea>
+                    <div>Location Name:<input type="text" id="locationName" placeholder="Location Name"></div>
+                    <div>
+                        <input type="checkbox" id="isStartPoint"> Journey Start Point
+                    </div>
+                    <div>
+                        <input type="checkbox" id="isEndPoint"> Journey End Point
+                    </div>
+                    <br>
+                    <div>Arrival Date:<input type="date" id="arrivalDate" placeholder="Arrival Date"></div>
+                    <div>Departure Date:<input type="date" id="departureDate" placeholder="Departure Date"></div>
+                    <div>Notes:<textarea id="notes" placeholder="Notes about your visit"></textarea></div>
                     <button onclick="addMarker()">Add Marker</button>
                 </div>
                 <div id="journalEntries"></div>
