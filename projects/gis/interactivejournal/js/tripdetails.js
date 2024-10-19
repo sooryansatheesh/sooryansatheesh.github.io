@@ -595,7 +595,41 @@ function loadAndDisplayTripName() {
         // Optionally, redirect to the trip selection page or display an error message
     }
 }
+
+function showInstructions() {
+    const instructions = `
+        <ul>
+            <li><strong>Starting Point:</strong> When entering the starting point of your journey, set the arrival and departure dates to be the same (the day you start your trip).</li>
+            <li><strong>End Point:</strong> For the final destination of your trip, set the arrival and departure dates to be the same (the day your trip ends).</li>
+            <li><strong>Intermediate Stops:</strong> For all other stops, enter the actual arrival and departure dates.</li>
+            <li><strong>Date Order:</strong> Ensure that the departure date is never before the arrival date for any stop.</li>
+            <li><strong>Avoid Overlaps:</strong> Make sure the dates for different stops don't overlap.</li>
+            <li><strong>Chronological Order:</strong> Try to enter your stops in chronological order for the best experience.</li>
+            <li><strong>Marker Placement:</strong> Click on the map to place a marker before filling in the details.</li>
+            <li><strong>Saving Entries:</strong> Fill in all required fields (location name, arrival date, departure date) before saving.</li>
+        </ul>
+        <p>Enjoy planning/recording your trip!</p>
+    `;
+
+    document.getElementById('instructionsText').innerHTML = instructions;
+    document.getElementById('instructionsModal').style.display = 'block';
+
+    // Close the modal when clicking on <span> (x)
+    document.querySelector('.close').onclick = function() {
+        document.getElementById('instructionsModal').style.display = 'none';
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('instructionsModal')) {
+            document.getElementById('instructionsModal').style.display = 'none';
+        }
+    }
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // cleanLegacyEntries();
     initMap();
+    showInstructions();
     });
