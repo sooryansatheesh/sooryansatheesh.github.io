@@ -468,15 +468,32 @@ function loadRoutes() {
 function updateJournalEntries() {
     let entriesDiv = document.getElementById('journalEntries');
     entriesDiv.innerHTML = '<h3>Your Travel Journal:</h3>';
-    markers.forEach((marker, index) => {
+    
+    // Sort markers based on departure date
+    let sortedMarkers = markers.slice().sort((a, b) => {
+        let dateA = new Date(a.marker.getPopup().getContent().split('<br>')[2].split(': ')[1]);
+        let dateB = new Date(b.marker.getPopup().getContent().split('<br>')[2].split(': ')[1]);
+        return dateA - dateB;
+    });
+
+    sortedMarkers.forEach((marker, index) => {
         let content = marker.marker.getPopup().getContent();
+        let locationName = content.split('<br>')[0].replace('<b>', '').replace('</b>', '');
+        let arrivalDate = content.split('<br>')[1].split(': ')[1];
+        let departureDate = content.split('<br>')[2].split(': ')[1];
+        let notes = content.split('<br>')[3].split(': ')[1];
+
         entriesDiv.innerHTML += `
             <div class="journal-entry">
-                <p><strong>Entry ${index + 1}:</strong> ${content}</p>
-                
+                <p><strong>Stop ${index + 1}: ${locationName}</strong></p>
+                <p>Arrival: ${arrivalDate}</p>
+                <p>Departure: ${departureDate}</p>
+                <p>Notes: ${notes}</p>
+                <button onclick="deleteMarker(${marker.entryId})">Delete</button>
             </div>
         `;
     });
+    
     loadAndDisplayTripName();
     updateMarkerColors();
     drawTripPath();
