@@ -41,20 +41,19 @@
             <div id="map"></div>
             <div id="rightcontainer">
                 <div id="tripDetailsDisplay"></div>
-                <div id="entryForm">
-                    <h3>Add New Entry:</h3>
-                    <div>Location Name:<input type="text" id="locationName" placeholder="Location Name"></div>
-                    <!-- <div>
-                        <input type="checkbox" id="isStartPoint"> Journey Start Point
+                <div id="entryFormModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div id="entryForm">
+                            <h3>Add New Entry:</h3>
+                            <div>Location Name:<input type="text" id="locationName" placeholder="Location Name"></div>
+                            <br>
+                            <div>Arrival Date:<input type="date" id="arrivalDate" placeholder="Arrival Date"></div>
+                            <div>Departure Date:<input type="date" id="departureDate" placeholder="Departure Date"></div>
+                            <div>Notes:<textarea id="notes" placeholder="Notes about your visit"></textarea></div>
+                            <button onclick="addMarker()">Add Marker</button>
+                        </div>
                     </div>
-                    <div>
-                        <input type="checkbox" id="isEndPoint"> Journey End Point
-                    </div> -->
-                    <br>
-                    <div>Arrival Date:<input type="date" id="arrivalDate" placeholder="Arrival Date"></div>
-                    <div>Departure Date:<input type="date" id="departureDate" placeholder="Departure Date"></div>
-                    <div>Notes:<textarea id="notes" placeholder="Notes about your visit"></textarea></div>
-                    <button onclick="addMarker()">Add Marker</button>
                 </div>
                 <div id="journalEntries"></div>
             </div>

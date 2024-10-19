@@ -173,10 +173,12 @@ function normalizeLatLng(latlng) {
 }
 
 function showEntryForm() {
-    document.getElementById('entryForm').style.display = 'block';
+    document.getElementById('entryFormModal').style.display = 'block';
        
 }
-
+function hideEntryForm() {
+    document.getElementById('entryFormModal').style.display = 'none';
+}
 
 function addMarker() {
     let locationName = document.getElementById('locationName').value;
@@ -208,10 +210,16 @@ function addMarker() {
             resetForm();
         } else {
             alert("Date conflict detected. Please choose different dates.");
+            showEntryForm();
         }
     } else {
         alert("Please enter location name, arrival date, departure date, and click on the map to place a marker.");
+        showEntryForm();
     }
+
+    // After successfully adding the marker:
+    hideEntryForm();
+
 }
 
 
@@ -627,6 +635,8 @@ function showInstructions() {
     }
 }
 
+// Set up event listener for closing the modal
+document.querySelector('.close').addEventListener('click', hideEntryForm);
 
 document.addEventListener('DOMContentLoaded', function() {
     // cleanLegacyEntries();
