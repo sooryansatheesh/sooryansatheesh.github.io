@@ -4,7 +4,33 @@ let routes = [];
 let tempMarker = null;
 let currentTripId = null;
 let tripPath; // Global variable to store the path
+// Markers
+const greenIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
 
+const redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const blueIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
 
 function initMap() {
     // Get the trip ID from the URL
@@ -104,6 +130,33 @@ function initMap() {
         addMarker();
     });
 }
+
+function updateStartAndEndPoints() {
+    if (markers.length === 0) return;
+
+    let sortedMarkers = markers.sort((a, b) => new Date(a.marker.getPopup().getContent().split('<br>')[2].split(': ')[1]) - new Date(b.marker.getPopup().getContent().split('<br>')[2].split(': ')[1]));
+
+    // Set start point
+    sortedMarkers.forEach((markerObj, index) => {
+        if (index === 0) {
+            markerObj.isStartPoint = true;
+            markerObj.isEndPoint = false;
+        } else {
+            markerObj.isStartPoint = false;
+        }
+    });
+
+    // Set end point
+    sortedMarkers = markers.sort((a, b) => new Date(b.marker.getPopup().getContent().split('<br>')[1].split(': ')[1]) - new Date(a.marker.getPopup().getContent().split('<br>')[1].split(': ')[1]));
+    sortedMarkers[0].isEndPoint = true;
+    if (sortedMarkers.length > 1) {
+        sortedMarkers[0].isStartPoint = false;
+    }
+
+    // Update markers array
+    markers = sortedMarkers;
+}
+
 function isWithinBounds(latlng) {
     return latlng.lng >= -180 && latlng.lng <= 180;
 }
@@ -121,75 +174,54 @@ function normalizeLatLng(latlng) {
 
 function showEntryForm() {
     document.getElementById('entryForm').style.display = 'block';
+       
 }
 
-function hasStartPoint() {
-    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-    return allEntries.some(entry => entry.tripId === currentTripId && entry.isStartPoint);
-}
-
-function hasEndPoint() {
-    let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-    return allEntries.some(entry => entry.tripId === currentTripId && entry.isEndPoint);
-}
 
 function addMarker() {
     let locationName = document.getElementById('locationName').value;
     let arrivalDate = document.getElementById('arrivalDate').value;
     let departureDate = document.getElementById('departureDate').value;
     let notes = document.getElementById('notes').value;
-    let isStartPoint = document.getElementById('isStartPoint').checked;
-    let isEndPoint = document.getElementById('isEndPoint').checked;
 
-    if (locationName && tempMarker) {
-        if ((isStartPoint || arrivalDate) && (isEndPoint || departureDate)) {
-            let normalizedLatLng = normalizeLatLng(tempMarker.getLatLng());
+    if (locationName && tempMarker && arrivalDate && departureDate) {
+        let normalizedLatLng = normalizeLatLng(tempMarker.getLatLng());
 
-            // Check if trying to add a start or end point when one already exists
-            if ((isStartPoint && hasStartPoint()) || (isEndPoint && hasEndPoint())) {
-                alert("A " + (isStartPoint ? "starting" : "ending") + " point already exists for this trip.");
-                return;
-            }
+        if (!isDateConflict(arrivalDate, departureDate)) {
+            let entry = {
+                id: Date.now(),
+                tripId: currentTripId,
+                locationName: locationName,
+                arrivalDate: arrivalDate,
+                departureDate: departureDate,
+                notes: notes,
+                lat: normalizedLatLng.lat,
+                lng: normalizedLatLng.lng
+            };
+            
+            console.log('New entry created:', entry);
 
-            if (!isDateConflict(isStartPoint ? null : arrivalDate, isEndPoint ? null : departureDate)) {
-                let entry = {
-                    id: Date.now(),
-                    tripId: currentTripId,
-                    locationName: locationName,
-                    arrivalDate: isStartPoint ? null : arrivalDate,
-                    departureDate: isEndPoint ? null : departureDate,
-                    notes: notes,
-                    lat: normalizedLatLng.lat,
-                    lng: normalizedLatLng.lng,
-                    isStartPoint: isStartPoint,
-                    isEndPoint: isEndPoint
-                };
-                
-                console.log('New entry created:', entry);
-
-                saveAndDisplayMarker(tempMarker, entry);
-                drawnItems.addLayer(tempMarker);
-                tempMarker = null;
-                document.getElementById('entryForm').style.display = 'none';
-                resetForm();
-            } else {
-                alert("Date conflict detected. Please choose different dates.");
-            }
+            saveAndDisplayMarker(tempMarker, entry);
+            drawnItems.addLayer(tempMarker);
+            tempMarker = null;
+            document.getElementById('entryForm').style.display = 'none';
+            resetForm();
         } else {
-            alert("Please enter both arrival and departure dates, or mark as start/end point.");
+            alert("Date conflict detected. Please choose different dates.");
         }
     } else {
-        alert("Please enter a location name and click on the map to place a marker.");
+        alert("Please enter location name, arrival date, departure date, and click on the map to place a marker.");
     }
 }
+
+
 function resetForm() {
     document.getElementById('locationName').value = '';
     document.getElementById('arrivalDate').value = '';
     document.getElementById('departureDate').value = '';
     document.getElementById('notes').value = '';
-    document.getElementById('isStartPoint').checked = false;
-    document.getElementById('isEndPoint').checked = false;
-    updateDateFields();
+   
+    
 }
 
 function isDateConflict(newArrival, newDeparture) {
@@ -198,6 +230,12 @@ function isDateConflict(newArrival, newDeparture) {
 
     newArrival = new Date(newArrival);
     newDeparture = new Date(newDeparture);
+
+    // Check if arrival date is after departure date
+    if (newArrival > newDeparture) {
+        alert("Arrival date cannot be after departure date.");
+        return true; // Conflict found
+    }
 
     for (let entry of tripEntries) {
         let entryArrival = new Date(entry.arrivalDate);
@@ -230,50 +268,24 @@ function saveAndDisplayMarker(marker, entry) {
 
     marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`).openPopup();
     markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
+    
+    updateStartAndEndPoints();
+    updateMarkerColors();
     console.log('Marker saved and displayed:', entry);
     saveJournalEntries();
     updateJournalEntries();
 }
 
-function updateDateFields() {
-    const isStartPoint = document.getElementById('isStartPoint').checked;
-    const isEndPoint = document.getElementById('isEndPoint').checked;
-    const arrivalDateField = document.getElementById('arrivalDate');
-    const departureDateField = document.getElementById('departureDate');
-    const startPointCheckbox = document.getElementById('isStartPoint');
-    const endPointCheckbox = document.getElementById('isEndPoint');
-
-    // Disable start point checkbox if one already exists
-    if (hasStartPoint() && !isStartPoint) {
-        startPointCheckbox.disabled = true;
-        startPointCheckbox.checked = false;
-    } else {
-        startPointCheckbox.disabled = false;
-    }
-
-    // Disable end point checkbox if one already exists
-    if (hasEndPoint() && !isEndPoint) {
-        endPointCheckbox.disabled = true;
-        endPointCheckbox.checked = false;
-    } else {
-        endPointCheckbox.disabled = false;
-    }
-
-    // Disable the other checkbox when one is checked
-    if (isStartPoint) {
-        endPointCheckbox.disabled = true;
-        endPointCheckbox.checked = false;
-        arrivalDateField.disabled = true;
-        arrivalDateField.value = '';
-    } else if (isEndPoint) {
-        startPointCheckbox.disabled = true;
-        startPointCheckbox.checked = false;
-        departureDateField.disabled = true;
-        departureDateField.value = '';
-    } else {
-        arrivalDateField.disabled = false;
-        departureDateField.disabled = false;
-    }
+function updateMarkerColors() {
+    markers.forEach((markerObj, index) => {
+        if (index === 0) {
+            markerObj.marker.setIcon(redIcon);
+        } else if (index === markers.length - 1) {
+            markerObj.marker.setIcon(greenIcon);
+        } else {
+            markerObj.marker.setIcon(blueIcon);
+        }
+    });
 }
 
 function deleteMarker(entryId) {
@@ -303,10 +315,8 @@ function deleteMarker(entryId) {
         
         markers.splice(markerIndex, 1);
         console.log('Marker removed from markers array');
-        // If the deleted marker was a start or end point, update the UI
-        if (markerObj.marker.options.isStartPoint || markerObj.marker.options.isEndPoint) {
-            updateDateFields();
-        }
+        
+        updateStartAndEndPoints();
         saveJournalEntries();
         updateJournalEntries();
         console.log('Marker deleted:', entryId);
@@ -335,7 +345,9 @@ function saveJournalEntries() {
             departureDate: popupContent[2].split(': ')[1],
             notes: popupContent[3].split(': ')[1],
             lat: latLng.lat,
-            lng: latLng.lng
+            lng: latLng.lng,
+            isStartPoint: markerObj.isStartPoint,
+            isEndPoint: markerObj.isEndPoint
         };
     });
     
@@ -343,6 +355,7 @@ function saveJournalEntries() {
     
     localStorage.setItem('journalEntries', JSON.stringify(allEntries));
     console.log('Journal entries saved to localStorage:', allEntries);
+    updateMarkerColors();
 }
 
 
@@ -361,8 +374,12 @@ function loadJournalEntries() {
     });
     markers = [];
 
-    entries.forEach(entry => {
-        let marker = L.marker([entry.lat, entry.lng]).addTo(map);
+    entries.forEach((entry, index) => {
+        let icon = blueIcon;
+        if (index === 0) icon = greenIcon;
+        else if (index === entries.length - 1) icon = redIcon;
+
+        let marker = L.marker([entry.lat, entry.lng], {icon: icon}).addTo(map);
         let popupContent = `
         <b>${entry.locationName}</b><br>
         Arrival: ${entry.arrivalDate}<br>
@@ -373,12 +390,13 @@ function loadJournalEntries() {
         `;
         marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`);
         markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
+
         drawnItems.addLayer(marker);
         console.log('Loaded marker:', entry);
     });
+    updateStartAndEndPoints();
     updateJournalEntries();
     drawTripPath();
-    updateDateFields(); // Add this line to update UI based on loaded entries
 }
 
 function drawTripPath() {
@@ -452,6 +470,7 @@ function updateJournalEntries() {
         `;
     });
     loadAndDisplayTripName();
+    updateMarkerColors();
     drawTripPath();
     console.log('Journal entries updated in DOM. Total entries:', markers.length);
 }
@@ -579,12 +598,4 @@ function loadAndDisplayTripName() {
 document.addEventListener('DOMContentLoaded', function() {
     // cleanLegacyEntries();
     initMap();
-    document.getElementById('isStartPoint').addEventListener('change', updateDateFields);
-    document.getElementById('isEndPoint').addEventListener('change', updateDateFields);
-    
-    // Set the first entry as the starting point by default if no entries exist
-    if (markers.length === 0) {
-        document.getElementById('isStartPoint').checked = true;
-        updateDateFields();
-    }
-});
+    });
