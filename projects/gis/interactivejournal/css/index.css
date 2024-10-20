@@ -109,3 +109,22 @@ nav a:hover {
         width: 100%;
     }
 }
+.leaflet-interactive {
+    stroke-dasharray: 5, 5;
+    animation: dashdraw 20s linear infinite;
+}
+
+.animated-path {
+    stroke-dasharray: 8, 8;
+    animation: dashdraw 20s linear infinite;
+}
+
+.animated-path.reverse {
+    animation-direction: reverse;
+}
+
+@keyframes dashdraw {
+    to {
+        stroke-dashoffset: 100;
+    }
+}
