@@ -659,4 +659,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // cleanLegacyEntries();
     initMap();
     showInstructions();
+
+    // Add event listener for the close button
+    let closeButton = document.querySelector('#entryFormModal .close');
+    if (closeButton) {
+
+        closeButton.addEventListener('click', function() {
+    console.log('Close button clicked');
+    hideEntryForm();
+    });
+    }
+
+    // Add event listener for clicking outside the modal
+    window.addEventListener('click', function(event) {
+        if (event.target == document.getElementById('entryFormModal')) {
+            hideEntryForm();
+        }
+    });
+
     });
