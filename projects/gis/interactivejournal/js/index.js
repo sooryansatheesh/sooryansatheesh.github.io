@@ -1,5 +1,6 @@
 let map;
 let markers = [];
+let paths = [];
 const colors = ['red', 'blue', 'green', 'purple', 'orange', 'yellow', 'pink', 'cyan', 'darkgreen', 'cadetblue'];
 
 function initMap() {
@@ -19,6 +20,7 @@ function initMap() {
     }).addTo(map);
 
     loadJournalEntries();
+    drawTripPaths();
     updateSummary();
 }
 
@@ -33,9 +35,9 @@ function loadJournalEntries() {
     });
 
     entries.forEach(entry => {
-        let color = tripColors[entry.tripId] || 'gray'; // Use gray for entries without a valid trip
+        let color = tripColors[entry.tripId] || 'gray';
         
-        let markerIcon = new L.Icon({
+        let markerIcon = L.icon({
             iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
             iconSize: [25, 41],
@@ -47,12 +49,47 @@ function loadJournalEntries() {
         let marker = L.marker([entry.lat, entry.lng], {icon: markerIcon}).addTo(map);
         let popupContent = `
             <b>${entry.locationName}</b><br>
-            Date: ${entry.visitDate}<br>
+            Arrival: ${entry.arrivalDate}<br>
+            Departure: ${entry.departureDate}<br>
             Notes: ${entry.notes}<br>
             Trip: ${trips.find(trip => trip.id === entry.tripId)?.name || 'Unknown Trip'}
         `;
         marker.bindPopup(popupContent);
-        markers.push(marker);
+        markers.push({ marker, entry });
+    });
+
+    // Fit map bounds to show all markers
+    if (markers.length > 0) {
+        let group = new L.featureGroup(markers.map(m => m.marker));
+        map.fitBounds(group.getBounds());
+    }
+}
+
+function drawTripPaths() {
+    // Clear existing paths
+    paths.forEach(path => map.removeLayer(path));
+    paths = [];
+
+    let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
+    let trips = JSON.parse(localStorage.getItem('trips') || '[]');
+
+    trips.forEach((trip, index) => {
+        let tripEntries = entries.filter(entry => entry.tripId === trip.id)
+            .sort((a, b) => new Date(a.departureDate) - new Date(b.departureDate));
+
+        if (tripEntries.length > 1) {
+            let pathPoints = tripEntries.map(entry => [entry.lat, entry.lng]);
+            let path = L.polyline(pathPoints, {
+                color: colors[index % colors.length],
+                weight: 3,
+                opacity: 0.7,
+                smoothFactor: 1,
+                className: 'animated-path reverse' // Add this line
+            }).addTo(map);
+
+            path.bindPopup(`Trip: ${trip.name}`);
+            paths.push(path);
+        }
     });
 }
 
@@ -62,6 +99,17 @@ function updateSummary() {
 
     document.getElementById('totalPlaces').textContent = entries.length;
     document.getElementById('totalTrips').textContent = trips.length;
+
+    // Add more detailed summary information
+    let latestEntry = entries.sort((a, b) => new Date(b.departureDate) - new Date(a.departureDate))[0];
+    if (latestEntry) {
+        let latestTrip = trips.find(trip => trip.id === latestEntry.tripId);
+        let summaryDiv = document.getElementById('summary');
+        summaryDiv.innerHTML += `
+            <p>Latest Entry: ${latestEntry.locationName}</p>
+            <p>Latest Trip: ${latestTrip ? latestTrip.name : 'Unknown'}</p>
+        `;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initMap);
