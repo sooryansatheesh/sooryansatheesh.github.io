@@ -28,34 +28,44 @@ function loadJournalEntries() {
     let entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
     let trips = JSON.parse(localStorage.getItem('trips') || '[]');
 
-    // Create a map of trip IDs to colors
-    let tripColors = {};
-    trips.forEach((trip, index) => {
-        tripColors[trip.id] = colors[index % colors.length];
-    });
+    // Clear existing markers
+    markers.forEach(m => map.removeLayer(m.marker));
+    markers = [];
 
-    entries.forEach(entry => {
-        let color = tripColors[entry.tripId] || 'gray';
-        
-        let markerIcon = L.icon({
-            iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
+    trips.forEach(trip => {
+        let tripEntries = entries.filter(entry => entry.tripId === trip.id)
+            .sort((a, b) => new Date(a.departureDate) - new Date(b.departureDate));
+
+        tripEntries.forEach((entry, index) => {
+            let color;
+            if (index === 0) {
+                color = 'green';  // Starting point
+            } else if (index === tripEntries.length - 1) {
+                color = 'red';    // End point
+            } else {
+                color = 'blue';   // Intermediate points
+            }
+
+            let markerIcon = L.icon({
+                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            let marker = L.marker([entry.lat, entry.lng], {icon: markerIcon}).addTo(map);
+            let popupContent = `
+                <b>${entry.locationName}</b><br>
+                Arrival: ${entry.arrivalDate}<br>
+                Departure: ${entry.departureDate}<br>
+                Notes: ${entry.notes}<br>
+                Trip: ${trip.name}
+            `;
+            marker.bindPopup(popupContent);
+            markers.push({ marker, entry });
         });
-
-        let marker = L.marker([entry.lat, entry.lng], {icon: markerIcon}).addTo(map);
-        let popupContent = `
-            <b>${entry.locationName}</b><br>
-            Arrival: ${entry.arrivalDate}<br>
-            Departure: ${entry.departureDate}<br>
-            Notes: ${entry.notes}<br>
-            Trip: ${trips.find(trip => trip.id === entry.tripId)?.name || 'Unknown Trip'}
-        `;
-        marker.bindPopup(popupContent);
-        markers.push({ marker, entry });
     });
 
     // Fit map bounds to show all markers
