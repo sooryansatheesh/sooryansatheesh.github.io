@@ -187,3 +187,26 @@ main {
     align-self: flex-start;
     padding: 5px 10px;
 }
+
+
+
+
+.leaflet-interactive {
+    stroke-dasharray: 5, 5;
+    animation: dashdraw 20s linear infinite;
+}
+
+.animated-path {
+    stroke-dasharray: 8, 8;
+    animation: dashdraw 20s linear infinite;
+}
+
+.animated-path.reverse {
+    animation-direction: normal !important; /* Changed to normal and added !important */
+}
+
+@keyframes dashdraw {
+    to {
+        stroke-dashoffset: -100; /* Changed to negative value */
+    }
+}
