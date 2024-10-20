@@ -417,10 +417,9 @@ function loadJournalEntries() {
 }
 
 function drawTripPath() {
-    // Check if currentTripId is null or undefined
     if (!currentTripId) {
         console.log('No trip ID available. Cannot draw path.');
-        return; // Exit the function if there's no current trip ID
+        return;
     }
 
     // Remove existing path if any
@@ -428,14 +427,12 @@ function drawTripPath() {
         map.removeLayer(tripPath);
     }
 
-    // Get all entries for the current trip
     let allEntries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
     let tripEntries = allEntries.filter(entry => entry.tripId === currentTripId);
 
-    // Check if there are any entries for this trip
     if (tripEntries.length === 0) {
         console.log('No entries found for the current trip. Cannot draw path.');
-        return; // Exit the function if there are no entries
+        return;
     }
 
     // Sort entries by arrival date
@@ -446,16 +443,32 @@ function drawTripPath() {
 
     // Create a polyline with the points
     tripPath = L.polyline(pathPoints, {
-        color: 'red',
+        color: 'blue',
         weight: 3,
         opacity: 0.7,
-        smoothFactor: 1
+        smoothFactor: 1,
+        className: 'animated-path reverse' // Add this line
     }).addTo(map);
 
     // Fit the map bounds to show the entire path
     if (pathPoints.length > 0) {
         map.fitBounds(tripPath.getBounds());
     }
+}
+function animatePolyline(polyline) {
+    let length = polyline.getLatLngs().length;
+    let currentIndex = 0;
+
+    function animate() {
+        if (currentIndex < length) {
+            let nextSegment = polyline.getLatLngs().slice(0, currentIndex + 1);
+            polyline.setLatLngs(nextSegment);
+            currentIndex++;
+            requestAnimationFrame(animate);
+        }
+    }
+
+    animate();
 }
 function saveRoutes() {
     let routeData = routes.map(route => route.getLatLngs());
