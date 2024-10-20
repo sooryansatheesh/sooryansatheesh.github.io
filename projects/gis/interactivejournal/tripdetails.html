@@ -44,15 +44,26 @@
                 <div id="entryFormModal" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
-                        <div id="entryForm">
+                        <form id="entryForm">
                             <h3>Add New Entry:</h3>
-                            <div>Location Name:<input type="text" id="locationName" placeholder="Location Name"></div>
-                            <br>
-                            <div>Arrival Date:<input type="date" id="arrivalDate" placeholder="Arrival Date"></div>
-                            <div>Departure Date:<input type="date" id="departureDate" placeholder="Departure Date"></div>
-                            <div>Notes:<textarea id="notes" placeholder="Notes about your visit"></textarea></div>
-                            <button onclick="addMarker()">Add Marker</button>
-                        </div>
+                            <div>
+                                <label for="locationName">Location Name:</label>
+                                <input type="text" id="locationName" placeholder="Location Name" required>
+                            </div>
+                            <div>
+                                <label for="arrivalDate">Arrival Date:</label>
+                                <input type="date" id="arrivalDate" required>
+                            </div>
+                            <div>
+                                <label for="departureDate">Departure Date:</label>
+                                <input type="date" id="departureDate" required>
+                            </div>
+                            <div>
+                                <label for="notes">Notes:</label>
+                                <textarea id="notes" placeholder="Notes about your visit"></textarea>
+                            </div>
+                            <button type="submit">Add Marker</button>
+                        </form>
                     </div>
                 </div>
                 <div id="journalEntries"></div>

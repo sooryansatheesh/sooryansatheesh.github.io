@@ -173,11 +173,20 @@ function normalizeLatLng(latlng) {
 }
 
 function showEntryForm() {
-    document.getElementById('entryFormModal').style.display = 'block';
+    let modal = document.getElementById('entryFormModal');
+    modal.style.display = 'block';
+    let form = document.getElementById('entryForm');
+    form.style.display = 'block';
+    // Reset form fields
+    document.getElementById('locationName').value = '';
+    document.getElementById('arrivalDate').value = '';
+    document.getElementById('departureDate').value = '';
+    document.getElementById('notes').value = '';
        
 }
 function hideEntryForm() {
-    document.getElementById('entryFormModal').style.display = 'none';
+    let modal = document.getElementById('entryFormModal');
+    modal.style.display = 'none';
 }
 
 function addMarker() {
@@ -659,4 +668,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // cleanLegacyEntries();
     initMap();
     showInstructions();
+
+    // Add event listener for the close button
+    let closeButton = document.querySelector('#entryFormModal .close');
+    if (closeButton) {
+
+        closeButton.addEventListener('click', function() {
+    console.log('Close button clicked');
+    hideEntryForm();
     });
+    }
+
+    // Add event listener for clicking outside the modal
+    window.addEventListener('click', function(event) {
+        if (event.target == document.getElementById('entryFormModal')) {
+            hideEntryForm();
+        }
+    });
+
+    });
+
+   
