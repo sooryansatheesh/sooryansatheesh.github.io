@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
         attribution: '&copy; OpenTopoMap contributors'
     });
     // Global variables
-    const points = [];
+    let points = [];
     let currentClass = 1;
     let geoLayer = null;
-    let markers = L.layerGroup().addTo(map);
+    let markersLayer = L.layerGroup().addTo(map);
     const crsInfoElement = document.getElementById('crsInfo');
 
     const baseMaps = {
@@ -25,12 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
         "Topographic": topo
     };
     const overlayMaps = {
-        "Sample Points": markers
+        "Sample Points": markersLayer
     };
 
     // Add layer control
     const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
+    
     // DOM Elements
     const imageUpload = document.getElementById('imageUpload');
     const fileName = document.getElementById('fileName');
@@ -40,6 +41,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadBtn = document.getElementById('downloadBtn');
     const pointCountElement = document.getElementById('pointCount');
     const coordinatesElement = document.getElementById('coordinates');
+
+    // Register callback for class deletion
+    classManager.onClassDelete((deletedClassId) => {
+        // Remove all points of the deleted class
+        points = points.filter(point => point.class !== deletedClassId);
+        
+        // Clear all markers and recreate them for remaining points
+        markersLayer.clearLayers();
+        
+        // Recreate markers for remaining points
+        points.forEach(point => {
+            const marker = L.circleMarker([point.lat, point.lng], {
+                radius: 8,
+                fillColor: classManager.getColorForClass(point.class),
+                color: '#fff',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(markersLayer);
+            
+            marker.on('click', (e) => {
+                L.DomEvent.stopPropagation(e);
+                removePoint(point.id);
+                markersLayer.removeLayer(marker);
+            });
+        });
+
+        // Update point count
+        updatePointCount();
+    });
 
     // File upload handler
     imageUpload.addEventListener('change', function(e) {
@@ -95,6 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Map click handler
     map.on('click', function(e) {
+        const currentClass = classManager.getCurrentClass();
+        console.log('Current selected class:', currentClass);
         const { lat, lng } = e.latlng;
         addPoint(lat, lng, currentClass);
     });
@@ -116,17 +149,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const marker = L.circleMarker([lat, lng], {
             radius: 8,
-            fillColor: getColorForClass(classId),
+            fillColor: classManager.getColorForClass(classId),
             color: '#fff',
             weight: 2,
             opacity: 1,
             fillOpacity: 0.8
-        }).addTo(markers);
+        }).addTo(markersLayer);
         
         marker.on('click', (e) => {
             L.DomEvent.stopPropagation(e);
             removePoint(point.id);
-            markers.removeLayer(marker);
+            markersLayer.removeLayer(marker);
         });
         
         updatePointCount();
@@ -152,24 +185,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePointCount() {
         pointCountElement.textContent = points.length;
-        // Count points by class
-    const classCounts = {
-        1: 0, // Water
-        2: 0, // Dense Vegetation
-        3: 0, // Vegetation
-        4: 0  // Impervious
-    };
-    
-    // Count points for each class
-    points.forEach(point => {
-        classCounts[point.class]++;
-    });
-    
-    // Update class-wise counts
-    document.getElementById('waterCount').textContent = classCounts[1];
-    document.getElementById('denseVegCount').textContent = classCounts[2];
-    document.getElementById('vegCount').textContent = classCounts[3];
-    document.getElementById('impCount').textContent = classCounts[4];
+        
+        const classCounts = {};
+        points.forEach(point => {
+            classCounts[point.class] = (classCounts[point.class] || 0) + 1;
+        });
+        
+        // Update class-wise counts dynamically
+        const countsDiv = document.querySelector('.point-counts');
+        countsDiv.innerHTML = classManager.getAllClasses().map(cls => 
+            `<div class="count-item">${cls.name}: ${classCounts[cls.id] || 0}</div>`
+        ).join('');
     }
 
     // Class button click handler
@@ -178,32 +204,74 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.class-btn').forEach(btn => 
                 btn.classList.remove('active'));
             e.target.classList.add('active');
-            currentClass = parseInt(e.target.dataset.class);
+            const newClass = parseInt(e.target.dataset.class);
+            classManager.setCurrentClass(newClass);
+            console.log('Selected new class:', newClass);
         }
     });
 
     // Clear all points
     clearBtn.addEventListener('click', () => {
         points.length = 0;
-        markers.clearLayers();
+        markersLayer.clearLayers();
         updatePointCount();
     });
 
-    // Download CSV
+    // Download CSV and metadata
     downloadBtn.addEventListener('click', () => {
-        if (points.length === 0) return;
+        if (points.length === 0) {
+            alert('No points to export');
+            return;
+        }
 
         const csvContent = [
             'id,latitude,longitude,label',
             ...points.map(p => `${p.id},${p.lat},${p.lng},${p.class}`)
         ].join('\n');
 
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'training_samples.csv';
-        a.click();
-        window.URL.revokeObjectURL(url);
+        const csvBlob = new Blob([csvContent], { type: 'text/csv' });
+        const csvUrl = window.URL.createObjectURL(csvBlob);
+        const csvLink = document.createElement('a');
+        csvLink.href = csvUrl;
+        csvLink.download = 'training_samples.csv';
+        csvLink.click();
+        window.URL.revokeObjectURL(csvUrl);
+
+        // Create metadata text file
+        const currentDate = new Date().toISOString().split('T')[0];
+        const metadataContent = [
+            'LULC Training Sample Collection Metadata',
+            '=====================================',
+            '',
+            'Collection Date: ' + currentDate,
+            '',
+            'Class Information:',
+            '----------------',
+            ...classManager.getAllClasses().map(cls => 
+                `Label ${cls.id}: ${cls.name} (Color: ${cls.color})`
+            ),
+            '',
+            'Coordinate Reference System:',
+            '-------------------------',
+            crsInfoElement.textContent,
+            '',
+            'Statistics:',
+            '-----------',
+            `Total Points: ${points.length}`,
+            ...classManager.getAllClasses().map(cls => {
+                const classPoints = points.filter(p => p.class === cls.id).length;
+                return `${cls.name}: ${classPoints} points`;
+            }),
+            '',
+            'Note: This metadata file accompanies training_samples.csv'
+        ].join('\n');
+
+        const metadataBlob = new Blob([metadataContent], { type: 'text/plain' });
+        const metadataUrl = window.URL.createObjectURL(metadataBlob);
+        const metadataLink = document.createElement('a');
+        metadataLink.href = metadataUrl;
+        metadataLink.download = 'training_samples_metadata.txt';
+        metadataLink.click();
+        window.URL.revokeObjectURL(metadataUrl);
     });
 });

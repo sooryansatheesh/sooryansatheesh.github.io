@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About-LULC Mapping Sample Collector</title>
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/about-project.css">
+</head>
+<body>
+    <header>
+        <div class="logo">LULC Mapping Sample Collector</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="use-instructions.html">How to use</a></li>
+                <li><a href="about-project.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container about-container">
+            <h2>About LULC Mapping Sample Collector</h2>
+    
+            <section class="about-section">
+                <h3>Project Overview</h3>
+                <div class="about-content">
+                    <p>The LULC (Land Use Land Cover) Mapping Sample Collector is a web-based tool designed to facilitate the collection of training samples for land cover classification. It provides an intuitive interface for users to annotate satellite imagery and collect georeferenced points for different land cover classes.</p>
+                </div>
+            </section>
+    
+            <section class="about-section">
+                <h3>Key Features</h3>
+                <div class="about-content">
+                    <ul>
+                        <li><strong>GeoTIFF Support:</strong> Load and visualize georeferenced satellite imagery</li>
+                        <li><strong>Custom Classes:</strong> Create and manage your own land cover classes with custom colors</li>
+                        <li><strong>Interactive Mapping:</strong> Click-to-collect point samples with precise coordinate tracking</li>
+                        <li><strong>CRS Awareness:</strong> Maintains coordinate reference system consistency</li>
+                        <li><strong>Data Export:</strong> Download collected samples in CSV format for further analysis</li>
+                    </ul>
+                </div>
+            </section>
+    
+            <section class="about-section">
+                <h3>Technical Details</h3>
+                <div class="about-content">
+                    <h4>Built With</h4>
+                    <ul>
+                        <li>Leaflet.js for interactive mapping</li>
+                        <li>GeoTIFF.js for raster data handling</li>
+                        <li>Modern JavaScript for dynamic functionality</li>
+                        <li>Responsive CSS for cross-device compatibility</li>
+                    </ul>
+    
+                    <h4>Supported Formats</h4>
+                    <ul>
+                        <li>Input: GeoTIFF satellite imagery</li>
+                        <li>Output: CSV with geographic coordinates and class labels</li>
+                    </ul>
+                </div>
+            </section>
+    
+            <section class="about-section">
+                <h3>Use Cases</h3>
+                <div class="about-content">
+                    <ul>
+                        <li>Creating training datasets for machine learning models</li>
+                        <li>Land cover classification projects</li>
+                        <li>Environmental monitoring studies</li>
+                        <li>Urban planning and development analysis</li>
+                        <li>Agricultural land use mapping</li>
+                    </ul>
+                </div>
+            </section>
+    
+            <section class="about-section contact-section">
+                <h3>Contact & Support</h3>
+                <div class="about-content">
+                    <p>For questions, feedback, or support, please contact:</p>
+                    <div class="contact-info">
+                        <p><strong>Email:</strong> <a href="mailto:sooryanarayan.ifs@gmail.com">sooryanarayan.ifs@gmail.com</a></p>
+                        <p><strong>GitHub:</strong> <a href="https://github.com/yourusername/project" target="_blank">Project Repository</a></p>
+                    </div>
+                </div>
+            </section>
+            <section class="about-section terms-section" id="terms">
+                <h3>Terms and Conditions</h3>
+                <div class="about-content">
+                    <div class="terms-box">
+                        <p class="terms-disclaimer">By using this tool, you agree to the following terms and conditions:</p>
+                        
+                        <h4>1. Disclaimer</h4>
+                        <p>This tool is provided "as is" and "as available" without any warranties of any kind, either express or implied. The developers do not guarantee the accuracy, completeness, or usefulness of any data collected using this tool.</p>
+            
+                        <h4>2. Use of Tool</h4>
+                        <ul>
+                            <li>This tool is intended for research and educational purposes only</li>
+                            <li>Users are responsible for verifying and validating any data collected</li>
+                            <li>The tool should not be used for critical decision-making without independent verification</li>
+                        </ul>
+            
+                        <h4>3. Data Collection</h4>
+                        <ul>
+                            <li>Users are responsible for ensuring they have the necessary rights and permissions to use any imagery uploaded to the tool</li>
+                            <li>The tool does not store or retain any uploaded imagery or collected data on its servers</li>
+                            <li>All data processing occurs locally in the user's browser</li>
+                        </ul>
+            
+                        <h4>4. Limitation of Liability</h4>
+                        <p>The developers of this tool shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages resulting from:</p>
+                        <ul>
+                            <li>The use or inability to use the tool</li>
+                            <li>Any decisions made based on data collected using the tool</li>
+                            <li>Technical failures or data inaccuracies</li>
+                            <li>Unauthorized access to or use of the tool</li>
+                        </ul>
+            
+                        <h4>5. User Responsibilities</h4>
+                        <ul>
+                            <li>Users must ensure compliance with all applicable laws and regulations</li>
+                            <li>Users are responsible for maintaining the confidentiality of their data</li>
+                            <li>Users should implement appropriate data backup procedures</li>
+                        </ul>
+            
+                        <h4>6. No Support or Maintenance</h4>
+                        <p>The developers are under no obligation to provide support, maintenance, updates, or bug fixes for the tool.</p>
+            
+                        <div class="terms-acceptance">
+                            <p><strong>By using this tool, you acknowledge that you have read, understood, and agree to these terms and conditions.</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 LULC Mapping Sample Creator. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="index/script.js"></script>
+</body>
+</html>

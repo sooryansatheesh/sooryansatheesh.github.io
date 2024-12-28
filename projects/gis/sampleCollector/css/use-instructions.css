@@ -1,0 +1,44 @@
+/* Instructions page specific styles */
+.instruction-container {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.instruction-section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.instruction-section h3 {
+    color: #007bff;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.instruction-content {
+    padding-left: 20px;
+}
+
+.instruction-content h4 {
+    color: #495057;
+    margin: 20px 0 10px 0;
+}
+
+.instruction-content ul,
+.instruction-content ol {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.instruction-content li {
+    margin-bottom: 8px;
+}
+
+.instruction-content p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructions-LULC Mapping Sample Collector</title>
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/use-instructions.css">
+
+
+</head>
+<body>
+    <header>
+        <div class="logo">LULC Mapping Sample Collector</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="use-instructions.html">How to use</a></li>
+                <li><a href="about-project.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container instruction-container">
+            <h2>How to Use LULC Mapping Sample Collector</h2>
+    
+            <section class="instruction-section">
+                <h3>1. Getting Started</h3>
+                <div class="instruction-content">
+                    <h4>Preparing Your Data</h4>
+                    <ul>
+                        <li>Ensure your GeoTIFF file is properly georeferenced</li>
+                        <li>The GeoTIFF should be in a supported coordinate reference system (CRS)</li>
+                        <li>Recommended: Use a multi-band image (e.g., RGB or multispectral)</li>
+                    </ul>
+                </div>
+            </section>
+    
+            <section class="instruction-section">
+                <h3>2. Managing Classes</h3>
+                <div class="instruction-content">
+                    <h4>Default Classes</h4>
+                    <p>The tool comes with four default classes:</p>
+                    <ul>
+                        <li>Water (Blue)</li>
+                        <li>Dense Vegetation (Dark Green)</li>
+                        <li>Agriculture (Light Green)</li>
+                        <li>Urban Habitation (Grey)</li>
+                    </ul>
+    
+                    <h4>Customizing Classes</h4>
+                    <p>To customize classes:</p>
+                    <ol>
+                        <li>Click the "Manage Classes" button</li>
+                        <li>Add new classes using the Add Class form</li>
+                        <li>Choose a name and color for your class</li>
+                        <li>Remove unwanted classes using the Remove button</li>
+                        <li>Click "Done" to save your changes</li>
+                    </ol>
+                </div>
+            </section>
+    
+            <section class="instruction-section">
+                <h3>3. Collecting Samples</h3>
+                <div class="instruction-content">
+                    <h4>Loading Your Image</h4>
+                    <ol>
+                        <li>Click "Choose GeoTIFF File" to upload your image</li>
+                        <li>The image will be displayed on the map</li>
+                        <li>The CRS information will be shown below the map</li>
+                    </ol>
+    
+                    <h4>Adding Sample Points</h4>
+                    <ol>
+                        <li>Select a class from the class buttons</li>
+                        <li>Click on the map to add sample points</li>
+                        <li>Points will be colored according to their class</li>
+                        <li>Click on any point to remove it</li>
+                    </ol>
+                </div>
+            </section>
+    
+            <section class="instruction-section">
+                <h3>4. Exporting Data</h3>
+                <div class="instruction-content">
+                    <h4>Downloading Samples</h4>
+                    <ul>
+                        <li>Click the "Download CSV" button to export your samples</li>
+                        <li>The CSV will contain point coordinates and class labels</li>
+                        <li>Use the Clear All button to start over if needed</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 LULC Mapping Sample Creator. All rights reserved.</p>
+    </footer>
+
+    <script src="index/script.js"></script>
+</body>
+</html>
