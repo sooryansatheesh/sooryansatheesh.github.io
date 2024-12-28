@@ -1,3 +1,13 @@
+header {
+    background-color: #3498db;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
 body {
     font-family: Arial, sans-serif;
     max-width: 1200px;
@@ -128,4 +138,93 @@ body {
     background-color: #f8f9fa;
     border-radius: 4px;
     font-family: monospace;
+}
+
+.manage-classes-section {
+    display: flex;
+    justify-content: flex-end;  /* Moves button to the right */
+    margin-bottom: 20px;  /* Adds space before the upload section */
+    padding: 0 10px;  /* Optional: adds some horizontal padding */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.class-list {
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.class-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.class-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.add-class-form {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+/* CSS Code for Terms and Condition */
+
+.terms-link {
+    color: #6c757d;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 0.9rem;
+}
+
+.terms-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.terms-notice {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #856404;
+}
+
+.terms-notice a {
+    color: #856404;
+    text-decoration: underline;
+}
+
+.terms-notice a:hover {
+    color: #533f03;
 }
