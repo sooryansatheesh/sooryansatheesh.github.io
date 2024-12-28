@@ -19,17 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let markersLayer = L.layerGroup().addTo(map);
     const crsInfoElement = document.getElementById('crsInfo');
 
-    const baseMaps = {
+    let baseMaps = {
         "OpenStreetMap": osm,
         "Satellite": satellite,
         "Topographic": topo
     };
-    const overlayMaps = {
+    let overlayMaps = {
         "Sample Points": markersLayer
     };
 
     // Add layer control
-    const layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+    let layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
     
     // DOM Elements
@@ -80,45 +80,48 @@ document.addEventListener('DOMContentLoaded', function() {
         fileName.textContent = file.name;
 
         const reader = new FileReader();
-        reader.onload = function(event) {
-            const arrayBuffer = event.target.result;
-
-            parseGeoraster(arrayBuffer).then(georaster => {
+        reader.onload = async function(event) {
+            try {
+                const arrayBuffer = event.target.result;
+                const georaster = await parseGeoraster(arrayBuffer);
+                
                 if (geoLayer) {
                     map.removeLayer(geoLayer);
                     layerControl.removeLayer(geoLayer);
                 }
-
-                // Extract CRS information
-                const projection = georaster.projection;
-                const wkt = georaster.wkt || 'Not available';
-                let crsInfo = 'EPSG:' + projection;
-                
-                if (projection === 4326) {
-                    crsInfo += ' (WGS84 - Latitude/Longitude)';
-                } else if (projection === 3857) {
-                    crsInfo += ' (Web Mercator)';
-                }
-                
-                // Display CRS information
-                crsInfoElement.textContent = crsInfo;
-
+    
+                // Create new GeoRasterLayer with default settings
                 geoLayer = new GeoRasterLayer({
                     georaster: georaster,
                     opacity: 0.7,
                     resolution: 256
                 });
-
+    
+                // Add layer to map
                 geoLayer.addTo(map);
-
-                // Add GeoTIFF layer to layer control
-                layerControl.addOverlay(geoLayer, "GeoTIFF Layer");
-
+    
+                // Update CRS info display
+                crsInfoElement.textContent = `Source CRS: EPSG:${georaster.projection}`;
+    
+                // Update layer control
+                if (layerControl) {
+                    layerControl.remove();
+                }
+    
+                overlayMaps = {
+                    "GeoTIFF": geoLayer,
+                    "Sample Points": markersLayer
+                };
+    
+                layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+    
+                // Fit map to georaster bounds
                 map.fitBounds(geoLayer.getBounds());
-            }).catch(error => {
-                console.error('Error parsing GeoTIFF:', error);
+    
+            } catch (error) {
+                console.error('Error loading GeoTIFF:', error);
                 alert('Error loading GeoTIFF file. Please make sure it\'s a valid GeoTIFF.');
-            });
+            }
         };
         
         reader.readAsArrayBuffer(file);
@@ -237,6 +240,41 @@ document.addEventListener('DOMContentLoaded', function() {
         csvLink.click();
         window.URL.revokeObjectURL(csvUrl);
 
+        // Debug logging
+        console.log('GeoLayer:', geoLayer);
+        console.log('GeoLayer options:', geoLayer.options);
+        console.log('Markers Layer:', markersLayer);
+        console.log('Markers Layer options:', markersLayer.options);
+
+        // Modified CRS extraction
+        let geotiffCRS = 'Not available';
+        let markersCRS = 'Not available';
+
+        // For GeoTIFF layer
+        if (geoLayer && geoLayer.options && geoLayer.options.georaster) {
+            const georaster = geoLayer.options.georaster;
+            console.log('Georaster:', georaster);
+            if (georaster.projection) {
+                geotiffCRS = `EPSG:${georaster.projection}`;
+                if (georaster.projection === 4326) {
+                    geotiffCRS += ' (WGS84 - Latitude/Longitude)';
+                } else if (georaster.projection === 3857) {
+                    geotiffCRS += ' (Web Mercator)';
+                }
+            }
+        }
+
+        // For Markers layer, we can use the map's CRS since we set it when creating the layer
+        if (map && map.options && map.options.crs) {
+            const mapCRS = map.options.crs;
+            console.log('Map CRS:', mapCRS);
+            markersCRS = `EPSG:${mapCRS.code}`;
+            if (mapCRS.code === 4326) {
+                markersCRS += ' (WGS84 - Latitude/Longitude)';
+            } else if (mapCRS.code === 3857) {
+                markersCRS += ' (Web Mercator)';
+            }
+        }
         // Create metadata text file
         const currentDate = new Date().toISOString().split('T')[0];
         const metadataContent = [
@@ -251,9 +289,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 `Label ${cls.id}: ${cls.name} (Color: ${cls.color})`
             ),
             '',
-            'Coordinate Reference System:',
-            '-------------------------',
-            crsInfoElement.textContent,
+            'Coordinate Reference System (CRS) Information:',
+            '----------------------------------------',
+            'Input GeoTIFF CRS:',
+            geotiffCRS,
+            '',
+            'Sample Points CRS:',
+            markersCRS,
+            '',
+            'CRS Verification:',
+            `CRS Match Status: ${geotiffCRS === markersCRS ? 'MATCHED ✓' : 'MISMATCH ⚠️'}`,
             '',
             'Statistics:',
             '-----------',
