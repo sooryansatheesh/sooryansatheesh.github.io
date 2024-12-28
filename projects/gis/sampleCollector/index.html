@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoTIFF Sample Collector</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>GeoTIFF Sample Collector</h2>
+        
+        <div class="upload-section">
+            <input type="file" id="imageUpload" accept=".tif,.tiff" class="file-input">
+            <label for="imageUpload" class="file-label">Choose GeoTIFF File</label>
+            <span id="fileName" class="file-name"></span>
+        </div>
+
+        <div id="mainContent">
+            <div class="controls" id="classButtons">
+                <button class="class-btn active" data-class="1" style="background-color: #0077be; color: white;">Water</button>
+                <button class="class-btn" data-class="2" style="background-color: #228B22; color: white;">Dense Vegetation</button>
+                <button class="class-btn" data-class="3" style="background-color: #90EE90; color: black;">Vegetation</button>
+                <button class="class-btn" data-class="4" style="background-color: #808080; color: white;">Impervious</button>
+            </div>
+
+            <div id="map"></div>
+
+            <div class="actions">
+                <span>Total points: <span id="pointCount">0</span></span>
+                <div>
+                    <button class="btn clear" id="clearBtn">Clear All</button>
+                    <button class="btn" id="downloadBtn">Download CSV</button>
+                </div>
+                <div class="point-counts">
+                    <div class="count-item">Water: <span id="waterCount">0</span></div>
+                    <div class="count-item">Dense Veg: <span id="denseVegCount">0</span></div>
+                    <div class="count-item">Vegetation: <span id="vegCount">0</span></div>
+                    <div class="count-item">Impervious: <span id="impCount">0</span></div>
+                </div>
+            </div>
+
+            <div class="coordinates">
+                Coordinates: <span id="coordinates">Click on map to see coordinates</span>
+            </div>
+            <div class="crs-info">
+                CRS Information: <span id="crsInfo">No file loaded</span>
+            </div>
+
+            <div class="instructions">
+                <h3>Instructions:</h3>
+                <ol>
+                    <li>Upload a GeoTIFF file using the button above</li>
+                    <li>Select a land cover class from the buttons above</li>
+                    <li>Click on the map to place points</li>
+                    <li>Click on any point to remove it</li>
+                    <li>Download the CSV when finished</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/georaster@1.6.0/dist/georaster.browser.bundle.min.js"></script>
+    <script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
