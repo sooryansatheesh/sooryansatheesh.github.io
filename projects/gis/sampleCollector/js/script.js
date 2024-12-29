@@ -41,7 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadBtn = document.getElementById('downloadBtn');
     const pointCountElement = document.getElementById('pointCount');
     const coordinatesElement = document.getElementById('coordinates');
-
+    const geotiffCrsInfo = document.getElementById('geotiffCrsInfo');
+    const pointsCrsInfo = document.getElementById('pointsCrsInfo');
     // Register callback for class deletion
     classManager.onClassDelete((deletedClassId) => {
         // Remove all points of the deleted class
@@ -99,9 +100,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 // Add layer to map
                 geoLayer.addTo(map);
+
+                // Modified CRS extraction
+                let geotiffCRS = 'Not available';
+                let markersCRS = 'Not available';
+
+                // For GeoTIFF layer
+                if (geoLayer && geoLayer.options && geoLayer.options.georaster) {
+                    const georaster = geoLayer.options.georaster;
+                    console.log('Georaster:', georaster);
+                    if (georaster.projection) {
+                        geotiffCRS = `EPSG:${georaster.projection}`;
+                        if (georaster.projection === 4326) {
+                            geotiffCRS += ' (WGS84 - Latitude/Longitude)';
+                        } else if (georaster.projection === 3857) {
+                            geotiffCRS += ' (Web Mercator)';
+                        }
+                    }
+                }
+
+                // For Markers layer, we can use the map's CRS since we set it when creating the layer
+                if (map && map.options && map.options.crs) {
+                    const mapCRS = map.options.crs;
+                    console.log('Map CRS:', mapCRS);
+                    markersCRS = `${mapCRS.code}`;
+                    if (mapCRS.code === 4326) {
+                        markersCRS += ' (WGS84 - Latitude/Longitude)';
+                    } else if (mapCRS.code === 3857) {
+                        markersCRS += ' (Web Mercator)';
+                    }
+                }
     
                 // Update CRS info display
-                crsInfoElement.textContent = `Source CRS: EPSG:${georaster.projection}`;
+                geotiffCrsInfo.textContent = geotiffCRS;
+                pointsCrsInfo.textContent = markersCRS;
+                
     
                 // Update layer control
                 if (layerControl) {
@@ -268,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (map && map.options && map.options.crs) {
             const mapCRS = map.options.crs;
             console.log('Map CRS:', mapCRS);
-            markersCRS = `EPSG:${mapCRS.code}`;
+            markersCRS = `${mapCRS.code}`;
             if (mapCRS.code === 4326) {
                 markersCRS += ' (WGS84 - Latitude/Longitude)';
             } else if (mapCRS.code === 3857) {
