@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Journal Landing Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/shared.css">
+
 </head>
 <body>
     <header>
-        <div class="logo">Soorya's Interactive Travel Journal</div>
+        <div class="logo">Waylytics</div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -22,21 +23,23 @@
         </nav>
     </header>
 
-    <main>
-        <div id="summary">
-            <h2>Travel Summary</h2>
-            <p>Total Places Visited: <span id="totalPlaces">0</span></p>
-            <p>Total Trips: <span id="totalTrips">0</span></p>
-        </div>
+    <main class="main-container">
         <div id="map"></div>
-        <a href="trip-management.html" class="button">Add new entry</a>
+        <div class="sidebar">
+            <div id="summary">
+                <h2>Travel Summary</h2>
+                <p>Total Places Visited: <span id="totalPlaces">0</span></p>
+                <p>Total Trips: <span id="totalTrips">0</span></p>
+            </div>
+            <a href="trip-management.html" class="button">Add new entry</a>
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2024 Interactive Travel Journal. All rights reserved.</p>
+        <p>&copy; 2024 Waylytics. All rights reserved.</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="index/script.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>
