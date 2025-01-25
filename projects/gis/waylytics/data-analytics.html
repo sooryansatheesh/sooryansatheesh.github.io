@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Analytics - Waylytics</title>
+    <link rel="stylesheet" href="css/data-analytics.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.30.0/date-fns.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Waylytics</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="trip-management.html">Trips</a></li>
+                <li><a href="data-analytics.html">Data Analytics</a></li>
+                <li><a href="use-instructions.html">How to use</a></li>
+                <li><a href="about-project.html">About</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="analytics-container">
+            <div class="filters-section">
+                <h2>Filters & Analytics Options</h2>
+                <div class="filter-group">
+                    <label>Date Range:</label>
+                    <input type="date" id="startDate">
+                    <input type="date" id="endDate">
+                </div>
+                <div class="filter-group">
+                    <label>Select Trips:</label>
+                    <select id="tripSelector" multiple>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <button id="applyFilters" class="primary-btn">Apply Filters</button>
+            </div>
+
+            <div class="metrics-overview">
+                <div class="metric-card">
+                    <h3>Total Trips</h3>
+                    <p id="totalTrips">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Places Visited</h3>
+                    <p id="totalPlaces">0</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Distance</h3>
+                    <p id="totalDistance">0 km</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Travel Days</h3>
+                    <p id="totalDays">0</p>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Travel Timeline</h3>
+                    <canvas id="timelineChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Distance by Trip</h3>
+                    <canvas id="distanceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Travel Duration Distribution</h3>
+                    <canvas id="durationChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Seasonal Travel Patterns</h3>
+                    <canvas id="seasonalChart"></canvas>
+                </div>
+            </div>
+
+            <div class="detailed-analysis">
+                <h2>Custom Analysis</h2>
+                <div class="query-builder">
+                    <select id="analysisType">
+                        <option value="avgStayDuration">Average Stay Duration</option>
+                        <option value="mostVisited">Most Visited Places</option>
+                        <option value="longestTrips">Longest Trips</option>
+                        <option value="travelPace">Travel Pace Analysis</option>
+                    </select>
+                    <button id="generateAnalysis" class="primary-btn">Generate Analysis</button>
+                </div>
+                <div id="analysisResults" class="analysis-results">
+                    <!-- Results populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Waylytics. All rights reserved.</p>
+    </footer>
+
+    <script src="js/data-analytics.js"></script>
+</body>
+</html>
