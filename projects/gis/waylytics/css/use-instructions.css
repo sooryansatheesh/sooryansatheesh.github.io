@@ -1,0 +1,18 @@
+Add this CSS for specific instruction page styling:
+
+```css
+.analysis-results ul {
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.analysis-results ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.analysis-results h3 {
+    margin-top: 2rem;
+    color: #007bff;
+}
+```

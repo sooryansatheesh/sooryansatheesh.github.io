@@ -25,20 +25,83 @@
     </header>
 
     <main>
-        <div id="summary">
-            <h2>Travel Summary</h2>
-            <p>Total Places Visited: <span id="totalPlaces">0</span></p>
-            <p>Total Trips: <span id="totalTrips">0</span></p>
+        <div class="analytics-container">
+            <div class="metrics-overview">
+                <div class="metric-card">
+                    <h3>Trip Management</h3>
+                    <p>Create & Edit</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Analytics</h3>
+                    <p>Insights</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Data</h3>
+                    <p>Export & Share</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Settings</h3>
+                    <p>Customize</p>
+                </div>
+            </div>
+
+            <div class="detailed-analysis">
+                <h2>Getting Started</h2>
+                <div class="analysis-results">
+                    <h3>1. Creating Your First Trip</h3>
+                    <ul>
+                        <li>Navigate to "Trips" in the main menu</li>
+                        <li>Click "Create New Trip" button</li>
+                        <li>Enter trip name, dates, and description</li>
+                        <li>Add locations with arrival/departure dates</li>
+                    </ul>
+
+                    <h3>2. Using Analytics</h3>
+                    <ul>
+                        <li>Access the Analytics dashboard</li>
+                        <li>Set date ranges to filter data</li>
+                        <li>Select specific trips for analysis</li>
+                        <li>View metrics: total distance, days traveled, places visited</li>
+                    </ul>
+
+                    <h3>3. Custom Analysis</h3>
+                    <ul>
+                        <li>Use the Analysis dropdown for specific insights</li>
+                        <li>View average stay duration</li>
+                        <li>Check most visited places</li>
+                        <li>Analyze longest trips</li>
+                        <li>Review travel patterns</li>
+                    </ul>
+
+                    <h3>4. Data Management</h3>
+                    <ul>
+                        <li>All data is stored locally in your browser</li>
+                        <li>Use export feature to backup your data</li>
+                        <li>Import previous backups when needed</li>
+                        <li>Clear data from settings if required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Tips for Better Analysis</h3>
+                    <div class="analysis-results">
+                        <ul>
+                            <li>Enter accurate dates for better timeline views</li>
+                            <li>Add detailed location information for distance calculations</li>
+                            <li>Use consistent naming for places to track visits</li>
+                            <li>Regularly backup your travel data</li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
         </div>
-        <div id="map"></div>
-        <a href="trip-management.html" class="button">Add new entry</a>
     </main>
 
     <footer>
         <p>&copy; 2024 Waylytics. All rights reserved.</p>
     </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="index/script.js"></script>
 </body>
 </html>
