@@ -1,18 +1,80 @@
-Add this CSS for specific instruction page styling:
+.analytics-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
 
-```css
+.metrics-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.metric-card h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.metric-card p {
+    color: #666;
+    margin: 0;
+}
+
+.detailed-analysis, 
+.chart-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.analysis-results h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.analysis-results h3 {
+    color: #007bff;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
 .analysis-results ul {
     padding-left: 1.5rem;
     margin-bottom: 2rem;
 }
 
 .analysis-results ul li {
+    color: #666;
     margin-bottom: 0.75rem;
     line-height: 1.5;
 }
 
-.analysis-results h3 {
+.charts-grid {
     margin-top: 2rem;
-    color: #007bff;
 }
-```
+
+@media (max-width: 600px) {
+    .analytics-container {
+        margin: 1rem;
+    }
+    
+    .metrics-overview {
+        grid-template-columns: 1fr;
+    }
+    
+    .detailed-analysis, 
+    .chart-container {
+        padding: 1.5rem;
+    }
+}
