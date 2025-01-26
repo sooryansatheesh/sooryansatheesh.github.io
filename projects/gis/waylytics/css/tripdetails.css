@@ -41,7 +41,6 @@ nav a:hover {
     background-color: rgba(255,255,255,0.2);
 } */
 
-
 main {
     flex: 1;
     padding: 20px;
@@ -90,7 +89,6 @@ main {
     margin-top: auto;
 } */
 
-
 /* Search Box CSS Code Starts */
 .leaflet-control-geocoder {
     border: 2px solid rgba(0,0,0,0.2);
@@ -128,7 +126,6 @@ main {
 
 /* Trip Details Display end */
 
-
 /* Alert pop up message styling  */
 
 .modal {
@@ -152,7 +149,7 @@ main {
     max-width: 500px;
     position: relative;
     z-index: 10000;
-    
+
 }
 
 .close {
@@ -188,9 +185,6 @@ main {
     padding: 5px 10px;
 }
 
-
-
-
 .leaflet-interactive {
     stroke-dasharray: 5, 5;
     animation: dashdraw 20s linear infinite;
@@ -208,5 +202,31 @@ main {
 @keyframes dashdraw {
     to {
         stroke-dashoffset: -100; /* Changed to negative value */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #displayDataEntryContainer {
+        flex-direction: column;
+    }
+
+    #map {
+        width: 100%;
+        height: 50vh;
+    }
+
+    #rightcontainer {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    #map {
+        width: 70%;
+    }
+
+    #rightcontainer {
+        width: 30%;
     }
 }
