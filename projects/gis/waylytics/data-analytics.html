@@ -12,8 +12,15 @@
 <body>
     <header>
         <div class="logo">Waylytics</div>
+        <script>
+            function toggleMenu() {
+                document.getElementById('nav-menu').classList.toggle('show');
+            }
+        </script>
+        
         <nav>
-            <ul>
+            <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="trip-management.html">Trips</a></li>
                 <li><a href="data-analytics.html">Data Analytics</a></li>
@@ -83,21 +90,7 @@
                 </div>
             </div>
 
-            <div class="detailed-analysis">
-                <h2>Custom Analysis</h2>
-                <div class="query-builder">
-                    <select id="analysisType">
-                        <option value="avgStayDuration">Average Stay Duration</option>
-                        <option value="mostVisited">Most Visited Places</option>
-                        <option value="longestTrips">Longest Trips</option>
-                        <option value="travelPace">Travel Pace Analysis</option>
-                    </select>
-                    <button id="generateAnalysis" class="primary-btn">Generate Analysis</button>
-                </div>
-                <div id="analysisResults" class="analysis-results">
-                    <!-- Results populated dynamically -->
-                </div>
-            </div>
+            
         </div>
     </main>
 

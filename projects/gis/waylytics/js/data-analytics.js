@@ -19,7 +19,7 @@ function initializeAnalytics() {
 
 function setupEventListeners() {
     document.getElementById('applyFilters').addEventListener('click', updateDashboard);
-    document.getElementById('generateAnalysis').addEventListener('click', generateCustomAnalysis);
+    // document.getElementById('generateAnalysis').addEventListener('click', generateCustomAnalysis);
 }
 
 function updateDashboard() {
@@ -396,7 +396,7 @@ function createCountryVisitsChart(entries) {
     const countryStats = {};
     entries.forEach(entry => {
         if (entry.country && entry.country !== 'Unknown') {
-            console.log("Found Country-",entry.country);
+            // console.log("Found Country-",entry.country);
             if (!countryStats[entry.country]) {
                 countryStats[entry.country] = {
                     visits: 0,
@@ -411,10 +411,10 @@ function createCountryVisitsChart(entries) {
             countryStats[entry.country].totalDays += duration;
         }
         else {
-            console.log("Did not find Country-",entry.country); 
+            // console.log("Did not find Country-",entry.country); 
         }
     });
-    console.log("CountryVisits-countryStats:",countryStats); 
+    // console.log("CountryVisits-countryStats:",countryStats); 
     // Get top 5 countries by visits
     const topCountries = Object.entries(countryStats)
         .sort(([,a], [,b]) => b.visits - a.visits)
@@ -424,7 +424,7 @@ function createCountryVisitsChart(entries) {
             visits: stats.visits,
             avgDuration: Math.round(stats.totalDays / stats.visits)
         }));
-        console.log("CountryVisits-topCountries:",topCountries);   
+        // console.log("CountryVisits-topCountries:",topCountries);   
     const data = {
         datasets: [{
             label: 'Country Visits',
@@ -451,7 +451,7 @@ function createCountryVisitsChart(entries) {
             borderWidth: 1
         }]
     };
-    console.log("CountryVisits-Data:",data);
+    // console.log("CountryVisits-Data:",data);
     new Chart(ctx, {
         type: 'bubble',
         data: data,
@@ -495,92 +495,4 @@ function createCountryVisitsChart(entries) {
             }
         }
     });
-}
-function generateCustomAnalysis() {
-    const analysisType = document.getElementById('analysisType').value;
-    const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-    const resultsDiv = document.getElementById('analysisResults');
-
-    switch (analysisType) {
-        case 'avgStayDuration':
-            const avgDuration = calculateAverageStayDuration(entries);
-            resultsDiv.innerHTML = `<h3>Average Stay Duration</h3>
-                <p>On average, you spend ${avgDuration.toFixed(1)} days at each location.</p>`;
-            break;
-
-        case 'mostVisited':
-            const topPlaces = getMostVisitedPlaces(entries);
-            resultsDiv.innerHTML = `<h3>Most Visited Places</h3>
-                <ul>${topPlaces.map(place => 
-                    `<li>${place.location}: ${place.visits} visits</li>`).join('')}</ul>`;
-            break;
-
-        case 'longestTrips':
-            const longest = getLongestTrips(entries);
-            resultsDiv.innerHTML = `<h3>Longest Trips</h3>
-                <ul>${longest.map(trip => 
-                    `<li>${trip.location}: ${trip.duration} days</li>`).join('')}</ul>`;
-            break;
-
-        case 'travelPace':
-            const pace = analyzeTravelPace(entries);
-            resultsDiv.innerHTML = `<h3>Travel Pace Analysis</h3>
-                <p>Average distance per day: ${pace.distancePerDay.toFixed(1)} km</p>
-                <p>Most active month: ${pace.mostActiveMonth}</p>`;
-            break;
-    }
-}
-
-function calculateAverageStayDuration(entries) {
-    const durations = entries.map(entry => {
-        const start = new Date(entry.arrivalDate);
-        const end = new Date(entry.departureDate);
-        return (end - start) / (1000 * 60 * 60 * 24);
-    });
-    return durations.reduce((a, b) => a + b, 0) / durations.length;
-}
-
-function getMostVisitedPlaces(entries) {
-    const placeCounts = {};
-    entries.forEach(entry => {
-        placeCounts[entry.location] = (placeCounts[entry.location] || 0) + 1;
-    });
-    
-    return Object.entries(placeCounts)
-        .map(([location, visits]) => ({ location, visits }))
-        .sort((a, b) => b.visits - a.visits)
-        .slice(0, 5);
-}
-
-function getLongestTrips(entries) {
-    return entries.map(entry => ({
-        location: entry.location,
-        duration: Math.ceil((new Date(entry.departureDate) - new Date(entry.arrivalDate)) 
-            / (1000 * 60 * 60 * 24))
-    }))
-    .sort((a, b) => b.duration - a.duration)
-    .slice(0, 5);
-}
-
-function analyzeTravelPace(entries) {
-    const sortedEntries = entries.sort((a, b) => 
-        new Date(a.arrivalDate) - new Date(b.arrivalDate)
-    );
-    
-    const totalDistance = calculateTotalDistance(sortedEntries);
-    const totalDays = calculateTotalDays(sortedEntries);
-    
-    const monthlyActivity = {};
-    entries.forEach(entry => {
-        const month = new Date(entry.arrivalDate).toLocaleString('default', { month: 'long' });
-        monthlyActivity[month] = (monthlyActivity[month] || 0) + 1;
-    });
-    
-    const mostActiveMonth = Object.entries(monthlyActivity)
-        .sort((a, b) => b[1] - a[1])[0][0];
-    
-    return {
-        distancePerDay: totalDistance / totalDays,
-        mostActiveMonth
-    };
 }
