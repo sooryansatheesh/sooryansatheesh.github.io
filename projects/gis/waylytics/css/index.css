@@ -35,7 +35,6 @@
     text-decoration: none;
     border-radius: 5px;
     text-align: center;
-    margin-top: auto; /* Push button to bottom of sidebar */
     margin-bottom: 20px; /* Ensure space before footer */
 }
 /* Responsive design for smaller screens */

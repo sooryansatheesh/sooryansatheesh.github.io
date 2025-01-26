@@ -58,10 +58,13 @@ function loadJournalEntries() {
             let marker = L.marker([entry.lat, entry.lng], {icon: markerIcon}).addTo(map);
             let popupContent = `
                 <b>${entry.locationName}</b><br>
-                Arrival: ${entry.arrivalDate}<br>
-                Departure: ${entry.departureDate}<br>
-                Notes: ${entry.notes}<br>
-                Trip: ${trip.name}
+                <b>City:</b> ${entry.city || 'N/A'}<br>
+                <b>State:</b> ${entry.state || 'N/A'}<br>
+                <b>Country:</b> ${entry.country || 'N/A'}<br>
+                <b>Arrival:</b> ${entry.arrivalDate}<br>
+                <b>Departure:</b> ${entry.departureDate}<br>
+                <b>Notes:</b> ${entry.notes}<br>
+                <b>Trip:</b> ${trip.name}
             `;
             marker.bindPopup(popupContent);
             markers.push({ marker, entry });
