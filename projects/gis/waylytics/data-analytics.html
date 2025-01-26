@@ -33,12 +33,7 @@
                     <input type="date" id="startDate">
                     <input type="date" id="endDate">
                 </div>
-                <div class="filter-group">
-                    <label>Select Trips:</label>
-                    <select id="tripSelector" multiple>
-                        <!-- Populated dynamically -->
-                    </select>
-                </div>
+                
                 <button id="applyFilters" class="primary-btn">Apply Filters</button>
             </div>
 
@@ -71,12 +66,20 @@
                     <canvas id="distanceChart"></canvas>
                 </div>
                 <div class="chart-container">
-                    <h3>Travel Duration Distribution</h3>
+                    <h3>Place Stay Duration Distribution</h3>
                     <canvas id="durationChart"></canvas>
                 </div>
                 <div class="chart-container">
                     <h3>Seasonal Travel Patterns</h3>
                     <canvas id="seasonalChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Trip Duration Distribution</h3>
+                    <canvas id="tripDurationChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Most Visited Countries</h3>
+                    <canvas id="countryVisitsChart"></canvas>
                 </div>
             </div>
 

@@ -3,19 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeAnalytics() {
-    loadTripSelector();
+    // loadTripSelector();
     setupEventListeners();
     updateDashboard();
 }
 
-function loadTripSelector() {
-    const tripSelector = document.getElementById('tripSelector');
-    const trips = JSON.parse(localStorage.getItem('trips') || '[]');
+// function loadTripSelector() {
+//     const tripSelector = document.getElementById('tripSelector');
+//     const trips = JSON.parse(localStorage.getItem('trips') || '[]');
     
-    tripSelector.innerHTML = trips.map(trip => 
-        `<option value="${trip.id}">${trip.name}</option>`
-    ).join('');
-}
+//     tripSelector.innerHTML = trips.map(trip => 
+//         `<option value="${trip.id}">${trip.name}</option>`
+//     ).join('');
+// }
 
 function setupEventListeners() {
     document.getElementById('applyFilters').addEventListener('click', updateDashboard);
@@ -34,7 +34,7 @@ function getFilters() {
     return {
         startDate: document.getElementById('startDate').value,
         endDate: document.getElementById('endDate').value,
-        selectedTrips: Array.from(document.getElementById('tripSelector').selectedOptions).map(opt => opt.value)
+        // selectedTrips: Array.from(document.getElementById('tripSelector').selectedOptions).map(opt => opt.value)
     };
 }
 
@@ -54,11 +54,11 @@ function getFilteredData(filters) {
         );
     }
 
-    if (filters.selectedTrips.length > 0) {
-        journalEntries = journalEntries.filter(entry => 
-            filters.selectedTrips.includes(entry.tripId)
-        );
-    }
+    // if (filters.selectedTrips.length > 0) {
+    //     journalEntries = journalEntries.filter(entry => 
+    //         filters.selectedTrips.includes(entry.tripId)
+    //     );
+    // }
 
     return { journalEntries, trips };
 }
@@ -126,29 +126,61 @@ function calculateTotalDays(entries) {
 
 function updateCharts(data) {
     const { journalEntries, trips } = data;
+
+    // Clear existing charts before creating new ones
+    clearCharts();
     
     createTimelineChart(journalEntries);
     createDistanceChart(journalEntries, trips);
     createDurationChart(journalEntries);
+    createTripDurationChart(journalEntries)
     createSeasonalChart(journalEntries);
+    createCountryVisitsChart(journalEntries);
 }
+
+function clearCharts() {
+    const chartIds = ['timelineChart', 'distanceChart', 'durationChart', 'seasonalChart','tripDurationChart','countryVisitsChart'];
+    chartIds.forEach(id => {
+        const canvas = document.getElementById(id);
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (Chart.getChart(id)) {
+            Chart.getChart(id).destroy();
+        }
+    });
+}
+
 
 function createTimelineChart(entries) {
     const ctx = document.getElementById('timelineChart').getContext('2d');
     
-    const sortedEntries = entries.sort((a, b) => 
-        new Date(a.arrivalDate) - new Date(b.arrivalDate)
-    );
+    // Convert entries to monthCount format with proper timestamps
+    const monthlyData = {};
+    entries.forEach(entry => {
+        const date = new Date(entry.arrivalDate);
+        // Set day to 1 to ensure consistent sorting
+        const key = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
+        monthlyData[key] = (monthlyData[key] || 0) + 1;
+    });
+
+    // Sort timestamps and create data arrays
+    const sortedTimestamps = Object.keys(monthlyData).sort();
+    const labels = sortedTimestamps.map(ts => {
+        const date = new Date(parseInt(ts));
+        return date.toLocaleString('default', { month: 'short', year: 'numeric' });
+    });
+    const data = sortedTimestamps.map(ts => monthlyData[ts]);
 
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: sortedEntries.map(entry => entry.arrivalDate),
+            labels: labels,
             datasets: [{
-                label: 'Places Visited Over Time',
-                data: sortedEntries.map((_, index) => index + 1),
+                label: 'Places Visited',
+                data: data,
                 borderColor: '#007bff',
-                tension: 0.1
+                tension: 0.1,
+                fill: false
             }]
         },
         options: {
@@ -158,7 +190,7 @@ function createTimelineChart(entries) {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Cumulative Places Visited'
+                        text: 'Number of Places'
                     }
                 }
             }
@@ -166,7 +198,6 @@ function createTimelineChart(entries) {
     });
 }
 
-// ... Previous code remains the same ...
 
 function createDistanceChart(entries, trips) {
     const ctx = document.getElementById('distanceChart').getContext('2d');
@@ -245,6 +276,79 @@ function createDurationChart(entries) {
     });
 }
 
+function createTripDurationChart(entries) {
+    const ctx = document.getElementById('tripDurationChart').getContext('2d');
+    
+    const tripEntries = {};
+    entries.forEach(entry => {
+        if (!tripEntries[entry.tripId]) {
+            tripEntries[entry.tripId] = [];
+        }
+        tripEntries[entry.tripId].push(entry);
+    });
+
+    const categories = {
+        'Short (1-7 days)': [],
+        'Medium (8-14 days)': [],
+        'Long (15+ days)': []
+    };
+
+    Object.entries(tripEntries).forEach(([tripId, entries]) => {
+        const arrivals = entries.map(e => new Date(e.arrivalDate));
+        const departures = entries.map(e => new Date(e.departureDate));
+        const duration = Math.ceil((Math.max(...departures) - Math.min(...arrivals)) / (1000 * 60 * 60 * 24));
+        
+        if (duration <= 7) {
+            categories['Short (1-7 days)'].push(duration);
+        } else if (duration <= 14) {
+            categories['Medium (8-14 days)'].push(duration);
+        } else {
+            categories['Long (15+ days)'].push(duration);
+        }
+    });
+
+    const categoryAverages = Object.fromEntries(
+        Object.entries(categories).map(([category, durations]) => [
+            category,
+            durations.length > 0 ? durations.reduce((a, b) => a + b, 0) / durations.length : 0
+        ])
+    );
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(categoryAverages),
+            datasets: [{
+                label: 'Average Duration (days)',
+                data: Object.values(categoryAverages),
+                backgroundColor: ['#007bff', '#28a745', '#dc3545']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Average Duration (days)'
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        footer: (tooltipItems) => {
+                            const categoryName = tooltipItems[0].label;
+                            return `Number of trips: ${categories[categoryName].length}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
 function createSeasonalChart(entries) {
     const ctx = document.getElementById('seasonalChart').getContext('2d');
     
@@ -285,7 +389,113 @@ function createSeasonalChart(entries) {
         }
     });
 }
-
+function createCountryVisitsChart(entries) {
+    const ctx = document.getElementById('countryVisitsChart').getContext('2d');
+    
+    // Count visits and calculate average duration per country
+    const countryStats = {};
+    entries.forEach(entry => {
+        if (entry.country && entry.country !== 'Unknown') {
+            console.log("Found Country-",entry.country);
+            if (!countryStats[entry.country]) {
+                countryStats[entry.country] = {
+                    visits: 0,
+                    totalDays: 0
+                };
+            }
+            const duration = Math.ceil(
+                (new Date(entry.departureDate) - new Date(entry.arrivalDate)) 
+                / (1000 * 60 * 60 * 24)
+            );
+            countryStats[entry.country].visits++;
+            countryStats[entry.country].totalDays += duration;
+        }
+        else {
+            console.log("Did not find Country-",entry.country); 
+        }
+    });
+    console.log("CountryVisits-countryStats:",countryStats); 
+    // Get top 5 countries by visits
+    const topCountries = Object.entries(countryStats)
+        .sort(([,a], [,b]) => b.visits - a.visits)
+        .slice(0, 5)
+        .map(([country, stats]) => ({
+            country,
+            visits: stats.visits,
+            avgDuration: Math.round(stats.totalDays / stats.visits)
+        }));
+        console.log("CountryVisits-topCountries:",topCountries);   
+    const data = {
+        datasets: [{
+            label: 'Country Visits',
+            data: topCountries.map(country => ({
+                x: country.visits,
+                y: country.avgDuration,
+                r: country.visits * 5, // bubble size proportional to visits
+                country: country.country
+            })),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+    console.log("CountryVisits-Data:",data);
+    new Chart(ctx, {
+        type: 'bubble',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Number of Visits'
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Average Stay Duration (days)'
+                    },
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const data = context.raw;
+                            return [
+                                `Country: ${data.country}`,
+                                `Visits: ${data.x}`,
+                                `Avg. Stay: ${data.y} days`
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
 function generateCustomAnalysis() {
     const analysisType = document.getElementById('analysisType').value;
     const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');

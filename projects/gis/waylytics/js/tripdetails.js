@@ -212,11 +212,36 @@ function addMarker() {
             
             console.log('New entry created:', entry);
 
-            saveAndDisplayMarker(tempMarker, entry);
-            drawnItems.addLayer(tempMarker);
-            tempMarker = null;
-            document.getElementById('entryForm').style.display = 'none';
-            resetForm();
+            // Call async function and handle promise
+            getLocationDetails(normalizedLatLng.lat, normalizedLatLng.lng)
+                .then(locationDetails => {
+                    entry.country = locationDetails.country;
+                    entry.city = locationDetails.city;
+                    entry.state = locationDetails.state;
+                    return saveAndDisplayMarker(tempMarker, entry);
+                })
+                .catch(error => {
+                    console.error('Error getting location details:', error);
+                    entry.country = 'Unknown';
+                    entry.city = 'Unknown';
+                    entry.state = 'Unknown';
+                    return saveAndDisplayMarker(tempMarker, entry);
+                })
+                .finally(() => {
+                    drawnItems.addLayer(tempMarker);
+                    tempMarker = null;
+                    document.getElementById('entryForm').style.display = 'none';
+                    resetForm();
+                    hideEntryForm();
+                });
+
+            // saveAndDisplayMarker(tempMarker, entry);
+
+
+            // drawnItems.addLayer(tempMarker);
+            // tempMarker = null;
+            // document.getElementById('entryForm').style.display = 'none';
+            // resetForm();
         } else {
             alert("Date conflict detected. Please choose different dates.");
             showEntryForm();
@@ -273,24 +298,53 @@ function isDateConflict(newArrival, newDeparture) {
 function saveAndDisplayMarker(marker, entry) {
     let normalizedLatLng = L.latLng(entry.lat, entry.lng);
     marker.setLatLng(normalizedLatLng);
+
+    // Get location details from coordinates
+    // const locationDetails = await getLocationDetails(entry.lat, entry.lng);
+    // entry.country = locationDetails.country;
+    // entry.city = locationDetails.city;
+    // entry.state = locationDetails.state;
     
     let popupContent = `
     <b>${entry.locationName}</b><br>
     Arrival: ${entry.arrivalDate}<br>
     Departure: ${entry.departureDate}<br>
     Notes: ${entry.notes}<br>
+    Country: ${entry.country}<br>
+    City: ${entry.city}<br>
+    State/Province: ${entry.state}<br>
     Latitude: ${entry.lat.toFixed(6)}<br>
     Longitude: ${entry.lng.toFixed(6)}<br>
     `;
 
     marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`).openPopup();
-    markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
+    markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker,country: entry.country,
+        city: entry.city,
+        state: entry.state });
     
     updateStartAndEndPoints();
     updateMarkerColors();
     console.log('Marker saved and displayed:', entry);
     saveJournalEntries();
     updateJournalEntries();
+}
+
+function getLocationDetails(lat, lng) {
+    return fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+        .then(response => response.json())
+        .then(data => ({
+            country: data.address.country || 'Unknown',
+            city: data.address.city || data.address.town || data.address.village || data.address.suburb || 'Unknown',
+            state: data.address.state || data.address.province || 'Unknown'
+        }))
+        .catch(error => {
+            console.error('Error getting location details:', error);
+            return {
+                country: 'Unknown',
+                city: 'Unknown',
+                state: 'Unknown'
+            };
+        });
 }
 
 function updateMarkerColors() {
@@ -361,6 +415,9 @@ function saveJournalEntries() {
             arrivalDate: popupContent[1].split(': ')[1],
             departureDate: popupContent[2].split(': ')[1],
             notes: popupContent[3].split(': ')[1],
+            country: markerObj.country,
+            city: markerObj.city,
+            state: markerObj.state,
             lat: latLng.lat,
             lng: latLng.lng,
             isStartPoint: markerObj.isStartPoint,
@@ -395,6 +452,26 @@ function loadJournalEntries() {
         let icon = blueIcon;
         if (index === 0) icon = greenIcon;
         else if (index === entries.length - 1) icon = redIcon;
+        if (!entry.country || !entry.city) {
+            // const locationDetails = await getLocationDetails(entry.lat, entry.lng);
+            // entry.country = locationDetails.country;
+            // entry.city = locationDetails.city;
+            // entry.state = locationDetails.state;
+            getLocationDetails(entry.lat, entry.lng)
+                .then(locationDetails => {
+                    entry.country = locationDetails.country;
+                    entry.city = locationDetails.city;
+                    entry.state = locationDetails.state;
+                    
+                })
+                .catch(error => {
+                    console.error('Error getting location details:', error);
+                    entry.country = 'Unknown';
+                    entry.city = 'Unknown';
+                    entry.state = 'Unknown';
+                    
+                });
+        }
 
         let marker = L.marker([entry.lat, entry.lng], {icon: icon}).addTo(map);
         let popupContent = `
@@ -402,11 +479,16 @@ function loadJournalEntries() {
         Arrival: ${entry.arrivalDate}<br>
         Departure: ${entry.departureDate}<br>
         Notes: ${entry.notes}<br>
+        Country: ${entry.country}<br>
+        City: ${entry.city}<br>
+        State/Province: ${entry.state}<br>
         Latitude: ${entry.lat.toFixed(6)}<br>
         Longitude: ${entry.lng.toFixed(6)}<br>
         `;
         marker.bindPopup(`${popupContent}<button onclick="deleteMarker(${entry.id})">Delete</button>`);
-        markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker });
+        markers.push({ leafletId: marker._leaflet_id, entryId: entry.id, marker: marker,country: entry.country,
+            city: entry.city,
+            state: entry.state });
 
         drawnItems.addLayer(marker);
         console.log('Loaded marker:', entry);
