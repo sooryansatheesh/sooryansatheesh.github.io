@@ -302,6 +302,53 @@ function createPopupContent(properties, mapYear) {
     return content;
 }
 
+function addGoldenSpikeMarker(map) {
+    // Add Golden Spike marker at Promontory Summit
+    console.log("Started execute addGoldenSpike Marker function");
+    const goldenSpikeMarker = L.marker([41.5945, -112.5581], {
+        icon: L.divIcon({
+            className: 'golden-spike-icon',
+            html: `<div style="
+                background-color: gold; 
+                width: 30px; 
+                height: 30px; 
+                border-radius: 50%; 
+                border: 3px solid brown;
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            "></div>`,
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            popupAnchor: [0, 0]
+        })
+    }).addTo(map);
+
+    // Create a popup with the historical image and context
+    goldenSpikeMarker.bindPopup(`
+        <div class="golden-spike-popup scrollable-popup" style="display: flex; align-items: stretch; max-width: 500px;">
+        <div class="popup-text" style="flex: 1; padding-right: 10px; overflow-y: auto; max-height: 250px;">
+            <h3 style="margin-bottom: 5px;">Golden Spike Ceremony</h3>
+            <p style="margin: 2px 0;"><strong>Location:</strong> Promontory Summit, Utah</p>
+            <p style="margin: 2px 0;"><strong>Date:</strong> May 10, 1869</p>
+            <p style="margin: 2px 0;"><strong>Significance:</strong> Completion of the First Transcontinental Railroad</p>
+            <p style="margin: 2px 0; font-size: 0.8em;"><strong>By</strong> <a href="https://en.wikipedia.org/wiki/en:Andrew_J._Russell" class="extiw" title="w:en:Andrew J. Russell"><span title="American photographer">Andrew J. Russell</span></a> - Cropped, edited and restored from <a href="//commons.wikimedia.org/wiki/File:East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad.jpg" title="File:East and West Shaking hands at the laying of last rail Union Pacific Railroad.jpg">original file</a>, Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=94268577">Link</a></p>
+        </div>
+        <div class="popup-image" style="flex: 1; display: flex; align-items: center; justify-content: center;">
+            <img src="images/golden_spike_ceremony.jpg" 
+                 style="max-width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px;">
+        </div>
+    </div>
+    `, {
+        maxWidth: 600,
+        minWidth: 400,
+        className: 'golden-spike-popup'
+    });
+
+    // Optionally open the popup
+    goldenSpikeMarker.openPopup();
+
+    return goldenSpikeMarker;
+}
+
 let railroadLayer = null;
 
 async function loadRailRoadMap(mapYear) {
@@ -433,6 +480,11 @@ async function updateMap() {
 
             const sectionType = section.dataset.type || 'historical';
             const railMap = section.dataset.railMap;
+
+            if (railMap === '1870') {
+                // Add Golden Spike marker
+                addGoldenSpikeMarker(map);
+            }
 
             if (sectionType === 'historical' && railMap) {
                 // Load historical railroad map
