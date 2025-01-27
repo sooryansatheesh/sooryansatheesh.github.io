@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>American Railroad History: A Journey Through Time</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.kml/1.0.1/L.KML.js"></script>
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,7 +13,7 @@
     <div class="progress-bar" id="progress-bar"></div>
     <div class="story-container">
             <!-- Section 1: Early Beginnings -->
-        <section class="story-section" data-center="[39.2904, -76.6122]" data-zoom="6"
+        <section class="story-section" data-type="historical" data-center="[39.2904, -76.6122]" data-zoom="6"
             data-route='[[39.2904, -76.6122], [39.9526, -75.1652]]'>
         <div class="timeline-marker">1797-1830</div>
         <h2>The Dawn of American Railroads</h2>
@@ -37,8 +38,8 @@
         </section>
 
         <!-- Section 2: Rapid Expansion -->
-        <section class="story-section" data-center="[42.3601, -71.0589]" data-zoom="6"
-            data-route='[[42.3601, -71.0589], [42.6526, -73.7562]]'>
+        <section class="story-section" data-rail-map="1840" data-type="historical" data-center="[37.75569, -82.0589]" data-zoom="6"
+            data-route='[]'>
         <div class="timeline-marker">1840-1850</div>
         <h2>Era of Rapid Expansion</h2>
         <p class="intro">By 1840, over 2,800 miles of railroad operated in the U.S., marking the beginning of a transportation revolution that would transform the nation.</p>
@@ -61,8 +62,8 @@
         </section>
 
         <!-- Section 3: Civil War Era -->
-        <section class="story-section" data-center="[38.8977, -77.0365]" data-zoom="5"
-            data-route='[[38.8977, -77.0365], [39.2904, -76.6122]]'>
+        <section class="story-section" data-rail-map="1861" data-type="historical" data-center="[38.8977, -77.0365]" data-zoom="5"
+            data-route='[]'>
         <div class="timeline-marker">1860-1865</div>
         <h2>Railroads in the Civil War</h2>
         <p class="intro">The Civil War became the first major conflict where railroads played a decisive role in military strategy and logistics.</p>
@@ -85,8 +86,8 @@
         </section>
 
         <!-- Section 4: Golden Age -->
-        <section class="story-section" data-center="[41.6169, -112.5518]" data-zoom="5"
-            data-route='[[41.6169, -112.5518], [41.6169, -112.5518]]'>
+        <section class="story-section" data-rail-map="1870" data-type="historical" data-center="[39.49520, -101,28895]" data-zoom="4"
+            data-route='[]'>
         <div class="timeline-marker">1865-1916</div>
         <h2>The Golden Age of Railroads</h2>
         <p class="intro">The completion of the transcontinental railroad in 1869 ushered in a half-century period where railroads dominated American transportation without significant competition.</p>
@@ -110,7 +111,7 @@
         </section>
 
         <!-- Section 5: Regulation Era -->
-        <section class="story-section" data-center="[38.8977, -77.0365]" data-zoom="5">
+        <!-- <section class="story-section" data-type="historical" data-center="[38.8977, -77.0365]" data-zoom="5">
         <div class="timeline-marker">1887-1970</div>
         <h2>Era of Regulation and Challenges</h2>
         <p class="intro">The creation of the Interstate Commerce Commission in 1887 marked the beginning of comprehensive federal regulation, leading to decades of industry challenges.</p>
@@ -130,10 +131,10 @@
                 <li>Technological advancements continue</li>
             </ul>
         </div>
-        </section>
+        </section> -->
 
         <!-- Section 6: Modern Transformation -->
-        <section class="story-section" data-center="[38.8977, -77.0365]" data-zoom="4">
+        <section class="story-section" data-rail-map="amtrak" data-type="historical" data-center="[38.8977, -77.0365]" data-zoom="4">
         <div class="timeline-marker">1970-1980</div>
         <h2>Crisis and Transformation</h2>
         <p class="intro">The 1970s brought significant changes as the industry faced bankruptcy crises and the need for fundamental reform.</p>
@@ -156,7 +157,7 @@
         </section>
 
         <!-- Section 7: Modern Era -->
-        <section class="story-section" data-center="[41.8781, -87.6298]" data-zoom="4">
+        <section class="story-section" data-type="historical" data-center="[41.8781, -87.6298]" data-zoom="4">
         <div class="timeline-marker">1980-Present</div>
         <h2>Renaissance and Innovation</h2>
         <p class="intro">Post-Staggers Act, railroads have invested over $810 billion in private funds to create the world's safest and most efficient freight rail network.</p>
@@ -179,7 +180,7 @@
         </div>
         </section>
         <!-- Section 8: California High-Speed Rail -->
-        <section class="story-section" data-center="[36.7783, -119.4179]" data-zoom="6"
+        <section class="story-section" data-type="highSpeed" data-center="[36.7783, -119.4179]" data-zoom="6"
             data-route='[[37.7749, -122.4194], [36.7378, -119.7871], [34.0522, -118.2437], [38.5816, -121.4944]]'>
         <div class="timeline-marker">Present Day</div>
         <h2>California High-Speed Rail: America's First True HSR System</h2>
@@ -217,7 +218,7 @@
         </section>
 
         <!-- Section 9: Future of Rail - Brightline Projects -->
-        <section class="story-section" data-center="[36.1699, -115.1398]" data-zoom="6"
+        <section class="story-section" data-type="future" data-center="[36.1699, -115.1398]" data-zoom="6"
             data-route='[[36.1699, -115.1398], [34.0522, -118.2437]]'>
         <div class="timeline-marker">Future</div>
         <h2>Brightline: The Future of Private High-Speed Rail</h2>

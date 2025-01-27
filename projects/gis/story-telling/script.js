@@ -76,7 +76,13 @@ const hsrStations = [
         name: "Los Angeles",
         coords: [34.0522, -118.2437],
         info: "Union Station - Southern terminus of Phase 1"
+    },
+    {
+        name: "Sacramento",
+        coords: [38.58639, -121.466],
+        info: "Sacramento Valley Station"
     }
+
 ];
 
 // Brightline Station data
@@ -102,6 +108,8 @@ const brightlineStations = [
 let activeRoute = null;
 let activeMarkers = [];
 let activeOverlays = [];
+let activeRailroads = null;
+
 
 // Function to check if element is in viewport
 function isElementInViewport(el) {
@@ -114,13 +122,41 @@ function isElementInViewport(el) {
 
 // Function to clear map elements
 function clearMap() {
+    console.log("Clearing map layers...");
+
+     // Clear all layers from map
+     map.eachLayer((layer) => {
+        // Don't remove the base tile layer
+        if (!layer._url) {  // Base tile layers have _url property
+            map.removeLayer(layer);
+        }
+    });
+    
     if (activeRoute) {
+        console.log("Clearing active route");
         map.removeLayer(activeRoute);
+        activeRoute = null;
     }
-    activeMarkers.forEach(marker => map.removeLayer(marker));
-    activeMarkers = [];
-    activeOverlays.forEach(overlay => map.removeLayer(overlay));
-    activeOverlays = [];
+
+    if (activeRailroads) {
+        console.log("Clearing railroad layer");
+        map.removeLayer(activeRailroads);
+        activeRailroads = null;
+    }
+
+    if (activeMarkers.length > 0) {
+        console.log(`Clearing ${activeMarkers.length} markers`);
+        activeMarkers.forEach(marker => map.removeLayer(marker));
+        activeMarkers = [];
+    }
+
+    if (activeOverlays.length > 0) {
+        console.log(`Clearing ${activeOverlays.length} overlays`);
+        activeOverlays.forEach(overlay => map.removeLayer(overlay));
+        activeOverlays = [];
+    }
+
+    console.log("Map cleared");
 }
 
 // Function to add a route with animation and interactivity
@@ -199,14 +235,7 @@ function addStationMarker(station, type) {
             <p>${station.info}</p>
             ${type === 'highSpeed' || type === 'future' ? 
                 `<div class="station-stats">
-                    <div class="stat">
-                        <span class="stat-label">Estimated Daily Riders</span>
-                        <span class="stat-value">10,000+</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Platform Tracks</span>
-                        <span class="stat-value">4</span>
-                    </div>
+                    
                 </div>` : ''
             }
         </div>
@@ -243,10 +272,153 @@ function addRouteOverlay(coordinates, type) {
     return overlay;
 }
 
+function createPopupContent(properties, mapYear) {
+   
+    if (!properties) return 'No information available';
+    
+    let content = '<div class="railroad-popup">';
+    
+    // Check if it's Amtrak data based on mapYear
+    if (mapYear === 'amtrak') {
+        content += `
+        <div class="railroad-popup">
+            <h3 style="color: #0039A6; margin-bottom: 8px;">${properties.name || 'Amtrak Route'}</h3>
+            <p><strong>Type:</strong> Long Distance Passenger Route</p>
+            ${properties.shape_leng ? `<p><strong>Length:</strong> ${Math.round(properties.shape_leng * 100) / 100} miles</p>` : ''}
+        </div>
+    `;
+    }
+    // Historical railroad data
+    else {
+        content += `
+            <h3>${properties.NAME || 'Historical Railroad'}</h3>
+            ${properties.RROWNER1 ? `<p><strong>Owner:</strong> ${properties.RROWNER1}</p>` : ''}
+            ${properties.GAUGE ? `<p><strong>Track Gauge:</strong> ${properties.GAUGE}</p>` : ''}
+            ${properties.STATE ? `<p><strong>State:</strong> ${properties.STATE}</p>` : ''}
+        `;
+    }
+    
+    content += '</div>';
+    return content;
+}
+
+let railroadLayer = null;
+
+async function loadRailRoadMap(mapYear) {
+    
+
+    // Define paths for different map years
+    const mapPaths = {
+        '1840': './gis_data/1840_rail_map.geojson',
+        '1845': './gis_data/1845_rail_map.geojson',
+        '1855': './gis_data/1855_rail_map.geojson',
+        '1860': './gis_data/1860_rail_map.geojson',
+        '1861': './gis_data/1861_rail_map.geojson',
+        '1870': './gis_data/1870_rail_map.geojson',
+        'amtrak': './gis_data/amtrak_routes.geojson'
+    };
+
+    // Get the correct path
+    const path = mapPaths[mapYear];
+    if (!path) {
+        console.error('Invalid map year:', mapYear);
+        return null;
+    }
+
+    try {
+        const response = await fetch(path);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const geojsonData = await response.json();
+
+        // Create and style the GeoJSON layer
+        const railroadLayer = L.geoJSON(geojsonData, {
+            style: function(feature) {
+                return {
+                    color: '#FF0000',  // Red color
+                    weight: 4,         // Thicker line
+                    opacity: 1,        // Full opacity
+                    dashArray: null
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                                
+                 // Store original style
+                layer.originalStyle = {
+                    color: '#FF0000',
+                    weight: 4,
+                    opacity: 1,
+                    dashArray: null
+                };
+
+                // Track highlight state directly on the layer
+                layer.isHighlighted = false;
+
+                layer.on('click', function(e) {
+                    // Toggle highlight
+                    if (this.isHighlighted) {
+                        // De-highlight
+                        if (this.whiteOutline) {
+                            map.removeLayer(this.whiteOutline);
+                            this.whiteOutline = null;
+                        }
+                        
+                        // Restore original style
+                        this.setStyle(this.originalStyle);
+    
+                        // Close popup
+                        this.closePopup();
+                        this.isHighlighted = false;
+                    } else {
+                        // Highlight
+                        // Create white outline
+                        // this.whiteOutline = L.polyline(this.getLatLngs(), {
+                        //     color: 'white',
+                        //     weight: 8,  // Slightly wider than the main line
+                        //     opacity: 0.7
+                        // }).addTo(map);
+    
+                        // Modify style
+                        this.setStyle({
+                            weight: 6,
+                            color: '#FF4500', // More vibrant red on hover
+                            opacity: 1
+                        });
+    
+                        // Bring to front
+                        this.bringToFront();
+    
+                        // Create popup
+                        if (feature.properties) {
+                            const popupContent = createPopupContent(feature.properties, mapYear);
+                            this.bindPopup(popupContent).openPopup();
+                        }
+    
+                        this.isHighlighted = true;
+                    }
+                });
+            }
+        });
+
+        return railroadLayer;
+    } catch (error) {
+        console.error('Error loading railroad map:', error);
+        return null;
+    }
+}
+
+
+
+
+
 // Function to update map view
-function updateMap() {
-    sections.forEach(section => {
+async function updateMap() {
+    let activeSection = null;
+
+    for (const section of sections) {
         if (isElementInViewport(section)) {
+            activeSection = section;
             section.classList.add('active');
             
             const center = JSON.parse(section.dataset.center);
@@ -259,13 +431,19 @@ function updateMap() {
                 duration: 1.5
             });
 
-            // Determine section type and add appropriate elements
-            let sectionType = 'historical';
-            if (section.textContent.includes('High-Speed Rail')) {
-                sectionType = 'highSpeed';
+            const sectionType = section.dataset.type || 'historical';
+            const railMap = section.dataset.railMap;
+
+            if (sectionType === 'historical' && railMap) {
+                // Load historical railroad map
+                const layer = await loadRailRoadMap(railMap);
+                if (layer) {
+                    layer.addTo(map);
+                    activeRailroads = layer;  // Store reference to railroad layer
+                }
+            } else if (sectionType === 'highSpeed') {
                 hsrStations.forEach(station => addStationMarker(station, sectionType));
-            } else if (section.textContent.includes('Brightline')) {
-                sectionType = 'future';
+            } else if (sectionType === 'future') {
                 brightlineStations.forEach(station => addStationMarker(station, sectionType));
             }
 
@@ -278,11 +456,15 @@ function updateMap() {
                     addRouteOverlay(routeCoords, sectionType);
                 }
             }
-
         } else {
             section.classList.remove('active');
         }
-    });
+    }
+
+    // If no section is in viewport, clear the map
+    if (!activeSection) {
+        clearMap();
+    }
 }
 
 // Get all story sections
@@ -311,8 +493,9 @@ window.addEventListener('resize', throttle(() => {
 
 
 // Progress bar function
-window.addEventListener('scroll', throttle(() => {
-    updateMap();
+window.addEventListener('scroll', throttle(async () => {
+    clearMap();
+    await updateMap();
     const winScroll = window.scrollY;
     const height = document.querySelector('.story-container').scrollHeight - window.innerHeight;
     const scrolled = (winScroll / height) * 100;
