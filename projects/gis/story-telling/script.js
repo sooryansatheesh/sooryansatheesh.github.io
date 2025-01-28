@@ -325,14 +325,14 @@ function addGoldenSpikeMarker(map) {
     // Create a popup with the historical image and context
     goldenSpikeMarker.bindPopup(`
         <div class="golden-spike-popup scrollable-popup" style="display: flex; align-items: stretch; max-width: 500px;">
-        <div class="popup-text" style="flex: 1; padding-right: 10px; overflow-y: auto; max-height: 250px;">
+        <div class="popup-text" style="flex: 1; padding-right: 10px; overflow-y: auto; max-height: 250px;margin:5px">
             <h3 style="margin-bottom: 5px;">Golden Spike Ceremony</h3>
             <p style="margin: 2px 0;"><strong>Location:</strong> Promontory Summit, Utah</p>
             <p style="margin: 2px 0;"><strong>Date:</strong> May 10, 1869</p>
             <p style="margin: 2px 0;"><strong>Significance:</strong> Completion of the First Transcontinental Railroad</p>
             <p style="margin: 2px 0; font-size: 0.8em;"><strong>By</strong> <a href="https://en.wikipedia.org/wiki/en:Andrew_J._Russell" class="extiw" title="w:en:Andrew J. Russell"><span title="American photographer">Andrew J. Russell</span></a> - Cropped, edited and restored from <a href="//commons.wikimedia.org/wiki/File:East_and_West_Shaking_hands_at_the_laying_of_last_rail_Union_Pacific_Railroad.jpg" title="File:East and West Shaking hands at the laying of last rail Union Pacific Railroad.jpg">original file</a>, Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=94268577">Link</a></p>
         </div>
-        <div class="popup-image" style="flex: 1; display: flex; align-items: center; justify-content: center;">
+        <div class="popup-image" style="flex: 1; display: flex; align-items: center; justify-content: center;margin:15px">
             <img src="images/golden_spike_ceremony.jpg" 
                  style="max-width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px;">
         </div>
@@ -340,13 +340,57 @@ function addGoldenSpikeMarker(map) {
     `, {
         maxWidth: 600,
         minWidth: 400,
-        className: 'golden-spike-popup'
+        className: 'railgun-popup'
     });
 
     // Optionally open the popup
     goldenSpikeMarker.openPopup();
 
     return goldenSpikeMarker;
+}
+
+function addCivilWarRailGunMarker(map) {
+    // Add Civil War Rail Gun marker at Petersburg
+    const railGunMarker = L.marker([37.2295, -77.4017], {
+        icon: L.divIcon({
+            className: 'railgun-icon',
+            html: `<div style="
+                background-color: #8B4513; 
+                width: 30px; 
+                height: 30px; 
+                border-radius: 50%; 
+                border: 3px solid #4a2608;
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            "></div>`,
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            popupAnchor: [0, 0]
+        })
+    }).addTo(map);
+
+    railGunMarker.bindPopup(`
+        <div class="railgun-popup scrollable-popup" style="display: flex; flex-direction: row; max-width: 600px; gap: 15px;">
+            <div class="popup-image" style="flex: 1; min-width: 250px; margin-left:15px;">
+                <img src="images/railway_gun_and_crew.jpg" 
+                     style="width: 100%; height: auto; object-fit: cover; border-radius: 8px;">
+            </div>
+            <div class="popup-text" style="flex: 1; padding: 10px;min-height: 250px;">
+                <h3 style="margin-bottom: 5px;">Civil War Railway Gun at Petersburg</h3>
+                <p style="margin: 2px 0;"><strong>Location:</strong> Petersburg, Virginia</p>
+                <p style="margin: 2px 0;"><strong>Date:</strong> 1864-1865</p>
+                <p style="margin: 2px 0;"><strong>Significance:</strong> Used during the Siege of Petersburg</p>
+                <p style="margin: 2px 0;">This railway gun played a crucial role during the Siege of Petersburg, demonstrating the Union Army's innovative use of railroad technology in warfare.</p>
+                <p style="margin: 8px 0;font-size: 0.8em;">By Unknown author - This image is available from the United States <a href="//commons.wikimedia.org/wiki/Library_of_Congress" title="Library of Congress">Library of Congress</a>'s <a rel="nofollow" class="external text" href="//www.loc.gov/rr/print/">Prints and Photographs division</a>under the digital ID <a rel="nofollow" class="external text" href="https://hdl.loc.gov/loc.pnp/cwpb.01367">cwpb.01367</a>.This tag does not indicate the copyright status of the attached work. <span style="white-space:nowrap">A normal <a href="//commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Copyright_tags" title="Special:MyLanguage/Commons:Copyright tags">copyright tag</a> is still required.</span> <span style="white-space:nowrap">See <a href="//commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Licensing" title="Special:MyLanguage/Commons:Licensing">Commons:Licensing</a>.</span>, Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=2380902">Link</a></p>
+            </div>
+        </div>
+    `, {
+        maxWidth: 500,
+        minWidth: 300,
+        className: 'railgun-popup'
+    });
+
+    railGunMarker.openPopup();
+    return railGunMarker;
 }
 
 let railroadLayer = null;
@@ -484,6 +528,9 @@ async function updateMap() {
             if (railMap === '1870') {
                 // Add Golden Spike marker
                 addGoldenSpikeMarker(map);
+            } else if (railMap === '1861') {
+                // Add Civil War Rail Gun marker
+                addCivilWarRailGunMarker(map);
             }
 
             if (sectionType === 'historical' && railMap) {
@@ -537,11 +584,11 @@ function throttle(func, limit) {
 }
 
 // Event listeners
-window.addEventListener('scroll', throttle(updateMap, 100));
+window.addEventListener('scroll', throttle(updateMap, 2000));
 window.addEventListener('resize', throttle(() => {
     map.invalidateSize();
     updateMap();
-}, 100));
+}, 2000));
 
 
 // Progress bar function
