@@ -144,10 +144,23 @@ let activeRailroads = null;
 // Function to check if element is in viewport
 function isElementInViewport(el) {
     const rect = el.getBoundingClientRect();
-    return (
-        rect.top >= -100 &&
-        rect.top <= (window.innerHeight || document.documentElement.clientHeight) / 2
-    );
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // For mobile, check against the bottom half of the screen
+        const windowHeight = window.innerHeight;
+        const halfHeight = windowHeight / 2;
+        return (
+            rect.top >= halfHeight - 100 && // Slightly above the middle
+            rect.top <= halfHeight + (windowHeight / 4) // Quarter of the way down
+        );
+    } else {
+        // Desktop behavior remains the same
+        return (
+            rect.top >= -100 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) / 2
+        );
+    }
 }
 
 // Function to clear map elements
@@ -442,6 +455,7 @@ function updateLegend(sectionType, railMap) {
 function addGoldenSpikeMarker(map) {
     // Add Golden Spike marker at Promontory Summit
     console.log("Started execute addGoldenSpike Marker function");
+    const isMobile = window.innerWidth <= 768;
     const goldenSpikeMarker = L.marker([41.5945, -112.5581], {
         icon: L.divIcon({
             className: 'golden-spike-icon',
@@ -459,9 +473,19 @@ function addGoldenSpikeMarker(map) {
         })
     }).addTo(map);
 
-    // Create a popup with the historical image and context
-    goldenSpikeMarker.bindPopup(`
-        <div class="golden-spike-popup scrollable-popup" style="display: flex; align-items: stretch; max-width: 500px;">
+    const popupContent = isMobile ? `
+        <div class="golden-spike-popup scrollable-popup">
+            <div class="popup-text">
+                <h3>Golden Spike Ceremony</h3>
+                <p>Completion of the First Transcontinental Railroad (May 10, 1869)</p>
+            </div>
+            <div class="popup-image">
+                <img src="images/golden_spike_ceremony.jpg" alt="Golden Spike Ceremony">
+            </div>
+        </div>
+    ` : /* Your existing desktop popup content */
+    `
+    <div class="golden-spike-popup scrollable-popup" style="display: flex; align-items: stretch; max-width: 500px;">
         <div class="popup-text" style="flex: 1; padding-right: 10px; overflow-y: auto; max-height: 250px;margin:5px">
             <h3 style="margin-bottom: 5px;">Golden Spike Ceremony</h3>
             <p style="margin: 2px 0;"><strong>Location:</strong> Promontory Summit, Utah</p>
@@ -474,11 +498,19 @@ function addGoldenSpikeMarker(map) {
                  style="max-width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px;">
         </div>
     </div>
-    `, {
-        maxWidth: 600,
-        minWidth: 400,
-        className: 'railgun-popup'
+    `;
+
+    goldenSpikeMarker.bindPopup(popupContent, {
+        maxWidth: isMobile ? 220 : 500,
+        className: 'golden-spike-popup'
     });
+
+    // // Create a popup with the historical image and context
+    // goldenSpikeMarker.bindPopup(, {
+    //     maxWidth: 600,
+    //     minWidth: 400,
+    //     className: 'railgun-popup'
+    // });
 
     // Optionally open the popup
     goldenSpikeMarker.openPopup();
@@ -505,7 +537,19 @@ function addCivilWarRailGunMarker(map) {
         })
     }).addTo(map);
 
-    railGunMarker.bindPopup(`
+    const isMobile = window.innerWidth <= 768;
+    const popupContent = isMobile ? `
+        <div class="railgun-popup scrollable-popup">
+            <div class="popup-text">
+                <h3>Civil War Railway Gun</h3>
+                <p>Used during the Siege of Petersburg (1864-1865)</p>
+            </div>
+            <div class="popup-image">
+                <img src="images/railway_gun_and_crew.jpg" alt="Civil War Railway Gun">
+            </div>
+        </div>
+    ` : /* Your existing desktop popup content */
+    `
         <div class="railgun-popup scrollable-popup" style="display: flex; flex-direction: row; max-width: 600px; gap: 15px;">
             <div class="popup-image" style="flex: 1; min-width: 250px; margin-left:15px;">
                 <img src="images/railway_gun_and_crew.jpg" 
@@ -520,9 +564,17 @@ function addCivilWarRailGunMarker(map) {
                 <p style="margin: 8px 0;font-size: 0.8em;">By Unknown author - This image is available from the United States <a href="//commons.wikimedia.org/wiki/Library_of_Congress" title="Library of Congress">Library of Congress</a>'s <a rel="nofollow" class="external text" href="//www.loc.gov/rr/print/">Prints and Photographs division</a>under the digital ID <a rel="nofollow" class="external text" href="https://hdl.loc.gov/loc.pnp/cwpb.01367">cwpb.01367</a>.This tag does not indicate the copyright status of the attached work. <span style="white-space:nowrap">A normal <a href="//commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Copyright_tags" title="Special:MyLanguage/Commons:Copyright tags">copyright tag</a> is still required.</span> <span style="white-space:nowrap">See <a href="//commons.wikimedia.org/wiki/Special:MyLanguage/Commons:Licensing" title="Special:MyLanguage/Commons:Licensing">Commons:Licensing</a>.</span>, Public Domain, <a href="https://commons.wikimedia.org/w/index.php?curid=2380902">Link</a></p>
             </div>
         </div>
-    `, {
-        maxWidth: 500,
-        minWidth: 300,
+    `
+    ;
+
+    // railGunMarker.bindPopup(, {
+    //     maxWidth: 500,
+    //     minWidth: 300,
+    //     className: 'railgun-popup'
+    // });
+
+    railGunMarker.bindPopup(popupContent, {
+        maxWidth: isMobile ? 220 : 500,
         className: 'railgun-popup'
     });
 
@@ -637,7 +689,15 @@ async function loadRailRoadMap(mapYear) {
 }
 
 
-
+// Function to get mobile zoom levels
+const getMobileZoomLevel = (railMap) => {
+    const mobileZoomLevels = {
+        '1840': 3,
+        '1861': 3,
+        '1870': 3
+    };
+    return mobileZoomLevels[railMap] || null;
+};
 
 
 // Function to update map view
@@ -648,9 +708,22 @@ async function updateMap() {
         if (isElementInViewport(section)) {
             activeSection = section;
             section.classList.add('active');
+            const isMobile = window.innerWidth <= 768;
+            // Parse all data attributes first
             
+            const railMap = section.dataset.railMap;
             const center = JSON.parse(section.dataset.center);
-            const zoom = parseInt(section.dataset.zoom);
+            let zoom = parseInt(section.dataset.zoom);
+            
+            // Check if it's mobile and adjust zoom for specific rail maps
+            if (isMobile && railMap) {
+                const mobileZoom = getMobileZoomLevel(railMap);
+                if (mobileZoom !== null) {
+                    zoom = mobileZoom;
+                }
+            }
+
+
             const routeCoords = JSON.parse(section.dataset.route || '[]');
             
             clearMap();
@@ -660,7 +733,7 @@ async function updateMap() {
             });
 
             const sectionType = section.dataset.type || 'historical';
-            const railMap = section.dataset.railMap;
+            
 
             // Update the legend based on section type and rail map
             updateLegend(sectionType, railMap);

@@ -262,50 +262,51 @@ html, body {
 /* Keep all your existing CSS but replace the media query for mobile devices with this: */
 
 @media (max-width: 768px) {
-    body {
-        overflow-x: hidden;
-    }
-
-    #map {
-        position: fixed;
-        width: 100%;
-        height: 50vh;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 10;  /* Increased z-index */
-    }
-
-    .progress-bar {
-        position: fixed;
-        width: 100%;
-        top: calc(50vh - 4px);
-        left: 0;
-        z-index: 11;  /* Higher than map */
-        height: 4px;
-        background: #e74c3c;
-        transform-origin: 0 50%;
-    }
-
-    .story-container {
-        position: relative;  /* Changed to relative */
-        width: 100%;
-        margin-top: 50vh;   /* Use margin instead of absolute positioning */
-        background: white;
-        z-index: 1;         /* Lower than map and progress bar */
-    }
-
-    .story-section {
-        min-height: auto;
-        padding: 2rem;
-        background: white;
-    }
-
-    .title-section {
-        width: 100%;
-        margin-top: 0;
-        padding: 2rem;
-    }
+        body {
+            overflow-x: hidden;
+        }
+    
+        #map {
+            position: fixed;
+            width: 100%;
+            height: 50vh;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;  /* Increased z-index */
+        }
+    
+        .progress-bar {
+            position: fixed;
+            width: 100%;
+            top: calc(50vh - 4px);
+            left: 0;
+            z-index: 11;  /* Higher than map */
+            height: 4px;
+            background: #e74c3c;
+            transform-origin: 0 50%;
+        }
+    
+        .story-container {
+            position: relative;  /* Changed to relative */
+            width: 100%;
+            margin-top: 50vh;   /* Use margin instead of absolute positioning */
+            background: white;
+            z-index: 1;         /* Lower than map and progress bar */
+        }
+    
+        .story-section {
+            min-height: auto;
+            padding: 2rem;
+            background: white;
+        }
+    
+        .title-section {
+            width: 100%;
+            margin-top: 0;
+            padding: 2rem;
+        }
+    
     .title-section h1 {
         font-size: 2rem;
     }
@@ -377,4 +378,66 @@ html, body {
     font-size: 0.9rem;
     margin-top: 0.5rem;
     color: #888;
+}
+
+/* Historical Marker Mobile Popup Styles */
+@media (max-width: 768px) {
+    .golden-spike-popup,
+    .railgun-popup {
+        width: 220px !important;  /* Force smaller width */
+    }
+
+    .golden-spike-popup .leaflet-popup-content,
+    .railgun-popup .leaflet-popup-content {
+        margin: 8px !important;
+        width: auto !important;
+    }
+
+    /* Make popup content more compact */
+    .golden-spike-popup .popup-text,
+    .railgun-popup .popup-text {
+        flex: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Simplify popup content structure */
+    .golden-spike-popup .scrollable-popup,
+    .railgun-popup .scrollable-popup {
+        display: block !important;
+        max-width: 100% !important;
+    }
+
+    /* Adjust image size */
+    .golden-spike-popup .popup-image,
+    .railgun-popup .popup-image {
+        margin: 5px 0 !important;
+    }
+
+    .golden-spike-popup img,
+    .railgun-popup img {
+        max-height: 120px !important;
+        width: auto !important;
+        margin: 5px auto !important;
+    }
+
+    /* Hide less important content */
+    .golden-spike-popup p:not(:first-of-type),
+    .railgun-popup p:not(:first-of-type),
+    .popup-text p[style*="font-size: 0.8em"] {
+        display: none !important;
+    }
+
+    /* Adjust text sizes */
+    .golden-spike-popup h3,
+    .railgun-popup h3 {
+        font-size: 1em !important;
+        margin-bottom: 4px !important;
+    }
+
+    .golden-spike-popup p,
+    .railgun-popup p {
+        font-size: 0.9em !important;
+        margin: 2px 0 !important;
+    }
 }
