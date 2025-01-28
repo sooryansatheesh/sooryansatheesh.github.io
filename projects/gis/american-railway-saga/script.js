@@ -80,7 +80,12 @@ const hsrStations = [
     {
         name: "Sacramento",
         coords: [38.58639, -121.466],
-        info: "Sacramento Valley Station"
+        info: "Sacramento Valley Station(Possible)"
+    },
+    {
+        name: "San Diego",
+        coords: [32.7157, -117.1611],
+        info: "San Diego Station - Southern terminus of Phase 2"
     }
 
 ];
@@ -103,6 +108,31 @@ const brightlineStations = [
         info: "Union Station - Southern California hub"
     }
 ];
+
+const boStations = [
+    {
+        name: "Mount Clare Station, Baltimore",
+        coords: [39.2904, -76.6122],
+        info: "First railroad station in America (1827), Baltimore terminus of B&O Railroad",
+        year: "1827"
+    },
+    {
+        name: "Philadelphia Station",
+        coords: [39.9526, -75.1652],
+        info: "Philadelphia terminus connecting to the eastern seaboard",
+        year: "1832"
+    }
+];
+
+// Custom icon for B&O stations
+
+stationIcons.bo = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+});
+
 
 // Store active elements
 let activeRoute = null;
@@ -300,6 +330,113 @@ function createPopupContent(properties, mapYear) {
     
     content += '</div>';
     return content;
+}
+
+//Legend 
+// First, create the legend control
+const legend = L.control({ position: 'bottomright' });
+
+legend.onAdd = function(map) {
+    const div = L.DomUtil.create('div', 'info legend');
+    div.style.backgroundColor = 'white';
+    div.style.padding = '10px';
+    div.style.borderRadius = '5px';
+    div.style.boxShadow = '0 1px 5px rgba(0,0,0,0.4)';
+    return div;
+};
+
+legend.addTo(map);
+
+// Function to update legend content based on section type
+function updateLegend(sectionType, railMap) {
+    const div = document.querySelector('.legend');
+    let content = '<h4 style="margin: 0 0 10px 0;">Legend</h4>';
+
+    switch(true) {
+        case railMap === 'bo':
+            content += `
+                <div style="margin-bottom: 5px;">
+                    <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png" 
+                         height="20" style="vertical-align: middle"> 
+                    B&O Railroad Stations
+                </div>
+                <div>
+                    <span style="background: #FF0000; height: 3px; width: 20px; display: inline-block;"></span>
+                    Historical Route
+                </div>
+            `;
+            break;
+
+        case railMap === '1840':
+        case railMap === '1861':
+        case railMap === '1870':
+            content += `
+                <div style="margin-bottom: 5px;">
+                    <span style="background: #FF0000; height: 3px; width: 20px; display: inline-block;"></span>
+                    Railroad Network
+                </div>
+                ${railMap === '1870' ? `
+                <div>
+                    <div style="background: gold; border: 2px solid brown; height: 12px; width: 12px; display: inline-block; border-radius: 50%;"></div>
+                    Golden Spike Location
+                </div>
+                ` : ''}
+                ${railMap === '1861' ? `
+                <div>
+                    <div style="background: #8B4513; border: 2px solid #4a2608; height: 12px; width: 12px; display: inline-block; border-radius: 50%;"></div>
+                    Civil War Railway Gun
+                </div>
+                ` : ''}
+            `;
+            break;
+
+        case sectionType === 'highSpeed':
+            content += `
+                <div style="margin-bottom: 5px;">
+                    <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png" 
+                         height="20" style="vertical-align: middle"> 
+                    HSR Stations
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <span style="background: #3498db; height: 3px; width: 20px; display: inline-block;"></span>
+                    Planned HSR Route
+                </div>
+                <div>
+                    <span style="background: rgba(52, 152, 219, 0.1); border: 1px solid #3498db; height: 12px; width: 20px; display: inline-block;"></span>
+                    Service Area
+                </div>
+            `;
+            break;
+
+        case sectionType === 'future':
+            content += `
+                <div style="margin-bottom: 5px;">
+                    <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png" 
+                         height="20" style="vertical-align: middle"> 
+                    Brightline Stations
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <span style="background: #2ecc71; height: 3px; width: 20px; display: inline-block;"></span>
+                    Planned Route
+                </div>
+                <div>
+                    <span style="background: rgba(46, 204, 113, 0.1); border: 1px solid #2ecc71; height: 12px; width: 20px; display: inline-block;"></span>
+                    Service Area
+                </div>
+            `;
+            break;
+
+        case railMap === 'amtrak':
+            content += `
+                <div style="margin-bottom: 5px;">
+                    <span style="background: #FF0000; height: 3px; width: 20px; display: inline-block;"></span>
+                    Amtrak Routes
+                </div>
+            `;
+            break;
+    }
+
+    div.innerHTML = content;
 }
 
 function addGoldenSpikeMarker(map) {
@@ -525,12 +662,17 @@ async function updateMap() {
             const sectionType = section.dataset.type || 'historical';
             const railMap = section.dataset.railMap;
 
+            // Update the legend based on section type and rail map
+            updateLegend(sectionType, railMap);
+
             if (railMap === '1870') {
                 // Add Golden Spike marker
                 addGoldenSpikeMarker(map);
             } else if (railMap === '1861') {
                 // Add Civil War Rail Gun marker
                 addCivilWarRailGunMarker(map);
+            } else if (railMap === 'bo') {
+                boStations.forEach(station => addStationMarker(station, 'bo'));
             }
 
             if (sectionType === 'historical' && railMap) {
