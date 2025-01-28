@@ -384,17 +384,27 @@ function updateLegend(sectionType, railMap) {
         case railMap === '1861':
         case railMap === '1870':
             content += `
+                ${railMap === '1840' ? `
                 <div style="margin-bottom: 5px;">
                     <span style="background: #FF0000; height: 3px; width: 20px; display: inline-block;"></span>
-                    Railroad Network
+                    1840 Railroad Network
                 </div>
+                ` : ''}
                 ${railMap === '1870' ? `
+                <div style="margin-bottom: 5px;">
+                    <span style="background: #FF0000; height: 3px; width: 20px; display: inline-block;"></span>
+                    1870 Railroad Network
+                </div>
                 <div>
                     <div style="background: gold; border: 2px solid brown; height: 12px; width: 12px; display: inline-block; border-radius: 50%;"></div>
                     Golden Spike Location
                 </div>
                 ` : ''}
                 ${railMap === '1861' ? `
+                <div style="margin-bottom: 5px;">
+                    <span style="background: #FF0000; height: 3px; width: 20px; display: inline-block;"></span>
+                    1861 Railroad Network
+                </div>
                 <div>
                     <div style="background: #8B4513; border: 2px solid #4a2608; height: 12px; width: 12px; display: inline-block; border-radius: 50%;"></div>
                     Civil War Railway Gun
@@ -414,10 +424,6 @@ function updateLegend(sectionType, railMap) {
                     <span style="background: #3498db; height: 3px; width: 20px; display: inline-block;"></span>
                     Planned HSR Route
                 </div>
-                <div>
-                    <span style="background: rgba(52, 152, 219, 0.1); border: 1px solid #3498db; height: 12px; width: 20px; display: inline-block;"></span>
-                    Service Area
-                </div>
             `;
             break;
 
@@ -431,10 +437,6 @@ function updateLegend(sectionType, railMap) {
                 <div style="margin-bottom: 5px;">
                     <span style="background: #2ecc71; height: 3px; width: 20px; display: inline-block;"></span>
                     Planned Route
-                </div>
-                <div>
-                    <span style="background: rgba(46, 204, 113, 0.1); border: 1px solid #2ecc71; height: 12px; width: 20px; display: inline-block;"></span>
-                    Service Area
                 </div>
             `;
             break;
