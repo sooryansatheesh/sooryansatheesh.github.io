@@ -447,3 +447,109 @@ body {
     transform: scale(1.02);
 }
 
+.conclusion-section {
+    min-height: 80vh;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 3rem;
+    border-top: 4px solid #e74c3c;
+}
+
+.conclusion-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.conclusion-section h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.conclusion-section h3 {
+    font-size: 1.8rem;
+    color: #34495e;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e74c3c;
+}
+
+.conclusion-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #34495e;
+    margin-bottom: 2rem;
+}
+
+.reference-list {
+    list-style: none;
+    padding: 0;
+}
+
+.reference-list li {
+    margin-bottom: 1.5rem;
+}
+
+.reference-list strong {
+    display: block;
+    color: #2c3e50;
+    margin-bottom: 0.3rem;
+}
+
+.reference-list a {
+    color: #e74c3c;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.reference-list a:hover {
+    color: #c0392b;
+    text-decoration: underline;
+}
+
+.ref-details {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.3rem;
+}
+
+.sub-references {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.sub-references li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.copyright {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    color: #666;
+}
+
+.disclaimer {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    color: #888;
+}
+
+@media (max-width: 768px) {
+    .conclusion-section {
+        width: 100%;
+        padding: 2rem;
+    }
+    
+    .conclusion-section h2 {
+        font-size: 2rem;
+    }
+    
+    .conclusion-section h3 {
+        font-size: 1.5rem;
+    }
+}
