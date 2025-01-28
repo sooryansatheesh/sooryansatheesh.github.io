@@ -584,11 +584,11 @@ function throttle(func, limit) {
 }
 
 // Event listeners
-window.addEventListener('scroll', throttle(updateMap, 2000));
+window.addEventListener('scroll', throttle(updateMap, 3000));
 window.addEventListener('resize', throttle(() => {
     map.invalidateSize();
     updateMap();
-}, 2000));
+}, 3000));
 
 
 // Progress bar function
