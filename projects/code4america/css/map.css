@@ -1,0 +1,150 @@
+/* Map page specific styles */
+
+.map-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 300px);
+    min-height: 500px;
+    margin: 20px 0;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Control Panel Styles */
+.control-panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    z-index: 1000;
+    background: white;
+    padding: 20px;
+}
+
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.view-controls {
+    margin: 20px 0;
+}
+
+.toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.toggle input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.stats-panel {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.stats-panel h3 {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Custom Marker Styles */
+.custom-marker {
+    background-color: #3b82f6;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    border: 2px solid white;
+}
+
+.marker-sidewalk { background-color: #3b82f6; }
+.marker-streetlight { background-color: #fbbf24; }
+.marker-pothole { background-color: #ef4444; }
+.marker-crossing { background-color: #10b981; }
+.marker-bike { background-color: #8b5cf6; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .map-container {
+        height: calc(100vh - 200px);
+    }
+
+    .control-panel {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+/* Leaflet Popup Customization */
+.leaflet-popup-content {
+    margin: 10px;
+}
+
+.popup-content h3 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.popup-content p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}

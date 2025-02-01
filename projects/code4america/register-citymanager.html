@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register as City Manager - Community Infrastructure Planning Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body class="bg-pattern min-h-screen flex flex-col">
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-city"></i>
+                <span>CommunityPlan</span>
+            </a>
+
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <h1 class="text-3xl font-bold text-center mb-8">Register as City Manager</h1>
+
+            <!-- Registration Progress -->
+            <div class="registration-progress mb-8">
+                <div class="step active">
+                    <span class="step-number">1</span>
+                    <span class="step-text">Personal Info</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <span class="step-text">City Details</span>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span class="step-text">Account</span>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="registrationForm" class="bg-white rounded-lg shadow-lg p-6">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step" data-step="1">
+                    <h2 class="text-xl font-semibold mb-4">Personal Information</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Work Email</label>
+                        <input type="email" id="email" name="email" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Work Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="jobTitle">Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle" required class="form-input">
+                    </div>
+                </div>
+
+                <!-- Step 2: City Details -->
+                <div class="form-step hidden" data-step="2">
+                    <h2 class="text-xl font-semibold mb-4">City Details</h2>
+                    <div class="form-group">
+                        <label class="form-label" for="cityName">City Name</label>
+                        <input type="text" id="cityName" name="cityName" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="state">State</label>
+                        <select id="state" name="state" required class="form-input">
+                            <option value="">Select State</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="department">Department</label>
+                        <input type="text" id="department" name="department" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="cityWebsite">City Website</label>
+                        <input type="url" id="cityWebsite" name="cityWebsite" required class="form-input"
+                               placeholder="https://www.citywebsite.gov">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="employeeId">Employee ID</label>
+                        <input type="text" id="employeeId" name="employeeId" required class="form-input">
+                    </div>
+                </div>
+
+                <!-- Step 3: Account Information -->
+                <div class="form-step hidden" data-step="3">
+                    <h2 class="text-xl font-semibold mb-4">Account Information</h2>
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" id="username" name="username" required class="form-input">
+                        <p class="text-sm text-gray-500 mt-1">Must be unique and contain only letters, numbers, and underscores</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" name="password" required class="form-input">
+                        <p class="text-sm text-gray-500 mt-1">At least 8 characters, including a number and a special character</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label flex items-center gap-2">
+                            <input type="checkbox" id="termsAccept" name="termsAccept" required>
+                            <span class="text-sm">I confirm that I am an authorized representative of the city government</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Form Navigation -->
+                <div class="flex justify-between mt-6">
+                    <button type="button" id="prevBtn" class="btn btn-secondary" disabled>Previous</button>
+                    <button type="button" id="nextBtn" class="btn btn-primary">Next</button>
+                </div>
+
+                <!-- Error Messages -->
+                <div id="errorMessage" class="error-message mt-4 hidden"></div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Our Mission</a></li>
+                    <li><a href="#" class="footer-link">Team</a></li>
+                    <li><a href="#" class="footer-link">Careers</a></li>
+                    <li><a href="#" class="footer-link">Press</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Documentation</a></li>
+                    <li><a href="#" class="footer-link">Guidelines</a></li>
+                    <li><a href="#" class="footer-link">Tutorial</a></li>
+                    <li><a href="#" class="footer-link">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#" class="footer-link">Cookie Policy</a></li>
+                    <li><a href="#" class="footer-link">GDPR</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Support</a></li>
+                    <li><a href="#" class="footer-link">Sales</a></li>
+                    <li><a href="#" class="footer-link">Partners</a></li>
+                    <li><a href="#" class="footer-link">Report Issue</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 Community Infrastructure Planning Tool. A Code for America Summit Demo Project.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <script src="js/register-citymanager.js"></script>
+</body>
+</html>

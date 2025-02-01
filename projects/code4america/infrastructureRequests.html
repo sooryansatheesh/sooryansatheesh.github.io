@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure Requests - Community Infrastructure Planning Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/infrastructure-requests.css">
+</head>
+<body class="bg-pattern min-h-screen flex flex-col">
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="cityManagerDashboard.html" class="nav-logo">
+                <i class="fas fa-city"></i>
+                <span>CommunityPlan</span>
+            </a>
+
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-links">
+                <span id="cityManagerName" class="text-gray-600"></span>
+                <a href="cityManagerDashboard.html" class="nav-link">Dashboard</a>
+                <a href="residentApprovals.html" class="nav-link">Resident Approvals</a>
+                <a href="infrastructureRequests.html" class="nav-link active">All Requests</a>
+                <button id="logoutBtn" class="nav-button">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- Split View Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Side: Map and Filters -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Request Locations</h2>
+                    <div class="view-controls">
+                        <button id="toggleHeatmap" class="btn btn-secondary">
+                            <i class="fas fa-layer-group"></i> Toggle Heatmap
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Map Container -->
+                <div id="requestMap" class="h-96 mb-4"></div>
+
+                <!-- Filters -->
+                <div class="filters-section">
+                    <h3 class="text-lg font-medium mb-2">Filters</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <select id="typeFilter" class="form-input">
+                            <option value="all">All Types</option>
+                            <option value="sidewalk">Sidewalk</option>
+                            <option value="streetlight">Streetlight</option>
+                            <option value="pothole">Pothole</option>
+                            <option value="crossing">Crossing</option>
+                            <option value="bike">Bike Lane</option>
+                        </select>
+                        <select id="statusFilter" class="form-input">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <select id="priorityFilter" class="form-input">
+                            <option value="all">All Priorities</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                        <div class="search-container">
+                            <input type="text" id="searchInput" placeholder="Search requests..." class="form-input">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Request List -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Infrastructure Requests</h2>
+                    <div class="sort-controls">
+                        <select id="sortBy" class="form-input">
+                            <option value="date-desc">Newest First</option>
+                            <option value="date-asc">Oldest First</option>
+                            <option value="priority-desc">Highest Priority</option>
+                            <option value="priority-asc">Lowest Priority</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Request List -->
+                <div class="requests-list" id="requestsList">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state hidden">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>No infrastructure requests found</p>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="loading-state hidden">
+                    <div class="spinner"></div>
+                    <p>Loading requests...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Request Details Modal -->
+    <div id="requestModal" class="modal hidden">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h2 id="modalTitle">Request Details</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="request-details">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                <div class="decision-section">
+                    <h3>Review Request</h3>
+                    <div class="form-group">
+                        <label for="estimatedCost" class="form-label">Estimated Cost ($)</label>
+                        <input type="number" id="estimatedCost" class="form-input" min="0" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="implementationTime" class="form-label">Estimated Implementation Time (weeks)</label>
+                        <input type="number" id="implementationTime" class="form-input" min="1" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewNotes" class="form-label">Review Notes</label>
+                        <textarea id="reviewNotes" class="form-input" rows="3"></textarea>
+                    </div>
+                    <div class="button-group">
+                        <button id="approveRequest" class="btn btn-success">
+                            <i class="fas fa-check"></i> Approve for Implementation
+                        </button>
+                        <button id="rejectRequest" class="btn btn-danger">
+                            <i class="fas fa-times"></i> Reject Request
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-bottom">
+            <p>© 2025 Community Infrastructure Planning Tool. A Code for America Summit Demo Project.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+    <script src="js/infrastructure-requests.js"></script>
+</body>
+</html>

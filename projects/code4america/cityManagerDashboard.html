@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Manager Dashboard - Community Infrastructure Planning Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/citymanager-dashboard.css">
+</head>
+<body class="bg-pattern min-h-screen flex flex-col">
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="cityManagerDashboard.html" class="nav-logo">
+                <i class="fas fa-city"></i>
+                <span>CommunityPlan</span>
+            </a>
+
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-links">
+                <span id="cityManagerName" class="text-gray-600"></span>
+                <a href="cityManagerDashboard.html" class="nav-link">Dashboard</a>
+                <a href="residentApprovals.html" class="nav-link">Resident Approvals</a>
+                <a href="infrastructureRequests.html" class="nav-link">All Requests</a>
+                <button id="logoutBtn" class="nav-button">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- City Manager Info -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-2" id="cityName"></h1>
+            <p class="text-gray-600" id="departmentInfo"></p>
+        </div>
+
+        <!-- Quick Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Pending Resident Approvals -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fas fa-user-clock text-blue-500"></i>
+                    <h3>Pending Resident Approvals</h3>
+                </div>
+                <div class="stat-content">
+                    <span id="pendingResidentsCount" class="stat-number">0</span>
+                    <a href="residentApprovals.html" class="btn btn-primary">Review</a>
+                </div>
+            </div>
+
+            <!-- Infrastructure Requests -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fas fa-map-marker-alt text-green-500"></i>
+                    <h3>Infrastructure Requests</h3>
+                </div>
+                <div class="stat-content">
+                    <span id="totalRequestsCount" class="stat-number">0</span>
+                    <a href="infrastructureRequests.html" class="btn btn-primary">View All</a>
+                </div>
+            </div>
+
+            <!-- Your Actions -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fas fa-tasks text-purple-500"></i>
+                    <h3>Your Actions</h3>
+                </div>
+                <div class="stat-content">
+                    <span id="actionsCount" class="stat-number">0</span>
+                    <button id="viewActionsBtn" class="btn btn-primary">Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity and Map Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Recent Activity -->
+            <div class="card">
+                <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+                <div class="recent-activity" id="recentActivityList">
+                    <!-- Activity items will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Quick View Map -->
+            <div class="card">
+                <h2 class="text-xl font-semibold mb-4">Request Locations</h2>
+                <div id="quickViewMap" class="h-96"></div>
+            </div>
+        </div>
+
+        <!-- Action Summaries -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <!-- Pending Requests -->
+            <div class="summary-card">
+                <h3 class="text-lg font-semibold mb-3">Pending Review</h3>
+                <div class="summary-content" id="pendingRequestsList">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Approved Requests -->
+            <div class="summary-card">
+                <h3 class="text-lg font-semibold mb-3">Recently Approved</h3>
+                <div class="summary-content" id="approvedRequestsList">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Rejected Requests -->
+            <div class="summary-card">
+                <h3 class="text-lg font-semibold mb-3">Recently Rejected</h3>
+                <div class="summary-content" id="rejectedRequestsList">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <!-- Footer content same as other pages -->
+        <div class="footer-bottom">
+            <p>© 2025 Community Infrastructure Planning Tool. A Code for America Summit Demo Project.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script src="js/citymanager-dashboard.js"></script>
+</body>
+</html>

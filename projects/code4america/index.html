@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Infrastructure Planning Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body class="bg-pattern min-h-screen flex flex-col">
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-city"></i>
+                <span>CommunityPlan</span>
+            </a>
+
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="register-resident.html" class="nav-button">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Replace the existing main content div with this -->
+<main class="flex-grow">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Community Infrastructure Planning Tool</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Help shape your community's future by identifying and mapping infrastructure needs in your neighborhood.</p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Left Column - Features -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4">Make Your Voice Heard</h2>
+                <div class="space-y-4">
+                    <div class="feature-item">
+                        <div class="feature-icon map-icon"></div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium">Interactive Mapping</h3>
+                            <p class="text-gray-600">Place markers on an interactive map to identify areas needing improvements.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon viz-icon"></div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium">Visualization</h3>
+                            <p class="text-gray-600">View heat maps of community requests and track popular improvement areas.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon cost-icon"></div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium">Cost Estimates</h3>
+                            <p class="text-gray-600">Get rough cost estimates for different types of infrastructure improvements.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Login Form -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-6">Login to Get Started</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" id="username" name="username" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" name="password" required class="form-input">
+                    </div>
+                    <div id="errorMessage" class="error-message hidden">
+                        Incorrect password. Please try again.
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full mt-4">
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Registration Options -->
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <h3 class="text-lg font-medium mb-4">New User?</h3>
+                    <div class="space-y-3">
+                        <a href="register-resident.html" class="btn btn-secondary w-full block text-center">
+                            Register as Resident
+                        </a>
+                        <a href="register-citymanager.html" class="btn btn-secondary w-full block text-center">
+                            Register as City Manager
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Our Mission</a></li>
+                    <li><a href="#" class="footer-link">Team</a></li>
+                    <li><a href="#" class="footer-link">Careers</a></li>
+                    <li><a href="#" class="footer-link">Press</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Documentation</a></li>
+                    <li><a href="#" class="footer-link">Guidelines</a></li>
+                    <li><a href="#" class="footer-link">Tutorial</a></li>
+                    <li><a href="#" class="footer-link">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#" class="footer-link">Cookie Policy</a></li>
+                    <li><a href="#" class="footer-link">GDPR</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Support</a></li>
+                    <li><a href="#" class="footer-link">Sales</a></li>
+                    <li><a href="#" class="footer-link">Partners</a></li>
+                    <li><a href="#" class="footer-link">Report Issue</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 Community Infrastructure Planning Tool. A Code for America Summit Demo Project.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/index.js"></script>
+    <!-- Add navigation script -->
+    <script>
+        document.querySelector('.mobile-menu-button').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
