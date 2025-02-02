@@ -6,6 +6,7 @@
     <title>Community Infrastructure Planning Tool</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/aiFeatures.css">
     <link rel="stylesheet" href="css/shared.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
@@ -13,26 +14,35 @@
     <!-- Header Navigation -->
     <header class="main-header">
         <nav class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <i class="fas fa-city"></i>
-                <span>CityVoiceMap</span>
-            </a>
-
+            <div class="nav-brand">
+                <a href="index.html" class="nav-logo">
+                    <i class="fas fa-city"></i>
+                    <span>CityVoiceMap</span>
+                </a>
+                <div class="ai-indicator">
+                    <i class="fas fa-robot"></i>
+                    <span>AI-Powered</span>
+                </div>
+            </div>
+    
             <button class="mobile-menu-button">
                 <i class="fas fa-bars"></i>
             </button>
-
+    
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <a href="register-resident.html" class="nav-button">Get Started</a>
+                <a href="register-resident.html" class="nav-button">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </a>
             </div>
         </nav>
     </header>
 
-    <!-- Replace the existing main content div with this -->
+    <
 <main class="flex-grow">
     <div class="container mx-auto px-4 py-8">
         <!-- Header -->
@@ -45,27 +55,42 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Left Column - Features -->
             <div class="bg-white rounded-lg shadow-lg p-6">
-                <h2 class="text-2xl font-semibold mb-4">Make Your Voice Heard</h2>
+                <h2 class="text-2xl font-semibold mb-4">AI-Powered Infrastructure Planning</h2>
                 <div class="space-y-4">
                     <div class="feature-item">
-                        <div class="feature-icon map-icon"></div>
+                        <div class="feature-icon ai-analysis-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
                         <div class="ml-3">
-                            <h3 class="text-lg font-medium">Interactive Mapping</h3>
-                            <p class="text-gray-600">Place markers on an interactive map to identify areas needing improvements.</p>
+                            <h3 class="text-lg font-medium">Smart Request Analysis</h3>
+                            <p class="text-gray-600">AI-powered analysis of infrastructure requests with automatic prioritization and impact assessment.</p>
                         </div>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon viz-icon"></div>
+                        <div class="feature-icon vision-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
                         <div class="ml-3">
-                            <h3 class="text-lg font-medium">Visualization</h3>
-                            <p class="text-gray-600">View heat maps of community requests and track popular improvement areas.</p>
+                            <h3 class="text-lg font-medium">Computer Vision Analysis</h3>
+                            <p class="text-gray-600">Upload photos of infrastructure issues for instant AI assessment and recommendations.</p>
                         </div>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon cost-icon"></div>
+                        <div class="feature-icon score-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <div class="ml-3">
-                            <h3 class="text-lg font-medium">Cost Estimates</h3>
-                            <p class="text-gray-600">Get rough cost estimates for different types of infrastructure improvements.</p>
+                            <h3 class="text-lg font-medium">Impact Scoring</h3>
+                            <p class="text-gray-600">Automated community impact analysis and cost-benefit calculations for each request.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon timeline-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium">Smart Timeline Prediction</h3>
+                            <p class="text-gray-600">AI-generated implementation timelines based on urgency and resource allocation.</p>
                         </div>
                     </div>
                 </div>

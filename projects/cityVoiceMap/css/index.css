@@ -184,3 +184,57 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Add to your existing CSS */
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ai-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    color: white;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.ai-indicator i {
+    font-size: 0.875rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Update the nav-button to include icon */
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-button i {
+    font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ai-indicator {
+        display: none; /* Hide on mobile to save space */
+    }
+    
+    .nav-links.active .ai-indicator {
+        display: flex; /* Show when menu is expanded */
+        margin-top: 0.5rem;
+    }
+}
