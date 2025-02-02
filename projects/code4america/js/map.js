@@ -67,7 +67,8 @@ function initMap() {
     map = L.map('map', {
         center: [defaultLat, defaultLng],
         zoom: 13,
-        layers: [] // Start with no base layer
+        layers: [], // Start with no base layer
+        preferCanvas: true // Use canvas renderer for better performance
     });
     
     // Define base maps
@@ -91,7 +92,8 @@ function initMap() {
     }).addTo(map);
     
     // Initialize heatmap layer
-    heatmapLayer = L.heatLayer([], { 
+     // Initialize heatmap layer with optimized canvas settings
+     const heatmapOptions = { 
         radius: 25,
         blur: 15,
         maxZoom: 10,
@@ -103,7 +105,33 @@ function initMap() {
             0.8: 'yellow',
             1.0: 'red'
         }
-    }).addTo(map);
+    };
+
+    // Create heatmap layer with canvas optimization
+    heatmapLayer = L.heatLayer([], heatmapOptions).addTo(map);
+
+    // Optimize canvas for frequent reading
+    const canvasElements = document.getElementsByTagName('canvas');
+    for (let canvas of canvasElements) {
+        canvas.willReadFrequently = true;
+    }
+
+    // Add observer to handle dynamically added canvases
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeName === 'CANVAS') {
+                    node.willReadFrequently = true;
+                }
+            });
+        });
+    });
+
+    // Start observing the document for added canvas elements
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
     
     // Add click handler to map
     map.on('click', onMapClick);
