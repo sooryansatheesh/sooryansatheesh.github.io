@@ -188,3 +188,26 @@ body.modal-open {
         @apply mx-2;
     }
 }
+
+.sortable {
+    cursor: pointer;
+}
+
+.sortable i {
+    margin-left: 4px;
+}
+
+.priority-high {
+    color: #dc2626;
+    font-weight: 500;
+}
+
+.priority-medium {
+    color: #d97706;
+    font-weight: 500;
+}
+
+.priority-low {
+    color: #059669;
+    font-weight: 500;
+}

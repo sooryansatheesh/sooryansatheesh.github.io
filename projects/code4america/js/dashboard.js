@@ -161,20 +161,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const endIndex = startIndex + itemsPerPage;
         const tableBody = document.getElementById('requestsTable');
         tableBody.innerHTML = '';
-
+    
         filteredRequests.slice(startIndex, endIndex).forEach(request => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${formatRequestType(request.type)}</td>
-                <td>${request.description}</td>
-                <td>
+                <td data-type="${request.type}">${formatRequestType(request.type)}</td>
+                <td data-description>${request.description}</td>
+                <td data-priority="${request.priority}">
+                    <span class="priority-${request.priority.toLowerCase()}">${request.priority.toUpperCase()}</span>
+                </td>
+                <td data-status="${request.status || 'pending'}">
                     <span class="status-badge status-${request.status || 'pending'}">
                         ${(request.status || 'pending').toUpperCase()}
                     </span>
                 </td>
-                <td>${request.priority.toUpperCase()}</td>
-                <td>${new Date(request.timestamp).toLocaleDateString()}</td>
-                <td>$${request.estimatedCost.toLocaleString()}</td>
+                <td data-date="${request.timestamp}">${new Date(request.timestamp).toLocaleDateString()}</td>
+                <td data-cost="${request.estimatedCost}">$${request.estimatedCost.toLocaleString()}</td>
                 <td>
                     <button class="btn btn-secondary btn-sm" onclick="showDetails('${request.id}')">
                         <i class="fas fa-eye"></i>
@@ -183,9 +185,11 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             tableBody.appendChild(row);
         });
-
+    
         updatePagination();
     }
+
+
     // Update pagination
     function updatePagination() {
         const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
@@ -340,6 +344,76 @@ document.addEventListener('DOMContentLoaded', function() {
         a.click();
         window.URL.revokeObjectURL(url);
     }
+
+    // Add this function to handle table sorting
+function sortTable(field) {
+    const headers = document.querySelectorAll('.sortable');
+    const header = document.querySelector(`[data-sort="${field}"]`);
+
+    // Toggle sort direction
+    if (sortField === field) {
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortField = field;
+        sortDirection = 'asc';
+    }
+
+    // Update sort icons
+    headers.forEach(h => {
+        h.querySelector('i').className = 'fas fa-sort';
+    });
+    header.querySelector('i').className = `fas fa-sort-${sortDirection}`;
+
+    // Sort the filtered requests
+    filteredRequests.sort((a, b) => {
+        let aVal, bVal;
+
+        switch(field) {
+            case 'type':
+                aVal = formatRequestType(a.type);
+                bVal = formatRequestType(b.type);
+                break;
+            case 'description':
+                aVal = a.description;
+                bVal = b.description;
+                break;
+            case 'priority':
+                // Convert priority to numeric value for sorting
+                const priorityWeight = {
+                    'high': 3,
+                    'medium': 2,
+                    'low': 1
+                };
+                aVal = priorityWeight[a.priority.toLowerCase()];
+                bVal = priorityWeight[b.priority.toLowerCase()];
+                break;
+            case 'status':
+                aVal = a.status || 'pending';
+                bVal = b.status || 'pending';
+                break;
+            case 'date':
+                aVal = new Date(a.timestamp).getTime();
+                bVal = new Date(b.timestamp).getTime();
+                break;
+            case 'cost':
+                aVal = a.estimatedCost;
+                bVal = b.estimatedCost;
+                break;
+            default:
+                aVal = a[field];
+                bVal = b[field];
+        }
+
+        // Compare values
+        if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+    });
+
+    // Reset to first page and update table
+    currentPage = 1;
+    updateTable();
+}
 
     // Event Listeners
     document.getElementById('typeFilter').addEventListener('change', applyFilters);
