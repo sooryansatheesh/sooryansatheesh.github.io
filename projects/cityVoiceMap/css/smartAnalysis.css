@@ -1,0 +1,99 @@
+.smart-analysis {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    border: 1px solid #e5e7eb;
+}
+
+.ai-analyzing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.analysis-results {
+    font-size: 14px;
+}
+
+.analysis-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #3b82f6;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.suggestion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    padding: 8px;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.apply-btn {
+    margin-left: auto;
+    padding: 4px 8px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.apply-btn:hover {
+    background-color: #2563eb;
+}
+
+.cost-estimate {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    padding: 8px;
+    background-color: #f0fdf4;
+    border-radius: 6px;
+    border: 1px solid #86efac;
+    color: #166534;
+}
+
+.similar-requests {
+    margin: 8px 0;
+    padding: 8px;
+    background-color: #fff7ed;
+    border-radius: 6px;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+}
+
+.similar-requests ul {
+    margin-top: 8px;
+    padding-left: 24px;
+    list-style-type: disc;
+}
+
+.similar-requests li {
+    margin: 4px 0;
+    font-size: 13px;
+}
+
+.hidden {
+    display: none !important;
+}

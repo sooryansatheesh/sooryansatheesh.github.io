@@ -7,6 +7,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+    <link rel="stylesheet" href="css/smartAnalysis.css">
+    <script src="js/smartAnalysis.js"></script>
+    <link rel="stylesheet" href="css/photoAnalysis.css">
+    <script src="js/photoAnalysis.js"></script>
     <link rel="stylesheet" href="css/shared.css">
     <link rel="stylesheet" href="css/map.css">
 </head>
@@ -96,24 +100,45 @@
         <div id="request-modal" class="modal hidden">
             <div class="modal-content card">
                 <h2>Add Infrastructure Request</h2>
-                <form id="request-form">
-                    <div class="form-group">
-                        <label class="form-label" for="request-description">Description</label>
-                        <textarea id="request-description" class="form-input" required></textarea>
+                <div class="modal-tabs">
+                    <button class="tab-btn active" data-tab="basic">Basic Info</button>
+                    <button class="tab-btn" data-tab="ai">AI Photo Analysis</button>
+                </div>
+                <div class="tab-content">
+                    <div id="basic-tab" class="tab-pane active">
+                        <form id="request-form">
+                            <div class="form-group">
+                                <label class="form-label" for="request-description">Description</label>
+                                <textarea id="request-description" class="form-input" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="request-priority">Priority</label>
+                                <select id="request-priority" class="form-input">
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn" id="modal-cancel">Cancel</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="request-priority">Priority</label>
-                        <select id="request-priority" class="form-input">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                        </select>
+
+                    <div id="ai-tab" class="tab-pane">
+                        <div class="photo-upload-container">
+                            <div class="upload-area" id="upload-area">
+                                <i class="fas fa-camera upload-icon"></i>
+                                <p class="upload-text">Upload a photo of the infrastructure issue</p>
+                                <p class="upload-subtext">Our AI will analyze the image</p>
+                                <input type="file" id="photo-input" accept="image/*" class="hidden">
+                            </div>
+                            <div id="photo-preview" class="photo-preview hidden"></div>
+                            <div id="ai-analysis" class="ai-analysis hidden"></div>
+                        </div>
                     </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn" id="modal-cancel">Cancel</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </main>

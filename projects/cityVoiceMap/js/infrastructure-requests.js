@@ -231,6 +231,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create request card element
     function createRequestCard(request) {
+        // Get AI analysis
+        const aiAnalysis = analyzeRequest(request);
+        
         const div = document.createElement('div');
         div.className = 'request-card';
         div.onclick = () => viewRequest(request);
@@ -238,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
         div.innerHTML = `
             <div class="request-header">
                 <span class="request-type ${request.type}">${formatRequestType(request.type)}</span>
-                <div class="flex items-center">
+                <div class="flex items-center gap-2">
                     <span class="request-status ${request.status}">
                         <i class="fas fa-${getStatusIcon(request.status)}"></i>
                         ${capitalizeFirst(request.status)}
@@ -249,14 +252,63 @@ document.addEventListener('DOMContentLoaded', function() {
                     </span>
                 </div>
             </div>
+            
             <div class="request-meta">
                 <span>Submitted by: ${request.user ? request.user.firstName + ' ' + request.user.lastName : 'Unknown User'}</span>
                 <span class="mx-2">•</span>
                 <span>${new Date(request.timestamp).toLocaleDateString()}</span>
             </div>
+            
             <p class="request-description">${request.description}</p>
+            
+            <!-- AI Analysis Section -->
+            <div class="ai-analysis-summary">
+                <div class="ai-header">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Analysis</span>
+                </div>
+                
+                <div class="ai-metrics">
+                    <div class="metric">
+                        <div class="metric-label">Urgency Score</div>
+                        <div class="metric-value">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: ${aiAnalysis.urgencyScore}%"></div>
+                            </div>
+                            <span>${aiAnalysis.urgencyScore}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Community Impact</div>
+                        <div class="metric-value">
+                            <span class="impact-badge ${aiAnalysis.communityImpact.benefitLevel.toLowerCase().replace(' ', '-')}">
+                                ${aiAnalysis.communityImpact.benefitLevel}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Cost-Benefit</div>
+                        <div class="metric-value">
+                            <span class="cost-badge ${aiAnalysis.costBenefit.ratio > 1 ? 'positive' : 'neutral'}">
+                                ${aiAnalysis.costBenefit.ratio}x Return
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Timeline</div>
+                        <div class="metric-value">
+                            <span class="timeline-badge ${aiAnalysis.timeline.timeframe.toLowerCase()}">
+                                ${aiAnalysis.timeline.recommendation}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
-
+        
         return div;
     }
 
