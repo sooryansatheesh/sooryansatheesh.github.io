@@ -1,0 +1,190 @@
+/* Dashboard specific styles */
+
+/* Stats Cards */
+.stat-card {
+    @apply bg-white rounded-lg p-6 shadow-sm;
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    @apply w-12 h-12 rounded-full flex items-center justify-center mb-4;
+}
+
+.stat-icon i {
+    @apply text-xl;
+}
+
+.stat-content h3 {
+    @apply text-gray-600 text-sm mb-1;
+}
+
+.stat-content p {
+    @apply text-2xl font-bold;
+}
+
+/* Filter Styles */
+.filter-group {
+    @apply space-y-2;
+}
+
+/* Table Styles */
+table {
+    @apply w-full border-collapse;
+}
+
+th {
+    @apply px-4 py-3 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer;
+}
+
+td {
+    @apply px-4 py-3 border-t;
+}
+
+.sortable {
+    @apply hover:bg-gray-100;
+}
+
+.sortable i {
+    @apply ml-1 text-gray-400;
+}
+
+/* Status Badges */
+.status-badge {
+    @apply px-2 py-1 rounded-full text-xs font-semibold;
+}
+
+.status-pending {
+    @apply bg-yellow-100 text-yellow-800;
+}
+
+.status-approved {
+    @apply bg-green-100 text-green-800;
+}
+
+.status-rejected {
+    @apply bg-red-100 text-red-800;
+}
+
+/* Search Box */
+.search-box {
+    @apply relative;
+}
+
+.search-box input {
+    @apply pl-10;
+}
+
+.search-box::before {
+    content: '\f002';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400;
+}
+
+/* Pagination */
+.pagination {
+    @apply flex items-center;
+}
+
+.pagination button {
+    @apply px-4 py-2 border rounded-md text-sm;
+}
+
+.pagination button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.close-modal:hover {
+    color: #1f2937;
+}
+
+.modal-body {
+    padding: 1rem;
+}
+
+/* Ensure the body doesn't scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Chart Container */
+#requestTypeChart {
+    @apply bg-white rounded-lg p-4;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .stat-card {
+        @apply p-4;
+    }
+
+    .stat-content p {
+        @apply text-xl;
+    }
+
+    table {
+        @apply text-sm;
+    }
+
+    .modal-content {
+        @apply mx-2;
+    }
+}

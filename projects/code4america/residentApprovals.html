@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident Approvals - Community Infrastructure Planning Tool</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/resident-approvals.css">
+</head>
+<body class="bg-pattern min-h-screen flex flex-col">
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="cityManagerDashboard.html" class="nav-logo">
+                <i class="fas fa-city"></i>
+                <span>CommunityPlan</span>
+            </a>
+
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="nav-links">
+                <span id="cityManagerName" class="text-gray-600"></span>
+                <a href="cityManagerDashboard.html" class="nav-link">Dashboard</a>
+                <a href="residentApprovals.html" class="nav-link active">Resident Approvals</a>
+                <a href="infrastructureRequests.html" class="nav-link">All Requests</a>
+                <button id="logoutBtn" class="nav-button">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">Resident Approvals</h1>
+                <p class="text-gray-600" id="cityInfo"></p>
+            </div>
+            <div class="flex gap-4">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search residents..." class="form-input">
+                    <i class="fas fa-search"></i>
+                </div>
+                <select id="statusFilter" class="form-input">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="status-card pending">
+                <div class="icon"><i class="fas fa-clock"></i></div>
+                <div class="details">
+                    <h3>Pending</h3>
+                    <span id="pendingCount">0</span>
+                </div>
+            </div>
+            <div class="status-card approved">
+                <div class="icon"><i class="fas fa-check"></i></div>
+                <div class="details">
+                    <h3>Approved</h3>
+                    <span id="approvedCount">0</span>
+                </div>
+            </div>
+            <div class="status-card rejected">
+                <div class="icon"><i class="fas fa-times"></i></div>
+                <div class="details">
+                    <h3>Rejected</h3>
+                    <span id="rejectedCount">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Residents List -->
+        <div class="residents-container card">
+            <table class="residents-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Registration Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="residentsTableBody">
+                    <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state hidden">
+                <i class="fas fa-users"></i>
+                <p>No resident applications found</p>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state hidden">
+                <div class="spinner"></div>
+                <p>Loading residents...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Approval Modal -->
+    <div id="approvalModal" class="modal hidden">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h2 id="modalTitle">Resident Details</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="resident-details">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                <div class="decision-section">
+                    <h3>Make a Decision</h3>
+                    <div class="form-group">
+                        <label for="decisionNotes" class="form-label">Notes (optional)</label>
+                        <textarea id="decisionNotes" class="form-input" rows="3"></textarea>
+                    </div>
+                    <div class="button-group">
+                        <button id="approveBtn" class="btn btn-success">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                        <button id="rejectBtn" class="btn btn-danger">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-bottom">
+            <p>© 2025 Community Infrastructure Planning Tool. A Code for America Summit Demo Project.</p>
+        </div>
+    </footer>
+
+    <script src="js/resident-approvals.js"></script>
+</body>
+</html>
