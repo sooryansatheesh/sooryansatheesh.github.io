@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const errorMessage = document.getElementById('errorMessage');
 
+    // Only proceed with login logic if we're on the login page
+    if (!loginForm) {
+        console.log('Not on login page, skipping login initialization');
+        return;
+    }
+
     // Function to handle login
     function handleLogin(event) {
         event.preventDefault();
@@ -73,11 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
         errorMessage.classList.add('hidden');
     });
 
-    // Check if user is already logged in
-    const currentUser = localStorage.getItem('currentUser');
-    if (currentUser) {
-        const user = JSON.parse(currentUser);
-        redirectUser(user);
+     // Check for logged in user only if we're on the login page (index.html)
+     if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            const user = JSON.parse(currentUser);
+            redirectUser(user);
+        }
     }
 
     // Add debug logging

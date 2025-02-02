@@ -1,0 +1,133 @@
+/* Profile specific styles */
+
+/* Section Styles */
+.section {
+    @apply border-b border-gray-200 pb-6;
+}
+
+.section:last-child {
+    @apply border-b-0 pb-0;
+}
+
+/* Form Styles */
+.form-group {
+    @apply space-y-1;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700;
+}
+
+.form-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+}
+
+.form-input[readonly] {
+    @apply bg-gray-50 cursor-not-allowed;
+}
+
+.form-checkbox {
+    @apply h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500;
+}
+
+/* Button Styles */
+.btn {
+    @apply px-4 py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+}
+
+.btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-secondary {
+    @apply bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-500;
+}
+
+/* Modal Styles */
+.modal {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+}
+
+.modal-content {
+    @apply bg-white rounded-lg shadow-xl w-full max-w-md mx-4;
+}
+
+.modal-header {
+    @apply flex justify-between items-center p-4 border-b;
+}
+
+.modal-header h2 {
+    @apply text-xl font-semibold;
+}
+
+.close-modal {
+    @apply text-gray-500 hover:text-gray-700;
+}
+
+.modal-body {
+    @apply p-4;
+}
+
+/* Notification Styles */
+.notification {
+    @apply fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-all duration-300 transform;
+}
+
+.notification.success {
+    @apply bg-green-500 text-white;
+}
+
+.notification.error {
+    @apply bg-red-500 text-white;
+}
+
+.notification.hidden {
+    @apply translate-x-full opacity-0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .form-group {
+        @apply col-span-2;
+    }
+}
+
+/* Loading State */
+.loading {
+    @apply opacity-50 cursor-wait pointer-events-none;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    @apply mt-1 text-sm;
+}
+
+.strength-weak {
+    @apply text-red-500;
+}
+
+.strength-medium {
+    @apply text-yellow-500;
+}
+
+.strength-strong {
+    @apply text-green-500;
+}
+
+/* Form Validation Styles */
+.form-input.error {
+    @apply border-red-500 focus:ring-red-500 focus:border-red-500;
+}
+
+.error-message {
+    @apply text-sm text-red-500 mt-1;
+}
+
+/* Checkbox Group Styles */
+.checkbox-group {
+    @apply space-y-2;
+}
+
+.checkbox-label {
+    @apply flex items-center cursor-pointer;
+}

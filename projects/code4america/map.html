@@ -5,96 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map - Community Infrastructure Planning Tool</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
     <link rel="stylesheet" href="css/shared.css">
     <link rel="stylesheet" href="css/map.css">
 </head>
-<body class="bg-pattern min-h-screen">
-    <div class="container">
-        <!-- Header -->
-        <header class="site-header">
-            <h1>Infrastructure Planning Map</h1>
-            <p>Click on the map to add infrastructure needs or view existing requests</p>
-        </header>
+<body class="bg-pattern min-h-screen flex flex-col">
+    <!-- Header Navigation - Full Width -->
+    <header class="main-header w-full">
+        <nav class="nav-container">
+            <a href="map.html" class="nav-logo">
+                <i class="fas fa-city"></i>
+                <span>CommunityPlan</span>
+            </a>
 
-        <!-- Main Content -->
-        <div class="map-container">
-            <div id="map" class="map"></div>
-            
-            <!-- Control Panel -->
-            <div class="control-panel card">
-                <div class="user-info">
-                    <span id="username-display"></span>
-                    <button id="logout-btn" class="btn btn-primary">Logout</button>
-                </div>
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
 
-                <div class="form-group">
-                    <label class="form-label">Infrastructure Type</label>
-                    <select id="infrastructure-type" class="form-input">
-                        <option value="sidewalk">Sidewalk Repair</option>
-                        <option value="streetlight">Street Light</option>
-                        <option value="pothole">Pothole</option>
-                        <option value="crossing">Pedestrian Crossing</option>
-                        <option value="bike">Bike Lane</option>
-                    </select>
-                </div>
-
-                <div class="view-controls">
-                    <h3 class="form-label">View Options</h3>
-                    <div class="toggle-group">
-                        <label class="toggle">
-                            <input type="checkbox" id="toggle-heatmap">
-                            Show Heatmap
-                        </label>
-                        <label class="toggle">
-                            <input type="checkbox" id="toggle-markers" checked>
-                            Show Markers
-                        </label>
-                    </div>
-                </div>
-
-                <div class="stats-panel">
-                    <h3>Statistics</h3>
-                    <div id="stats-content">
-                        <p>Total Requests: <span id="total-requests">0</span></p>
-                        <p>Your Requests: <span id="user-requests">0</span></p>
-                    </div>
-                </div>
-
-                <a href="dashboard.html" class="btn btn-primary mt-4">View Dashboard</a>
+            <div class="nav-links">
+                <a href="map.html" class="nav-link">Map</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <span id="username-display" class="text-gray-600 mr-4"></span>
+                <button id="logout-btn" class="nav-button">Logout</button>
             </div>
+        </nav>
+    </header>
 
-            <!-- Add Request Modal -->
-            <div id="request-modal" class="modal hidden">
-                <div class="modal-content card">
-                    <h2>Add Infrastructure Request</h2>
-                    <form id="request-form">
-                        <div class="form-group">
-                            <label class="form-label" for="request-description">Description</label>
-                            <textarea id="request-description" class="form-input" required></textarea>
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Page Header -->
+        <div class="container mx-auto px-4">
+            <header class="text-center py-6">
+                <h1 class="text-3xl font-bold text-gray-800">Infrastructure Planning Map</h1>
+                <p class="text-gray-600 mt-2">Click on the map to add infrastructure needs or view existing requests</p>
+            </header>
+        </div>
+
+        <!-- Map Section -->
+        <div class="container mx-auto px-4">
+            <div class="map-container">
+                <div id="map" class="map"></div>
+                
+                <!-- Control Panel -->
+                <div class="control-panel card">
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Infrastructure Type</label>
+                        <select id="infrastructure-type" class="form-input">
+                            <option value="sidewalk">Sidewalk Repair</option>
+                            <option value="streetlight">Street Light</option>
+                            <option value="pothole">Pothole</option>
+                            <option value="crossing">Pedestrian Crossing</option>
+                            <option value="bike">Bike Lane</option>
+                        </select>
+                    </div>
+
+                    <div class="view-controls">
+                        <h3 class="form-label">View Options</h3>
+                        <div class="toggle-group">
+                            <label class="toggle">
+                                <input type="checkbox" id="toggle-heatmap">
+                                Show Heatmap
+                            </label>
+                            <label class="toggle">
+                                <input type="checkbox" id="toggle-markers" checked>
+                                Show Markers
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="request-priority">Priority</label>
-                            <select id="request-priority" class="form-input">
-                                <option value="low">Low</option>
-                                <option value="medium">Medium</option>
-                                <option value="high">High</option>
-                            </select>
+                    </div>
+
+                    <div class="stats-panel">
+                        <h3>Statistics</h3>
+                        <div id="stats-content">
+                            <p>Total Requests: <span id="total-requests">0</span></p>
+                            <p>Your Requests: <span id="user-requests">0</span></p>
                         </div>
-                        <div class="modal-actions">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="button" class="btn" id="modal-cancel">Cancel</button>
-                        </div>
-                    </form>
+                    </div>
+
+                    <a href="dashboard.html" class="btn btn-primary mt-4 w-full text-center">View Dashboard</a>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="site-footer">
+        <!-- Add Request Modal -->
+        <div id="request-modal" class="modal hidden">
+            <div class="modal-content card">
+                <h2>Add Infrastructure Request</h2>
+                <form id="request-form">
+                    <div class="form-group">
+                        <label class="form-label" for="request-description">Description</label>
+                        <textarea id="request-description" class="form-input" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="request-priority">Priority</label>
+                        <select id="request-priority" class="form-input">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn" id="modal-cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer - Full Width -->
+    <footer class="main-footer w-full">
+        
+        <div class="footer-bottom">
             <p>© 2025 Community Infrastructure Planning Tool. A Code for America Summit Demo Project.</p>
-        </footer>
-    </div>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>

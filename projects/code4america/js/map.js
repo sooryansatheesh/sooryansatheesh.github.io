@@ -1,16 +1,33 @@
 // Check if user is logged in
 document.addEventListener('DOMContentLoaded', function() {
-    const username = localStorage.getItem('username');
-    if (!username) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) {
         window.location.href = 'index.html';
         return;
     }
     
     // Display username
-    document.getElementById('username-display').textContent = `Welcome, ${username}!`;
+    document.getElementById('username-display').textContent = 
+        `Welcome, ${currentUser.firstName} ${currentUser.lastName}!`;
+    
     
     // Initialize map
     initMap();
+
+    // Logout functionality
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    });
+
+    // Mobile menu toggle
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileMenuButton && navLinks) {
+        mobileMenuButton.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    }
 });
 
 // Global variables
@@ -77,7 +94,7 @@ function onMapClick(e) {
 function initializeUIHandlers() {
     // Logout button
     document.getElementById('logout-btn').addEventListener('click', function() {
-        localStorage.removeItem('username');
+        localStorage.removeItem('currentUser');
         window.location.href = 'index.html';
     });
     
@@ -148,6 +165,7 @@ function hideRequestModal() {
 function handleRequestSubmit(e) {
     e.preventDefault();
     
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const infrastructureType = document.getElementById('infrastructure-type').value;
     const request = {
         id: Date.now(),
@@ -155,7 +173,7 @@ function handleRequestSubmit(e) {
         description: document.getElementById('request-description').value,
         priority: document.getElementById('request-priority').value,
         location: [selectedLocation.lat, selectedLocation.lng],
-        username: localStorage.getItem('username'),
+        username: currentUser.username,  // Use the username from currentUser
         timestamp: new Date().toISOString(),
         estimatedCost: costEstimates[infrastructureType]
     };
@@ -258,8 +276,8 @@ function getPriorityWeight(priority) {
 
 // Update statistics
 function updateStats() {
-    const username = localStorage.getItem('username');
-    const userRequests = requests.filter(r => r.username === username);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const userRequests = requests.filter(r => r.username === currentUser.username);
     
     // Update basic stats
     document.getElementById('total-requests').textContent = requests.length;

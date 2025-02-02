@@ -115,6 +115,22 @@
     background-color: #fee2e2;
     color: #991b1b;
 }
+.refresh-indicator {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
 
 /* Map Container */
 #quickViewMap {

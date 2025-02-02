@@ -148,3 +148,31 @@
     margin: 5px 0;
     font-size: 0.9rem;
 }
+
+/* Add to map.css */
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.main-header,
+.main-footer {
+    width: 100%;
+}
+
+.nav-container,
+.footer-content,
+.footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (max-width: 1280px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
