@@ -1,6 +1,39 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded');
+
+    function initializeDefaultData() {
+        // Clear all existing data from localStorage
+        localStorage.clear();
+        
+        // Initialize with default data only
+        const users = defaultData.users.map(user => ({
+            ...user,
+            id: user.id || Date.now() + Math.floor(Math.random() * 1000)
+        }));
+    
+        const requests = defaultData.requests.map(request => ({
+            ...request,
+            id: request.id || Date.now() + Math.floor(Math.random() * 1000)
+        }));
+    
+        // Save default data to localStorage
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('requests', JSON.stringify(requests));
+        
+        console.log('Default data initialized:', {
+            users: users.length,
+            requests: requests.length
+        });
+    
+        // Return the initialized data (useful for debugging)
+        return {
+            users,
+            requests
+        };
+    }
+
+    initializeDefaultData();
     
     // Get references to DOM elements
     const loginForm = document.getElementById('loginForm');
