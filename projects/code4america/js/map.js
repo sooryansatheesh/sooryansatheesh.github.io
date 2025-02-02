@@ -48,8 +48,19 @@ const costEstimates = {
 
 // Initialize map
 function initMap() {
-    // Set map view to a default location (can be customized)
-    map = L.map('map').setView([37.7749, -122.4194], 13);
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    // Get user's city coordinates, fallback to San Francisco if not available
+    let defaultLat = 37.7749;
+    let defaultLng = -122.4194;
+    
+    if (currentUser && currentUser.address && currentUser.address.coordinates) {
+        defaultLat = parseFloat(currentUser.address.coordinates.lat);
+        defaultLng = parseFloat(currentUser.address.coordinates.lon);
+    }
+
+    // Set map view to user's location
+    map = L.map('map').setView([defaultLat, defaultLng], 13);
     
     // Add tile layer (OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
