@@ -72,20 +72,45 @@ document.addEventListener('DOMContentLoaded', function() {
             const allRequests = JSON.parse(localStorage.getItem('requests') || '[]');
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             
+            // Debug log
+            console.log('Loading requests:', {
+                totalRequests: allRequests.length,
+                totalUsers: users.length
+            });
+            
             // Filter requests for current city
             requests = allRequests.filter(request => {
                 const requestUser = users.find(u => u.username === request.username);
+                
+                // Debug log
+                if (!requestUser) {
+                    console.warn('No user found for request:', request);
+                }
+                
                 return requestUser && 
                     requestUser.address.city.toLowerCase() === currentUser.city.name.toLowerCase() &&
                     requestUser.address.state === currentUser.city.state;
             });
-
+    
             // Add user information to requests
             requests = requests.map(request => {
                 const user = users.find(u => u.username === request.username);
-                return { ...request, user };
+                const requestWithUser = { ...request, user };
+                
+                // Debug log
+                if (!user) {
+                    console.warn('Could not attach user to request:', request);
+                }
+                
+                return requestWithUser;
             });
-
+    
+            // Debug log final results
+            console.log('Processed requests:', {
+                finalCount: requests.length,
+                sampleRequest: requests[0]
+            });
+    
             updateMap();
             filterAndDisplayRequests();
         } catch (error) {
@@ -158,24 +183,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Display filtered and sorted requests
     function filterAndDisplayRequests() {
-        const filteredRequests = filterRequests();
-        const sortedRequests = sortRequests(filteredRequests);
-
-        if (sortedRequests.length === 0) {
+        showLoading(); // Show loading state before filtering starts
+        
+        // Use setTimeout to allow the loading state to render
+        setTimeout(() => {
+            const filteredRequests = filterRequests();
+            const sortedRequests = sortRequests(filteredRequests);
+    
+            if (sortedRequests.length === 0) {
+                requestsList.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                hideLoading(); // Hide loading when no results
+                return;
+            }
+    
+            emptyState.classList.add('hidden');
             requestsList.innerHTML = '';
-            emptyState.classList.remove('hidden');
-            return;
-        }
-
-        emptyState.classList.add('hidden');
-        requestsList.innerHTML = '';
-
-        sortedRequests.forEach(request => {
-            const requestCard = createRequestCard(request);
-            requestsList.appendChild(requestCard);
-        });
-
-        updateMap();
+    
+            sortedRequests.forEach(request => {
+                const requestCard = createRequestCard(request);
+                requestsList.appendChild(requestCard);
+            });
+    
+            updateMap();
+            hideLoading(); // Hide loading when complete
+        }, 100); // Small delay to ensure loading state is visible
     }
 
     // Sort requests based on selected option
@@ -465,7 +497,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners
-    searchInput.addEventListener('input', filterAndDisplayRequests);
+    searchInput.addEventListener('input', function(e) {
+        showLoading();
+        console.log('Search term:', e.target.value);
+        
+        // Log the current requests data
+        console.log('Total requests:', requests.length);
+        
+        // Test a few requests to see if they have the right properties
+        if (requests.length > 0) {
+            console.log('Sample request:', requests[0]);
+            console.log('Sample request user:', requests[0].user);
+        }
+        
+        // Log the filtered results
+        const filtered = filterRequests();
+        console.log('Filtered results:', filtered.length);
+
+        filterAndDisplayRequests(); // Call this to update the display
+        hideLoading();
+    });
+
+
     typeFilter.addEventListener('change', filterAndDisplayRequests);
     statusFilter.addEventListener('change', filterAndDisplayRequests);
     priorityFilter.addEventListener('change', filterAndDisplayRequests);
