@@ -327,7 +327,6 @@ function createPopupContent(properties, mapYear) {
         <div class="railroad-popup">
             <h3 style="color: #0039A6; margin-bottom: 8px;">${properties.name || 'Amtrak Route'}</h3>
             <p><strong>Type:</strong> Long Distance Passenger Route</p>
-            ${properties.shape_leng ? `<p><strong>Length:</strong> ${Math.round(properties.shape_leng * 100) / 100} miles</p>` : ''}
         </div>
     `;
     }
