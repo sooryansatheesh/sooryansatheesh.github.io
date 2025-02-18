@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - VerdantVision</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="../css/shared.css">
+    <link rel="stylesheet" href="../css/user-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                VerdantVision
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#reports">My Reports</a></li>
+                    <li><a href="#donations">Donations</a></li>
+                    <li>
+                        <button id="userMenuBtn" class="user-menu-btn">
+                            <span class="user-initial">J</span>
+                            <span class="user-name">John Doe</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- User dropdown menu -->
+        <div id="userDropdown" class="user-dropdown" style="display: none;">
+            <ul>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#settings">Settings</a></li>
+                <li><button id="logoutBtn" class="logout-btn">Logout</button></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-container">
+        <!-- City Overview -->
+        <section class="city-overview">
+            <div class="city-header">
+                <h1>New York City</h1>
+                <p class="weather">72°F Partly Cloudy</p>
+            </div>
+            <div class="quick-actions">
+                <button class="action-btn" id="newReportBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    New Report
+                </button>
+                <button class="action-btn" id="viewMapBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    View Map
+                </button>
+            </div>
+        </section>
+
+        <!-- Statistics Grid -->
+        <section class="stats-grid">
+            <!-- Trees at Risk Card -->
+            <div class="stat-card endangered">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Trees At Risk</h3>
+                        <p class="stat-number">7</p>
+                        <p class="stat-detail">2 critical cases</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#endangered-details">View Details →</a>
+                </div>
+            </div>
+
+            <!-- Needs Pruning Card -->
+            <div class="stat-card pruning">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Needs Pruning</h3>
+                        <p class="stat-number">12</p>
+                        <p class="stat-detail">3 urgent cases</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#pruning-details">View Details →</a>
+                </div>
+            </div>
+
+            <!-- Planting Spots Card -->
+            <div class="stat-card planting">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Planting Spots</h3>
+                        <p class="stat-number">23</p>
+                        <p class="stat-detail">5 verified locations</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#planting-details">View Details →</a>
+                </div>
+            </div>
+
+            <!-- Donations Card -->
+            <div class="stat-card donations">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20m-9-3h18"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Your Donations</h3>
+                        <p class="stat-number">$750</p>
+                        <p class="stat-detail">Last month: $250</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#donation-history">View History →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+       <!-- Map Section -->
+        <section class="map-section">
+            <div class="map-header">
+                <h2>Environmental Analysis Map</h2>
+                <div class="map-filters">
+                    <button class="map-action active" data-view="all">All Data</button>
+                    <button class="map-action" data-view="heat">Heat Islands</button>
+                    <button class="map-action" data-view="green">Green Spaces</button>
+                    <button class="map-action" data-view="changes">Coverage Changes</button>
+                </div>
+            </div>
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-info">
+                    <div class="map-stats">
+                        <div class="stat">
+                            <strong>Selected Area:</strong>
+                            <span id="selectedArea">All of NYC</span>
+                        </div>
+                        <div class="stat">
+                            <strong>Green Coverage:</strong>
+                            <span id="greenCoverage">27%</span>
+                        </div>
+                        <div class="stat">
+                            <strong>Heat Island Impact:</strong>
+                            <span id="heatImpact">Moderate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="recent-activity">
+            <h2>Recent Activity</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon endangered">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <h3>Tree at Risk Reported</h3>
+                        <p>123 Broadway, New York</p>
+                        <span class="activity-time">2 hours ago</span>
+                    </div>
+                    <div class="activity-status pending">Pending Review</div>
+                </div>
+                <!-- More activity items... -->
+            </div>
+        </section>
+    </main>
+
+    <!-- New Report Modal -->
+    <div id="newReportModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>New Report</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="reportForm">
+                <div class="form-group">
+                    <label for="reportType">Report Type</label>
+                    <select id="reportType" name="reportType" required>
+                        <option value="">Select type...</option>
+                        <option value="endangered">Tree at Risk</option>
+                        <option value="pruning">Needs Pruning</option>
+                        <option value="planting">Planting Location</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <div class="location-input-group">
+                        <input type="text" id="location" name="location" 
+                               placeholder="Click on map or enter address" required>
+                        <button type="button" class="get-location-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" required
+                              placeholder="Provide details about the situation..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo (optional)</label>
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                    <p class="input-help">Max file size: 5MB. Supported formats: JPG, PNG</p>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelReport">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Leaflet Heat Layer Plugin (important for heat map) -->
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="../js/user-dashboard.js"></script>
+</body>
+</html>
