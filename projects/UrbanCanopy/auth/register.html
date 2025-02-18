@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - UrbanCanopy</title>
+    <!-- Updated paths with ../ to go up one directory -->
+    <link rel="stylesheet" href="../css/shared.css">
+    <link rel="stylesheet" href="../css/register.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                UrbanCanopy
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="login.html">Already have an account? Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Registration Form Section -->
+    <main class="register-container">
+        <div class="register-content">
+            <div class="form-header">
+                <h1>Create Your Account</h1>
+                <p>Join UrbanCanopy and help make your city greener</p>
+            </div>
+
+            <div class="user-type-selector">
+                <button class="user-type-btn active" data-type="community">Community Member</button>
+                <button class="user-type-btn" data-type="official">City Official</button>
+            </div>
+
+            <form id="registrationForm" class="registration-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-input-container">
+                        <input type="password" id="password" name="password" required>
+                        <button type="button" class="toggle-password">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-meter"></div>
+                        <span class="strength-text"></span>
+                    </div>
+                    <span class="error-message"></span>
+                </div>
+
+                <!-- City Official specific fields -->
+                <div class="official-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <input type="text" id="department" name="department">
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cityId">City ID Number</label>
+                        <input type="text" id="cityId" name="cityId">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span class="checkmark"></span>
+                        I agree to the <a href="/terms" target="_blank">Terms of Service</a> and <a href="/privacy" target="_blank">Privacy Policy</a>
+                    </label>
+                    <span class="error-message"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary submit-btn">
+                    Create Account
+                    <span class="loading-spinner" style="display: none;"></span>
+                </button>
+            </form>
+
+            <div class="social-login">
+                <p>Or sign up with</p>
+                <div class="social-buttons">
+                    <button class="social-btn google">
+                        <img src="../images/google-icon.svg" alt="Google">
+                        Google
+                    </button>
+                    <button class="social-btn microsoft">
+                        <img src="../images/microsoft-icon.svg" alt="Microsoft">
+                        Microsoft
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Side banner with features -->
+        <div class="register-banner">
+            <div class="banner-content">
+                <h2>Join our growing community</h2>
+                <ul class="feature-list">
+                    <li>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        Track and monitor urban forests
+                    </li>
+                    <li>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v8M8 12h8"/>
+                        </svg>
+                        Contribute to green initiatives
+                    </li>
+                    <li>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Connect with your community
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/register.js"></script>
+</body>
+</html>
