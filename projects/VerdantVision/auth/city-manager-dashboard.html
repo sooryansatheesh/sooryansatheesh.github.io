@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Manager Dashboard - VerdantVision</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/shared.css">
+    <link rel="stylesheet" href="../css/city-manager-dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                VerdantVision
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#reports">Reports</a></li>
+                    <li><a href="#finances">Finances</a></li>
+                    <li>
+                        <button id="userMenuBtn" class="user-menu-btn">
+                            <span class="user-initial">CM</span>
+                            <span class="user-name">City Manager</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- User dropdown menu -->
+        <div id="userDropdown" class="user-dropdown" style="display: none;">
+            <ul>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#settings">Settings</a></li>
+                <li><button id="logoutBtn" class="logout-btn">Logout</button></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <main class="dashboard-container">
+        <!-- City Overview -->
+        <section class="city-overview">
+            <div class="city-header">
+                <h1>New York City</h1>
+                <p class="weather">72°F Partly Cloudy</p>
+            </div>
+            <div class="quick-actions">
+                <button class="action-btn" id="reviewReportsBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Review Reports
+                </button>
+                <button class="action-btn" id="generateReportBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Generate Report
+                </button>
+            </div>
+        </section>
+
+        <!-- Statistics Grid -->
+        <section class="stats-grid">
+            <!-- Pending Reports Card -->
+            <div class="stat-card pending-reports">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Pending Reports</h3>
+                        <p class="stat-number">15</p>
+                        <p class="stat-detail">5 critical cases</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#pending-reports">View All →</a>
+                </div>
+            </div>
+
+            <!-- Prioritized Reports Card -->
+            <div class="stat-card prioritized-reports">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Prioritized Reports</h3>
+                        <p class="stat-number">7</p>
+                        <p class="stat-detail">Urgent attention required</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#prioritized-reports">Manage Priority →</a>
+                </div>
+            </div>
+
+            <!-- Monthly Donations Card -->
+            <div class="stat-card donations">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20m-9-3h18"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Monthly Donations</h3>
+                        <p class="stat-number">$25,750</p>
+                        <p class="stat-detail">+12% from last month</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#donation-details">View Details →</a>
+                </div>
+            </div>
+
+            <!-- Expenditure Card -->
+            <div class="stat-card expenditure">
+                <div class="stat-content">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm8-8a2 2 0 100 4 2 2 0 000-4z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Monthly Expenditure</h3>
+                        <p class="stat-number">$18,500</p>
+                        <p class="stat-detail">Tree management & conservation</p>
+                    </div>
+                </div>
+                <div class="stat-footer">
+                    <a href="#expenditure-breakdown">View Breakdown →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="map-header">
+                <h2>City Environmental Analysis</h2>
+                <div class="map-filters">
+                    <button class="map-action active" data-view="all">All Data</button>
+                    <button class="map-action" data-view="heat">Heat Islands</button>
+                    <button class="map-action" data-view="green">Green Spaces</button>
+                    <button class="map-action" data-view="changes">Coverage Changes</button>
+                </div>
+            </div>
+            <div class="map-container">
+                <div id="cityMap"></div>
+                <div class="map-info">
+                    <div class="map-stats">
+                        <div class="stat">
+                            <strong>Selected Area:</strong>
+                            <span id="selectedArea">All of NYC</span>
+                        </div>
+                        <div class="stat">
+                            <strong>Green Coverage:</strong>
+                            <span id="greenCoverage">27%</span>
+                        </div>
+                        <div class="stat">
+                            <strong>Heat Island Impact:</strong>
+                            <span id="heatImpact">Moderate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Management Section -->
+        <section class="reports-management">
+            <div class="section-header">
+                <h2>Reports Management</h2>
+                <div class="filter-controls">
+                    <select id="reportTypeFilter">
+                        <option value="all">All Reports</option>
+                        <option value="pending">Pending</option>
+                        <option value="prioritized">Prioritized</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+            <div class="reports-list" id="reportsList">
+                <!-- Reports will be dynamically populated here -->
+            </div>
+        </section>
+
+        <!-- Financial Overview Section -->
+        <section class="financial-overview">
+            <div class="section-header">
+                <h2>Financial Dashboard</h2>
+                <div class="time-controls">
+                    <button class="active">Monthly</button>
+                    <button>Quarterly</button>
+                    <button>Yearly</button>
+                </div>
+            </div>
+            <div class="financial-grid">
+                <div class="donations-chart">
+                    <h3>Donations Trend</h3>
+                    <div id="donationChart"></div>
+                </div>
+                <div class="expenditure-breakdown">
+                    <h3>Expenditure Breakdown</h3>
+                    <div id="expenditureChart"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals for Reports and Financial Details -->
+    <div id="reportDetailsModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Report Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="reportDetailsContent"></div>
+            <div class="modal-actions">
+                <button id="prioritizeReport" class="btn btn-primary">Prioritize</button>
+                <button id="resolveReport" class="btn btn-success">Resolve</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet and Chart Libraries -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../js/city-manager-dashboard.js"></script>
+</body>
+</html>

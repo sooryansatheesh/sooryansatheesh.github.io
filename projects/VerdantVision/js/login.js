@@ -20,7 +20,7 @@ const VALID_CREDENTIALS = {
         password: '1234',
         role: 'manager',
         name: 'Jane Smith',
-        redirectUrl: './manager-dashboard.html'
+        redirectUrl: './city-manager-dashboard.html'
     }
 };
 

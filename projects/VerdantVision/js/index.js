@@ -9,7 +9,7 @@ const navLinks = document.querySelector('.nav-links');
 const statsData = [
     { end: 50000, suffix: '+', label: 'Trees Mapped' },
     { end: 25, suffix: '%', label: 'Coverage Increase' },
-    { end: 15, suffix: '°C', label: 'Temperature Reduction' },
+    { end: 3, suffix: '°C', label: 'Temperature Reduction' },
     { end: 1000, suffix: '+', label: 'Active Users' }
 ];
 

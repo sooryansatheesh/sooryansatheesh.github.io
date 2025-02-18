@@ -1,5 +1,9 @@
 /* index.css - Landing page specific styles */
-
+:root {
+  --primary-color: #059669;
+  --primary-color-dark: #047857;
+  --white: #ffffff;
+}
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
                 url('/images/hero-bg.jpg') center/cover;
@@ -311,4 +315,312 @@
 
 .mobile-menu-active span:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  height: 100%; /* Ensure equal height */
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #e6f3ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.feature-icon svg {
+  stroke: #059669;
+  width: 36px;
+  height: 36px;
+}
+
+.feature-title {
+  font-size: 1.25rem;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.feature-card p {
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 300px;
+  flex-grow: 1;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: white;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #059669, #10b981);
+  z-index: 1;
+}
+
+.hero-layers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.layer-city {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' + 
+      '<rect width="100%" height="100%" fill="rgba(255,255,255,0.05)"/>' + 
+      '<rect x="10%" y="70%" width="10%" height="30%" fill="rgba(255,255,255,0.1)"/>' + 
+      '<rect x="30%" y="60%" width="10%" height="40%" fill="rgba(255,255,255,0.08)"/>' + 
+      '<rect x="50%" y="65%" width="10%" height="35%" fill="rgba(255,255,255,0.06)"/>' + 
+      '<rect x="70%" y="55%" width="10%" height="45%" fill="rgba(255,255,255,0.09)"/>' + 
+  '</svg>');
+  animation: cityPan 20s linear infinite;
+}
+
+.layer-trees {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' + 
+      '<path d="M0 100% L20% 70% Q50% 50% 80% 70% L100% 100%" fill="rgba(39,174,96,0.2)"/>' + 
+      '<path d="M0 100% L30% 60% Q50% 40% 70% 60% L100% 100%" fill="rgba(39,174,96,0.15)"/>' + 
+  '</svg>');
+  animation: treeSway 15s ease-in-out infinite alternate;
+}
+
+.layer-data-points {
+  background: radial-gradient(
+      circle at 20% 30%, rgba(16,185,129,0.3) 0%, transparent 50%
+  ), radial-gradient(
+      circle at 80% 70%, rgba(5,150,105,0.3) 0%, transparent 50%
+  );
+  animation: dataPointPulse 10s ease-in-out infinite alternate;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(5, 150, 105, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: white;
+  text-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: rgba(255,255,255,0.9);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: white;
+  color: #059669;
+}
+
+.btn-secondary {
+  border: 2px solid white;
+  color: white;
+}
+
+@keyframes cityPan {
+  0% { transform: translateX(-5%); }
+  50% { transform: translateX(5%); }
+  100% { transform: translateX(-5%); }
+}
+
+@keyframes treeSway {
+  0% { transform: translateY(-2%); }
+  100% { transform: translateY(2%); }
+}
+
+@keyframes dataPointPulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.3; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+      font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+      font-size: 1rem;
+  }
+
+  .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .btn {
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+      margin-bottom: 1rem;
+  }
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color-dark);
+  border-color: var(--primary-color-dark);
+  opacity: 1;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: white; /* Ensure white text on green background */
+  opacity: 1; /* Full opacity to maintain readability */
+}
+.btn-secondary-login{
+  
+  border: 2px solid var(--primary-color)
+}
+
+.btn-secondary-login:hover {
+  background-color: white;
+  color: white; /* Ensure white text on green background */
+  opacity: 1; /* Full opacity to maintain readability */
+  border: 2px solid var(--primary-color)
+}
+
+.nav-links {
+  display: flex;
+  align-items: center; /* Vertically center items */
+  gap: 1.5rem; /* Consistent spacing between items */
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center; /* Ensure vertical alignment within each list item */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1f2937; /* Default text color */
+  font-weight: 500;
+  line-height: 1; /* Consistent line height */
+}
+
+/* Specific styling for buttons to match height and alignment */
+.nav-links .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px; /* Fixed height for consistent alignment */
+}
+
+.nav-links .btn-secondary-login,
+.nav-links .btn-primary {
+  padding: 0.5rem 1rem;
 }
