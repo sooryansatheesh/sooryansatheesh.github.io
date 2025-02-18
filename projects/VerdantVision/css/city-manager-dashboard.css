@@ -1,0 +1,760 @@
+/* City Manager Dashboard Styles */
+
+/* Base Layout */
+body {
+    background-color: #f8fafc;
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: #1f2937;
+}
+
+.dashboard-container {
+    padding: 2rem;
+    margin-top: 64px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Header and Navigation */
+.header {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #059669;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #059669;
+}
+
+/* User Menu */
+.user-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1f2937;
+}
+
+.user-initial {
+    width: 32px;
+    height: 32px;
+    background-color: #059669;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 2rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    z-index: 1000;
+}
+
+.user-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.user-dropdown li {
+    padding: 0.5rem;
+}
+
+.user-dropdown a, .user-dropdown button {
+    text-decoration: none;
+    color: #1f2937;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.user-dropdown a:hover, .user-dropdown button:hover {
+    background-color: #f3f4f6;
+}
+
+.logout-btn {
+    color: #dc2626;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #fef2f2;
+}
+
+/* City Overview Section */
+.city-overview {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('../images/nyc-skyline.jpg') center/cover;
+    border-radius: 1rem;
+    padding: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.city-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.weather {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.quick-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 0.5rem;
+    color: #1f2937;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: white;
+    transform: translateY(-2px);
+}
+
+/* Statistics Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-content {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pending-reports .stat-icon {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.prioritized-reports .stat-icon {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.donations .stat-icon {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.expenditure .stat-icon {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.stat-info h3 {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0 0 0.5rem 0;
+}
+
+.stat-number {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+.stat-detail {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0.25rem 0 0 0;
+}
+
+.stat-footer {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-footer a {
+    color: #059669;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Map Section */
+.map-section {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.map-filters {
+    display: flex;
+    gap: 1rem;
+}
+
+.map-action {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    background: white;
+    color: #374151;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.map-action:hover {
+    background: #f3f4f6;
+}
+
+.map-action.active {
+    background: #059669;
+    color: white;
+    border-color: #059669;
+}
+
+.map-container {
+    height: 500px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+#cityMap {
+    height: 100%;
+    width: 100%;
+}
+
+.map-info {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.map-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.map-stats .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.map-stats strong {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.map-stats span {
+    font-size: 1.125rem;
+    color: #111827;
+    font-weight: 500;
+}
+
+/* Reports Management Section */
+.reports-management {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.filter-controls select {
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+}
+
+.reports-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.report-item {
+    background: #f9fafb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.report-item:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.report-type {
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.report-type.endangered {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.report-type.pruning {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.report-type.planting {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.report-status {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.report-status.pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.report-status.prioritized {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.report-status.completed {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+/* Financial Overview Section */
+.financial-overview {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.time-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.time-controls button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    background: white;
+    color: #374151;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.time-controls button.active {
+    background: #059669;
+    color: white;
+    border-color: #059669;
+}
+
+.financial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+#donationChart,
+#expenditureChart {
+    height: 300px;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6b7280;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #059669;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #047857;
+}
+
+.btn-success {
+    background-color: #16a34a;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #15803d;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease;
+}
+
+.notification.success {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.notification.error {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1280px) {
+    .dashboard-container {
+        padding: 1.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .financial-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1024px) {
+    .header-container {
+        padding: 0 1rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .map-section {
+        padding: 1rem;
+    }
+
+    .map-filters {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .map-action {
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .city-overview {
+        padding: 1.5rem;
+    }
+
+    .quick-actions {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .map-container {
+        height: 400px;
+    }
+
+    .map-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .time-controls {
+        flex-wrap: wrap;
+    }
+
+    .time-controls button {
+        flex-grow: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0 0.5rem;
+    }
+
+    .logo {
+        font-size: 1rem;
+    }
+
+    .nav-links {
+        gap: 0.5rem;
+    }
+
+    .user-initial {
+        width: 28px;
+        height: 28px;
+        font-size: 0.875rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+
+    .notification {
+        right: 0.5rem;
+        left: 0.5rem;
+        bottom: 1rem;
+        width: calc(100% - 1rem);
+        text-align: center;
+    }
+}
+
+/* Additional Utility Classes */
+.text-muted {
+    color: #6b7280;
+}
+
+.text-primary {
+    color: #059669;
+}
+
+.text-danger {
+    color: #dc2626;
+}
+
+.text-success {
+    color: #16a34a;
+}
+
+.bg-light {
+    background-color: #f9fafb;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.rounded {
+    border-radius: 0.5rem;
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .dashboard-container, 
+    .dashboard-container * {
+        visibility: visible;
+    }
+    
+    .dashboard-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
