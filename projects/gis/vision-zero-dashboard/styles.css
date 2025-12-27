@@ -253,6 +253,11 @@ body {
     margin: 2rem 0 1rem;
 }
 
+.narrative-content h2 {
+    margin-bottom: 1.5rem;
+    color: rgba(0, 0, 0, 0.9)
+}
+
 .narrative-content p {
     margin-bottom: 1.5rem;
     color: var(--gray-700);
@@ -821,6 +826,11 @@ body {
     color: white;
 }
 
+/* Override for h2 inside narrative-content within sources-section */
+.sources-section .narrative-content h2 {
+    color: var(--dark);
+}
+
 .sources-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -879,7 +889,7 @@ body {
 }
 
 .methodology-text p {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.9);
     margin-bottom: 1rem;
 }
 
@@ -906,6 +916,10 @@ body {
 
     .narrative-content {
         padding: 2rem 1.5rem;
+    }
+
+    .narrative-content h2 {
+        color: var(--dark);
     }
 
     .main-title {
@@ -947,6 +961,11 @@ body {
 @media (max-width: 480px) {
     .narrative-content {
         padding: 1.5rem 1rem;
+    }
+
+    .narrative-content h2 {
+
+        color: var(--dark);
     }
 
     .chapter-title {
