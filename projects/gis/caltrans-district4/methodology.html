@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Methodology — District 4 Vegetation Monitor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    
+    .methodology-container {
+      background: white;
+      border-radius: 8px;
+      padding: 40px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin: 30px 0;
+    }
+    
+    .methodology-section {
+      margin: 40px 0;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #007bff;
+    }
+    
+    .section-icon {
+      font-size: 32px;
+      color: #007bff;
+      width: 50px;
+      text-align: center;
+    }
+    
+    .section-header h2 {
+      margin: 0;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+    
+    .methodology-content {
+      line-height: 1.8;
+      color: #333;
+      font-size: 16px;
+    }
+    
+    .methodology-content p {
+      margin-bottom: 15px;
+    }
+    
+    .step-list {
+      list-style: none;
+      padding-left: 0;
+      counter-reset: step-counter;
+    }
+    
+    .step-list li {
+      counter-increment: step-counter;
+      margin-bottom: 20px;
+      padding-left: 50px;
+      position: relative;
+    }
+    
+    .step-list li:before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: #007bff;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    .step-list li strong {
+      display: block;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+      font-size: 17px;
+    }
+    
+    .data-source {
+      background: #e7f3ff;
+      border-left: 4px solid #007bff;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    
+    .data-source strong {
+      color: #0056b3;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .technical-note {
+      background: #f5f5f5;
+      border-left: 4px solid #6c757d;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+      color: #495057;
+    }
+    
+    .methodology-diagram {
+      background: #f8f9fa;
+      border: 2px dashed #dee2e6;
+      padding: 30px;
+      border-radius: 8px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .flow-step {
+      display: inline-block;
+      background: white;
+      border: 2px solid #007bff;
+      border-radius: 6px;
+      padding: 15px 20px;
+      margin: 10px;
+      min-width: 150px;
+      font-weight: 500;
+      color: #007bff;
+    }
+    
+    .flow-arrow {
+      display: inline-block;
+      margin: 0 10px;
+      color: #007bff;
+      font-size: 20px;
+    }
+    
+    .key-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .metric-card {
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .metric-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #007bff;
+      margin: 10px 0;
+    }
+    
+    .metric-label {
+      color: #666;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body id="methodology-page">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html"><i class="fas fa-leaf"></i> District 4 Vegetation Monitor</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="map.html">Interactive Map</a></li>
+          <li class="nav-item"><a class="nav-link" href="analysis.html">Analysis</a></li>
+          <li class="nav-item"><a class="nav-link active" href="methodology.html">Methodology</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container methodology-container">
+    <h1 class="mb-4">Research Methodology</h1>
+    <p class="lead text-muted">Understanding how CalTrans District 4 roads impact vegetation through satellite imagery analysis</p>
+
+    <!-- Overview Section -->
+    <div class="methodology-section">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-compass"></i></div>
+        <h2>Overview</h2>
+      </div>
+      <div class="methodology-content">
+        <p>
+          This project analyzes vegetation changes around the California road network in CalTrans District 4 (the nine-county Bay Area region) 
+          using satellite imagery and geospatial analysis. By examining NDVI (Normalized Difference Vegetation Index) changes from 2020 to 2024, 
+          we can understand how roads impact the surrounding vegetation across different counties and road types.
+        </p>
+      </div>
+    </div>
+
+    <!-- Data Sources Section -->
+    <div class="methodology-section">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-database"></i></div>
+        <h2>Data Sources</h2>
+      </div>
+      <div class="methodology-content">
+        <div class="data-source">
+          <strong><i class="fas fa-road"></i> Road Network</strong>
+          California road network shapefile obtained from the U.S. Government data portal. 
+          This dataset includes comprehensive road geometries across California.
+        </div>
+        
+        <div class="data-source">
+          <strong><i class="fas fa-map"></i> District Boundaries</strong>
+          County boundaries for the 9 Bay Area counties that comprise CalTrans District 4: 
+          Alameda, Contra Costa, Marin, Napa, San Francisco, San Mateo, Santa Clara, Solano, and Sonoma.
+        </div>
+        
+        <div class="data-source">
+          <strong><i class="fas fa-satellite"></i> Satellite Imagery</strong>
+          Sentinel-2 satellite imagery:
+          <ul style="margin-top: 10px; margin-bottom: 0;">
+            <li><strong>Baseline (2020):</strong> Summer imagery to establish vegetation baseline conditions</li>
+            <li><strong>Comparison (2024):</strong> Summer imagery to assess vegetation changes over 4 years</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Methodology Process Section -->
+    <div class="methodology-section">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-cogs"></i></div>
+        <h2>Processing Steps</h2>
+      </div>
+      <div class="methodology-content">
+        <ul class="step-list">
+          <li>
+            <strong>Road Network Clipping</strong>
+            The California road network shapefile was clipped to the boundaries of the 9 Bay Area counties 
+            that comprise CalTrans District 4, isolating roads within the district for analysis.
+          </li>
+          
+          <li>
+            <strong>Buffer Zone Creation</strong>
+            A 75-meter buffer was created around each road segment. This buffer zone represents the area 
+            of potential vegetation impact from road activities, including right-of-way maintenance, dust, 
+            and edge effects.
+          </li>
+          
+          <li>
+            <strong>Baseline Establishment</strong>
+            Sentinel-2 imagery from 2020 was processed to calculate NDVI values within the buffered areas. 
+            This established the baseline vegetation health conditions across all road networks.
+          </li>
+          
+          <li>
+            <strong>Change Detection</strong>
+            Sentinel-2 imagery from 2024 was processed to recalculate NDVI values. The difference between 
+            2024 and 2020 NDVI values was computed for each road segment, showing vegetation changes over the 4-year period.
+          </li>
+          
+          <li>
+            <strong>Priority Classification</strong>
+            Road segments were classified into priority categories based on NDVI change magnitude:
+            <div style="margin-top: 20px;">
+              <table class="table table-sm" style="background: white; margin-bottom: 0;">
+                <thead>
+                  <tr style="background: #f8f9fa;">
+                    <th style="width: 30px;">Color</th>
+                    <th>Classification</th>
+                    <th>NDVI Change Range</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span style="display: inline-block; width: 20px; height: 20px; background: #d73027; border-radius: 3px;"></span></td>
+                    <td><strong>Critical Decline</strong></td>
+                    <td>&lt; -0.20</td>
+                  </tr>
+                  <tr>
+                    <td><span style="display: inline-block; width: 20px; height: 20px; background: #fc8d59; border-radius: 3px;"></span></td>
+                    <td><strong>Moderate Decline</strong></td>
+                    <td>-0.20 to -0.10</td>
+                  </tr>
+                  <tr>
+                    <td><span style="display: inline-block; width: 20px; height: 20px; background: #fee08b; border-radius: 3px;"></span></td>
+                    <td><strong>Stable</strong></td>
+                    <td>-0.10 to 0.10</td>
+                  </tr>
+                  <tr>
+                    <td><span style="display: inline-block; width: 20px; height: 20px; background: #d9ef8b; border-radius: 3px;"></span></td>
+                    <td><strong>Moderate Increase</strong></td>
+                    <td>0.10 to 0.20</td>
+                  </tr>
+                  <tr>
+                    <td><span style="display: inline-block; width: 20px; height: 20px; background: #91cf60; border-radius: 3px;"></span></td>
+                    <td><strong>Significant Increase</strong></td>
+                    <td>&gt; 0.20</td>
+                  </tr>
+                  <tr>
+                    <td><span style="display: inline-block; width: 20px; height: 20px; background: #1a9850; border-radius: 3px;"></span></td>
+                    <td><strong>Undefined</strong></td>
+                    <td>No data or undefined</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Technical Details Section -->
+    <div class="methodology-section">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-microscope"></i></div>
+        <h2>Technical Specifications</h2>
+      </div>
+      <div class="methodology-content">
+        <div class="key-metrics">
+          <div class="metric-card">
+            <div class="metric-label">Buffer Distance</div>
+            <div class="metric-value">75 m</div>
+            <p style="font-size: 13px; color: #666; margin-top: 10px;">Area around each road analyzed</p>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-label">Baseline Year</div>
+            <div class="metric-value">2020</div>
+            <p style="font-size: 13px; color: #666; margin-top: 10px;">Summer imagery for baseline</p>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-label">Analysis Year</div>
+            <div class="metric-value">2024</div>
+            <p style="font-size: 13px; color: #666; margin-top: 10px;">Summer imagery for comparison</p>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-label">Satellite Sensor</div>
+            <div class="metric-value">Sentinel-2</div>
+            <p style="font-size: 13px; color: #666; margin-top: 10px;">10m spatial resolution</p>
+          </div>
+        </div>
+
+        <div class="technical-note">
+          <strong><i class="fas fa-info-circle"></i> NDVI Calculation</strong>
+          <p style="margin-bottom: 0;">
+            NDVI = (NIR - RED) / (NIR + RED), where NIR is the near-infrared band and RED is the red band from Sentinel-2 imagery. 
+            NDVI ranges from -1 to +1, with higher values indicating healthier vegetation.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analysis Workflow Section -->
+    <div class="methodology-section">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-sitemap"></i></div>
+        <h2>Analysis Workflow</h2>
+      </div>
+      <div class="methodology-diagram">
+        <div class="flow-step">Road Network Shapefile</div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">Clip to District 4</div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">Create 75m Buffer</div>
+        <br style="margin: 10px 0;"><br>
+        <div class="flow-step">Sentinel 2020 Imagery</div>
+        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+        <div class="flow-step">Calculate NDVI</div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">Sentinel 2024 Imagery</div>
+        <div class="flow-arrow"><i class="fas fa-arrow-down"></i></div>
+        <div class="flow-step">Calculate NDVI</div>
+        <br style="margin: 10px 0;"><br>
+        <div class="flow-step">Compute Change (2024-2020)</div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">Classify Segments</div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">Visualize & Analyze</div>
+      </div>
+    </div>
+
+    <!-- Limitations Section -->
+    <div class="methodology-section">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <h2>Limitations & Considerations</h2>
+      </div>
+      <div class="methodology-content">
+        <ul style="list-style-type: disc; padding-left: 20px;">
+          <li>
+            <strong>Seasonal Variation:</strong> NDVI is sensitive to seasonal changes. Analysis uses summer imagery 
+            to minimize seasonal effects, but local variations may occur.
+          </li>
+          <li>
+            <strong>Cloud Cover:</strong> Sentinel-2 data is subject to cloud cover. Imagery was selected to minimize 
+            cloud cover, but some areas may have limited data availability.
+          </li>
+          <li>
+            <strong>Buffer Size:</strong> The 75-meter buffer represents a conservative estimate of road impact zone. 
+            Actual impacts may vary by road type, maintenance practices, and local conditions.
+          </li>
+          <li>
+            <strong>Multi-factor Analysis:</strong> NDVI changes may be caused by multiple factors beyond road maintenance, 
+            including climate variations, land use changes, and urban development.
+          </li>
+          <li>
+            <strong>Resolution:</strong> Sentinel-2's 10-meter spatial resolution may not capture fine-scale vegetation changes 
+            in all cases, particularly in narrow buffer zones.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Future Improvements Section -->
+    <div class="methodology-section">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-lightbulb"></i></div>
+        <h2>Future Enhancements</h2>
+      </div>
+      <div class="methodology-content">
+        <ul style="list-style-type: disc; padding-left: 20px;">
+          <li>Incorporation of higher-resolution imagery (e.g., 3-meter Planet Labs data) for detailed analysis</li>
+          <li>Temporal analysis with annual NDVI time series to identify trends and seasonal patterns</li>
+          <li>Integration of road maintenance records to correlate vegetation changes with specific activities</li>
+          <li>Analysis of other vegetation indices (e.g., EVI, SAVI) for complementary insights</li>
+          <li>Expansion to include precipitation and temperature data for climate-vegetation correlation analysis</li>
+          <li>Species-level vegetation mapping where data availability permits</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-light py-4 mt-5 border-top">
+    <div class="container text-center text-muted">
+      <p class="mb-0">&copy; 2024 CalTrans District 4 Vegetation Monitor. Data sources: U.S. Government, Sentinel-2, ESA.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

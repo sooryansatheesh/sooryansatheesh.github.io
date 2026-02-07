@@ -1,16 +1,68 @@
 // Chart utility functions using Chart.js
 var ChartManager = (function () {
+  
   function createPriorityBarChart(ctx, priorityCounts) {
-    const labels = Object.keys(priorityCounts);
-    const data = labels.map(k => priorityCounts[k]);
-    const colors = ['#d73027','#fc8d59','#fee08b','#91cf60','#1a9850'].slice(0, labels.length);
+  const labels = Object.keys(priorityCounts);
+  const data = labels.map(k => priorityCounts[k]);
+  const colors = ['#d73027','#fc8d59','#fee08b','#91cf60','#1a9850'].slice(0, labels.length);
 
-    return new Chart(ctx, {
-      type: 'bar',
-      data: { labels, datasets: [{ label: 'Segment count', data, backgroundColor: colors }] },
-      options: { responsive: true, plugins: { legend: { display: false } } }
-    });
-  }
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: { 
+      labels, 
+      datasets: [{ 
+        label: 'Segment count', 
+        data, 
+        backgroundColor: colors
+      }] 
+    },
+    options: { 
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: { 
+        legend: { display: false },
+        // Add data labels plugin
+        datalabels: {
+          display: true,
+          anchor: 'end',
+          align: 'top',
+          font: {
+            size: 14,
+            weight: 'bold'
+          },
+          color: '#333',
+          formatter: function(value) {
+            return value;
+          }
+        }
+      }
+    },
+    plugins: [{
+      // Custom plugin to draw labels on top of bars
+      id: 'barLabels',
+      afterDatasetsDraw: function(chart) {
+        const ctx = chart.ctx;
+        chart.data.datasets.forEach((dataset, datasetIndex) => {
+          const meta = chart.getDatasetMeta(datasetIndex);
+          meta.data.forEach((bar, index) => {
+            const value = dataset.data[index];
+            if (value !== null && value !== undefined) {
+              ctx.save();
+              ctx.font = 'bold 16px Arial';
+              ctx.fillStyle = '#333';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'bottom';
+              ctx.fillText(String(value), bar.x, bar.y - 5);
+              ctx.restore();
+            }
+          });
+        });
+      }
+    }]
+  });
+  
+  return chart;
+}
 
   function createNdviTimeseriesLine(ctx, ndviTimeseries) {
     const counties = Object.keys(ndviTimeseries);
