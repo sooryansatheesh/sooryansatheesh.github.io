@@ -1,0 +1,52 @@
+{
+  "ndvi_change": {
+    "breaks": [
+      -1.0,
+      -0.2,
+      -0.1,
+      0.1,
+      0.2,
+      1.0
+    ],
+    "colors": [
+      "#d73027",
+      "#fc8d59",
+      "#fee08b",
+      "#d9ef8b",
+      "#91cf60",
+      "#1a9850"
+    ],
+    "labels": [
+      "Critical Decline (< -0.20)",
+      "Moderate Decline (-0.20 to -0.10)",
+      "Stable (-0.10 to 0.10)",
+      "Moderate Increase (0.10 to 0.20)",
+      "Significant Increase (> 0.20)"
+    ]
+  },
+  "current_ndvi": {
+    "breaks": [
+      0,
+      0.2,
+      0.3,
+      0.5,
+      0.7,
+      1.0
+    ],
+    "colors": [
+      "#8c510a",
+      "#d8b365",
+      "#f6e8c3",
+      "#c7eae5",
+      "#5ab4ac",
+      "#01665e"
+    ],
+    "labels": [
+      "Bare/No Vegetation (0-0.2)",
+      "Sparse Vegetation (0.2-0.3)",
+      "Low-Moderate (0.3-0.5)",
+      "Moderate-Healthy (0.5-0.7)",
+      "Very Healthy (0.7-1.0)"
+    ]
+  }
+}

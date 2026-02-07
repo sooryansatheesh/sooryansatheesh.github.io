@@ -1,0 +1,53 @@
+/* Minimal styling for local preview */
+html, body { height: 100%; }
+#map { height: 100%; }
+.leaflet-control.legend { background: rgba(255,255,255,0.95); padding: 8px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+.leaflet-control.legend .legend-title { font-weight: 600; margin-bottom: 6px; }
+.leaflet-control.legend .legend-item { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+.leaflet-control.legend .swatch { width: 18px; height: 12px; border:1px solid #ddd; }
+
+/* Basemap Selector */
+.basemap-selector {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.basemap-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.basemap-control {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  min-width: 140px;
+  transition: border-color 0.2s ease;
+}
+
+.basemap-control:hover {
+  border-color: #999;
+}
+
+.basemap-control:focus {
+  outline: none;
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.1);
+}

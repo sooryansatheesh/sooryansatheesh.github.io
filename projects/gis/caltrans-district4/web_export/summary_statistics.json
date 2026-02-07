@@ -1,0 +1,80 @@
+{
+  "analysis_period": {
+    "start": "2020-07-01",
+    "end": "2024-09-30",
+    "years": 4
+  },
+  "overall_stats": {
+    "total_segments": 1356,
+    "analyzed_segments": 1356,
+    "total_miles": 11295.947773067703,
+    "mean_ndvi_change": 0.010438254706065603,
+    "median_ndvi_change": 0.009531572158258811,
+    "std_ndvi_change": 0.02649280446198226,
+    "min_ndvi_change": -0.10144564766946079,
+    "max_ndvi_change": 0.14758824832022271
+  },
+  "priority_counts": {
+    "critical_decline": 0,
+    "moderate_decline": 1,
+    "stable": 1349,
+    "moderate_increase": 6,
+    "significant_increase": 0
+  },
+  "county_stats": {
+    "Santa Clara": {
+      "segment_count": 405,
+      "total_miles": 3033.470451699753,
+      "mean_ndvi_change": -0.0006259177722671757,
+      "critical_segments": 0
+    },
+    "San Mateo": {
+      "segment_count": 187,
+      "total_miles": 1510.5647496186425,
+      "mean_ndvi_change": 0.033834319341892384,
+      "critical_segments": 0
+    },
+    "Alameda": {
+      "segment_count": 267,
+      "total_miles": 2051.75185167786,
+      "mean_ndvi_change": 0.010424431083373492,
+      "critical_segments": 0
+    },
+    "Contra Costa": {
+      "segment_count": 60,
+      "total_miles": 667.5086847715347,
+      "mean_ndvi_change": 0.007979613395601569,
+      "critical_segments": 0
+    },
+    "Solano": {
+      "segment_count": 117,
+      "total_miles": 779.0202789239188,
+      "mean_ndvi_change": 0.008383557414320978,
+      "critical_segments": 0
+    },
+    "Napa": {
+      "segment_count": 72,
+      "total_miles": 642.4015231987137,
+      "mean_ndvi_change": 0.004360671622758618,
+      "critical_segments": 0
+    },
+    "San Francisco": {
+      "segment_count": 74,
+      "total_miles": 624.2087711747341,
+      "mean_ndvi_change": 0.02337630176049583,
+      "critical_segments": 0
+    },
+    "Marin": {
+      "segment_count": 51,
+      "total_miles": 514.8414165812909,
+      "mean_ndvi_change": 0.011814586435328924,
+      "critical_segments": 0
+    },
+    "Sonoma": {
+      "segment_count": 123,
+      "total_miles": 1472.1800454212546,
+      "mean_ndvi_change": 0.00968632232902302,
+      "critical_segments": 0
+    }
+  }
+}

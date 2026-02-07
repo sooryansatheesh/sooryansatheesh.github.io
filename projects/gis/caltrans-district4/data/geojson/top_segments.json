@@ -1,0 +1,326 @@
+{
+  "top_decline": [
+    {
+      "Segment_ID": 632,
+      "Route": 632,
+      "County": "Napa",
+      "NDVI_Summer_2020": 0.44298394905038857,
+      "NDVI_Summer_2024": 0.3415383013809278,
+      "NDVI_Change_4yr": -0.10144564766946079,
+      "Percent_Change": -22.900524474290048
+    },
+    {
+      "Segment_ID": 775,
+      "Route": 775,
+      "County": "Alameda",
+      "NDVI_Summer_2020": 0.04916514049690916,
+      "NDVI_Summer_2024": -0.04559819383065689,
+      "NDVI_Change_4yr": -0.09476333432756606,
+      "Percent_Change": -192.74496801961442
+    },
+    {
+      "Segment_ID": 774,
+      "Route": 774,
+      "County": "Alameda",
+      "NDVI_Summer_2020": 0.05921985264567733,
+      "NDVI_Summer_2024": -0.023517975988225918,
+      "NDVI_Change_4yr": -0.08273782863390325,
+      "Percent_Change": -139.71299308854762
+    },
+    {
+      "Segment_ID": 503,
+      "Route": 503,
+      "County": "Alameda",
+      "NDVI_Summer_2020": 0.1879989569050596,
+      "NDVI_Summer_2024": 0.10578490403056841,
+      "NDVI_Change_4yr": -0.0822140528744912,
+      "Percent_Change": -43.73112182532465
+    },
+    {
+      "Segment_ID": 101,
+      "Route": 101,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.6946410920030559,
+      "NDVI_Summer_2024": 0.6214183642094914,
+      "NDVI_Change_4yr": -0.07322272779356453,
+      "Percent_Change": -10.541087856236759
+    },
+    {
+      "Segment_ID": 586,
+      "Route": 586,
+      "County": "Contra Costa",
+      "NDVI_Summer_2020": 0.26769923941020196,
+      "NDVI_Summer_2024": 0.19581474918087788,
+      "NDVI_Change_4yr": -0.07188449022932408,
+      "Percent_Change": -26.852706189117615
+    },
+    {
+      "Segment_ID": 374,
+      "Route": 374,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.36367059719663525,
+      "NDVI_Summer_2024": 0.2927318447004139,
+      "NDVI_Change_4yr": -0.07093875249622134,
+      "Percent_Change": -19.50632056675867
+    },
+    {
+      "Segment_ID": 42,
+      "Route": 42,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.3483926591480369,
+      "NDVI_Summer_2024": 0.2774553927897773,
+      "NDVI_Change_4yr": -0.07093726635825959,
+      "Percent_Change": -20.361297661015684
+    },
+    {
+      "Segment_ID": 43,
+      "Route": 43,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.3483926591480369,
+      "NDVI_Summer_2024": 0.2774553927897773,
+      "NDVI_Change_4yr": -0.07093726635825959,
+      "Percent_Change": -20.361297661015684
+    },
+    {
+      "Segment_ID": 100,
+      "Route": 100,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.6341498101301515,
+      "NDVI_Summer_2024": 0.5637903115334468,
+      "NDVI_Change_4yr": -0.07035949859670465,
+      "Percent_Change": -11.095091013630395
+    },
+    {
+      "Segment_ID": 1316,
+      "Route": 1316,
+      "County": "Sonoma",
+      "NDVI_Summer_2020": 0.36372874153963636,
+      "NDVI_Summer_2024": 0.2998167266847621,
+      "NDVI_Change_4yr": -0.06391201485487424,
+      "Percent_Change": -17.571340275266536
+    },
+    {
+      "Segment_ID": 1317,
+      "Route": 1317,
+      "County": "Sonoma",
+      "NDVI_Summer_2020": 0.36372874153963636,
+      "NDVI_Summer_2024": 0.2998167266847621,
+      "NDVI_Change_4yr": -0.06391201485487424,
+      "Percent_Change": -17.571340275266536
+    },
+    {
+      "Segment_ID": 504,
+      "Route": 504,
+      "County": "Alameda",
+      "NDVI_Summer_2020": 0.1579004887093882,
+      "NDVI_Summer_2024": 0.0940219737384214,
+      "NDVI_Change_4yr": -0.06387851497096679,
+      "Percent_Change": -40.45491910321669
+    },
+    {
+      "Segment_ID": 293,
+      "Route": 293,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.5686109145958307,
+      "NDVI_Summer_2024": 0.5085060843645092,
+      "NDVI_Change_4yr": -0.060104830231321515,
+      "Percent_Change": -10.570467201468354
+    },
+    {
+      "Segment_ID": 688,
+      "Route": 688,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.5686109145958307,
+      "NDVI_Summer_2024": 0.5085060843645092,
+      "NDVI_Change_4yr": -0.060104830231321515,
+      "Percent_Change": -10.570467201468354
+    },
+    {
+      "Segment_ID": 656,
+      "Route": 656,
+      "County": "Solano",
+      "NDVI_Summer_2020": 0.3002819508456903,
+      "NDVI_Summer_2024": 0.24037952360967657,
+      "NDVI_Change_4yr": -0.059902427236013744,
+      "Percent_Change": -19.948727210313272
+    },
+    {
+      "Segment_ID": 279,
+      "Route": 279,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.5651881222476762,
+      "NDVI_Summer_2024": 0.5074076621652132,
+      "NDVI_Change_4yr": -0.05778046008246307,
+      "Percent_Change": -10.22322618045794
+    },
+    {
+      "Segment_ID": 290,
+      "Route": 290,
+      "County": "San Mateo",
+      "NDVI_Summer_2020": 0.5651881222476762,
+      "NDVI_Summer_2024": 0.5074076621652132,
+      "NDVI_Change_4yr": -0.05778046008246307,
+      "Percent_Change": -10.22322618045794
+    },
+    {
+      "Segment_ID": 291,
+      "Route": 291,
+      "County": "San Mateo",
+      "NDVI_Summer_2020": 0.5651881222476762,
+      "NDVI_Summer_2024": 0.5074076621652132,
+      "NDVI_Change_4yr": -0.05778046008246307,
+      "Percent_Change": -10.22322618045794
+    },
+    {
+      "Segment_ID": 292,
+      "Route": 292,
+      "County": "Santa Clara",
+      "NDVI_Summer_2020": 0.5651881222476762,
+      "NDVI_Summer_2024": 0.5074076621652132,
+      "NDVI_Change_4yr": -0.05778046008246307,
+      "Percent_Change": -10.22322618045794
+    }
+  ],
+  "lowest_current": [
+    {
+      "Segment_ID": 1059,
+      "Route": 1059,
+      "County": "Contra Costa",
+      "NDVI_Summer_2024": -0.2613623807136929,
+      "NDVI_Change_4yr": -0.055633824804845494
+    },
+    {
+      "Segment_ID": 1060,
+      "Route": 1060,
+      "County": "Contra Costa",
+      "NDVI_Summer_2024": -0.25163259479376876,
+      "NDVI_Change_4yr": -0.03964513543294562
+    },
+    {
+      "Segment_ID": 1061,
+      "Route": 1061,
+      "County": "Marin",
+      "NDVI_Summer_2024": -0.25163259479376876,
+      "NDVI_Change_4yr": -0.03964513543294562
+    },
+    {
+      "Segment_ID": 1104,
+      "Route": 1104,
+      "County": "Contra Costa",
+      "NDVI_Summer_2024": -0.23665113108809716,
+      "NDVI_Change_4yr": -0.01943871103683295
+    },
+    {
+      "Segment_ID": 1105,
+      "Route": 1105,
+      "County": "Solano",
+      "NDVI_Summer_2024": -0.23665113108809716,
+      "NDVI_Change_4yr": -0.01943871103683295
+    },
+    {
+      "Segment_ID": 430,
+      "Route": 430,
+      "County": "Alameda",
+      "NDVI_Summer_2024": -0.2307356129411513,
+      "NDVI_Change_4yr": 0.016079934328421613
+    },
+    {
+      "Segment_ID": 431,
+      "Route": 431,
+      "County": "San Mateo",
+      "NDVI_Summer_2024": -0.2307356129411513,
+      "NDVI_Change_4yr": 0.016079934328421613
+    },
+    {
+      "Segment_ID": 727,
+      "Route": 727,
+      "County": "Alameda",
+      "NDVI_Summer_2024": -0.2292556155190418,
+      "NDVI_Change_4yr": -0.0034847173823684408
+    },
+    {
+      "Segment_ID": 768,
+      "Route": 768,
+      "County": "San Mateo",
+      "NDVI_Summer_2024": -0.2292556155190418,
+      "NDVI_Change_4yr": -0.0034847173823684408
+    },
+    {
+      "Segment_ID": 769,
+      "Route": 769,
+      "County": "San Mateo",
+      "NDVI_Summer_2024": -0.22904783263817521,
+      "NDVI_Change_4yr": -0.003338148030304827
+    },
+    {
+      "Segment_ID": 770,
+      "Route": 770,
+      "County": "Alameda",
+      "NDVI_Summer_2024": -0.22904783263817521,
+      "NDVI_Change_4yr": -0.003338148030304827
+    },
+    {
+      "Segment_ID": 432,
+      "Route": 432,
+      "County": "Alameda",
+      "NDVI_Summer_2024": -0.22769601426971156,
+      "NDVI_Change_4yr": 0.016058557813216023
+    },
+    {
+      "Segment_ID": 433,
+      "Route": 433,
+      "County": "San Mateo",
+      "NDVI_Summer_2024": -0.22769601426971156,
+      "NDVI_Change_4yr": 0.016058557813216023
+    },
+    {
+      "Segment_ID": 428,
+      "Route": 428,
+      "County": "Alameda",
+      "NDVI_Summer_2024": -0.21053288049460958,
+      "NDVI_Change_4yr": -0.005910303978862302
+    },
+    {
+      "Segment_ID": 427,
+      "Route": 427,
+      "County": "Alameda",
+      "NDVI_Summer_2024": -0.20528114724255778,
+      "NDVI_Change_4yr": -0.007822976808994991
+    },
+    {
+      "Segment_ID": 650,
+      "Route": 650,
+      "County": "Contra Costa",
+      "NDVI_Summer_2024": -0.19951663910692483,
+      "NDVI_Change_4yr": -0.031158849671743094
+    },
+    {
+      "Segment_ID": 651,
+      "Route": 651,
+      "County": "Contra Costa",
+      "NDVI_Summer_2024": -0.19951663910692483,
+      "NDVI_Change_4yr": -0.031158849671743094
+    },
+    {
+      "Segment_ID": 1133,
+      "Route": 1133,
+      "County": "Solano",
+      "NDVI_Summer_2024": -0.19095914876583542,
+      "NDVI_Change_4yr": 0.005339562281798466
+    },
+    {
+      "Segment_ID": 1106,
+      "Route": 1106,
+      "County": "Contra Costa",
+      "NDVI_Summer_2024": -0.16908545902826916,
+      "NDVI_Change_4yr": -0.014893858846400015
+    },
+    {
+      "Segment_ID": 1107,
+      "Route": 1107,
+      "County": "Solano",
+      "NDVI_Summer_2024": -0.16908545902826916,
+      "NDVI_Change_4yr": -0.014893858846400015
+    }
+  ]
+}
