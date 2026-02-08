@@ -1,6 +1,6 @@
 // Map manager: initializes Leaflet map and draws GeoJSON layers
 var MapManager = (function () {
-  let map, segmentsLayer, boundaryLayer, legendControl, currentTileLayer, layerControl;
+  let map, segmentsLayer, boundaryLayer, legendControl, currentTileLayer, layerControl, segmentsGeoJSON, lastColormap;
 
   // Define available basemaps
   const basemaps = {
@@ -88,11 +88,86 @@ var MapManager = (function () {
   }
 
   function addSegments(geojson, colormap) {
+    // store original geojson for filtering
+    if (!segmentsGeoJSON) segmentsGeoJSON = geojson;
+    if (colormap) lastColormap = colormap;
+    const cmap = colormap || lastColormap;
+
     if (segmentsLayer) map.removeLayer(segmentsLayer);
     segmentsLayer = L.geoJSON(geojson, {
-      style: function (f) { return styleFeature(f, colormap); },
+      style: function (f) { return styleFeature(f, cmap); },
       onEachFeature: onEachSegment
     }).addTo(map);
+  }
+
+  function populateCountyFilter() {
+    try {
+      const select = document.getElementById('countyFilter');
+      if (!select || !segmentsGeoJSON) return;
+      // clear existing (keep 'All')
+      select.innerHTML = '<option value="All">All counties</option>';
+      const counties = new Set();
+      (segmentsGeoJSON.features || []).forEach(f => {
+        const p = f.properties || {};
+        const name = p.NAME || p.County || null;
+        if (name) counties.add(name);
+      });
+      Array.from(counties).sort().forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        select.appendChild(opt);
+      });
+
+      // attach listener
+      select.addEventListener('change', function (e) {
+        const val = e.target.value || 'All';
+        filterSegmentsByCounty(val);
+      });
+    } catch (e) { console.warn('populateCountyFilter error', e); }
+  }
+
+  function filterSegmentsByCounty(county) {
+    if (!segmentsGeoJSON) return;
+    if (county === 'All' || !county) {
+      // restore original
+      addSegments(segmentsGeoJSON, lastColormap);
+      // reset boundary styles to default
+      if (boundaryLayer) {
+        boundaryLayer.eachLayer(function (layer) {
+          try { layer.setStyle({ color: '#222', weight: 2, fill: false }); } catch (e) {}
+        });
+      }
+      // re-add legend if needed by caller
+      return;
+    }
+    const filtered = {
+      type: 'FeatureCollection',
+      features: (segmentsGeoJSON.features || []).filter(f => {
+        const p = f.properties || {};
+        const name = p.NAME || p.County || '';
+        return name === county;
+      })
+    };
+    addSegments(filtered, lastColormap);
+    // highlight the selected county boundary in red (others revert to default) and zoom to it
+    if (boundaryLayer) {
+      boundaryLayer.eachLayer(function (layer) {
+        const p = (layer.feature && layer.feature.properties) || {};
+        const name = p.NAME || p.County || '';
+        try {
+          if (name === county) {
+            layer.setStyle({ color: '#ff0000', weight: 3, fill: false });
+            if (layer.bringToFront) layer.bringToFront();
+            // Zoom to selected county bounds
+            const bounds = layer.getBounds();
+            map.fitBounds(bounds, { padding: [50, 50], maxZoom: 11 });
+          } else {
+            layer.setStyle({ color: '#222', weight: 1, fill: false });
+          }
+        } catch (e) { /* ignore style errors */ }
+      });
+    }
   }
 
   function onEachBoundary(feature, layer) {
@@ -104,6 +179,16 @@ var MapManager = (function () {
       permanent: false,
       direction: 'top',
       offset: [0, -10]
+    });
+
+    // Add click handler to zoom to county
+    layer.on('click', function (e) {
+      try {
+        const bounds = layer.getBounds();
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 11 });
+      } catch (err) {
+        console.warn('Error zooming to county:', err);
+      }
     });
   }
 
@@ -164,6 +249,8 @@ var MapManager = (function () {
       addSegments(segments, colormap);
       addHeadquartersMarker();
       addLegend(colormap);
+      // populate county filter control (if present)
+      setTimeout(() => { try { populateCountyFilter(); } catch (e) {} }, 100);
       
       // Add layer control
       const overlays = {

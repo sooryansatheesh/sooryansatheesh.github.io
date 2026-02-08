@@ -22,14 +22,22 @@
 
   <main class="container-fluid p-0" style="height: calc(100vh - 56px);">
     <div id="map" style="height:100%; width:100%;"></div>
-    <!-- Basemap Selector -->
-    <div class="basemap-selector">
-      <label for="basemapSelect" class="basemap-label">Base Map:</label>
-      <select id="basemapSelect" class="basemap-control">
-        <option value="osm">Street Map</option>
-        <option value="grey">Grey Map</option>
-        <option value="satellite">Satellite</option>
-      </select>
+    <!-- Controls Panel: Basemap + County Filter -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <label for="basemapSelect" class="control-label">Base Map:</label>
+        <select id="basemapSelect" class="control-select">
+          <option value="osm">Street Map</option>
+          <option value="grey">Grey Map</option>
+          <option value="satellite">Satellite</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="countyFilter" class="control-label">Filter County:</label>
+        <select id="countyFilter" class="control-select">
+          <option value="All">All counties</option>
+        </select>
+      </div>
     </div>
   </main>
 

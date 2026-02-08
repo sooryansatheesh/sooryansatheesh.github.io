@@ -6,47 +6,55 @@ html, body { height: 100%; }
 .leaflet-control.legend .legend-item { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
 .leaflet-control.legend .swatch { width: 18px; height: 12px; border:1px solid #ddd; }
 
-/* Basemap Selector */
-.basemap-selector {
+/* Controls Panel */
+.controls-panel {
   position: absolute;
   top: 70px;
   right: 10px;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 12px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  background: rgba(255, 255, 255, 0.97);
+  padding: 14px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  width: 220px;
 }
 
-.basemap-label {
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.control-group:last-child {
+  margin-bottom: 0;
+}
+
+.control-label {
   font-weight: 600;
-  font-size: 14px;
-  color: #333;
+  font-size: 13px;
+  color: #222;
   margin: 0;
-  white-space: nowrap;
 }
 
-.basemap-control {
-  padding: 6px 10px;
+.control-select {
+  padding: 8px 10px;
   border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 14px;
+  border-radius: 4px;
+  font-size: 13px;
   background-color: white;
   color: #333;
   cursor: pointer;
-  min-width: 140px;
-  transition: border-color 0.2s ease;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.basemap-control:hover {
+.control-select:hover {
   border-color: #999;
 }
 
-.basemap-control:focus {
+.control-select:focus {
   outline: none;
   border-color: #0078d4;
   box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.1);
